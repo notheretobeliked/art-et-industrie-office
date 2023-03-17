@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "42fd0e62532c4a0dd3b8bf655463b6ff",
+    "content-hash": "b4ee2a742a652e3753f97ac0d40f8c9e",
     "packages": [
         {
             "name": "appsero/client",
@@ -5588,6 +5588,24 @@
             },
             "type": "wordpress-plugin",
             "homepage": "https://wordpress.org/plugins/acf-openstreetmap-field/"
+        },
+        {
+            "name": "wpackagist-plugin/avif-express",
+            "version": "2023.02.27",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/avif-express/",
+                "reference": "tags/2023.02.27"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/avif-express.2023.02.27.zip"
+            },
+            "require": {
+                "composer/installers": "^1.0 || ^2.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/avif-express/"
         },
         {
             "name": "wpackagist-plugin/performance-lab",
