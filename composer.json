@@ -61,8 +61,7 @@
     "wp-graphql/wp-graphql-acf": "^0.6.1",
     "wpackagist-plugin/acf-openstreetmap-field": "^1.4",
     "wpackagist-plugin/the-events-calendar": "^6.0",
-    "wpackagist-plugin/performance-lab": "^2.0",
-    "wpackagist-plugin/avif-express": "^2023.02"
+    "wpackagist-plugin/performance-lab": "^2.0"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.7.1",
