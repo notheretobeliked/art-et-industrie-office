@@ -16,7 +16,7 @@ add_filter('excerpt_more', function () {
 });
 
 add_filter('jpeg_quality', function ($arg) {
-    return 10;
+    return 50;
 });
 
 add_filter('wp_editor_set_quality', function ($quality, $mime_type) {
