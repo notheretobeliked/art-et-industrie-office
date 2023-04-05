@@ -39,6 +39,8 @@ function generate_image_variants($attachment_id, $source_path, $destination_path
     $variants[$size] = $sizes;
   }
 
+  error_log(print_r($variants, true));
+
   $variants = wp_get_image_editor($source_path)->multi_resize($variants);
   
   

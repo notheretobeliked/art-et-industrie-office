@@ -34,7 +34,7 @@ export default async (app) => {
      * Proxy origin (`WP_HOME`)
      * @see {@link https://bud.js.org/docs/bud.proxy/}
      */
-    .proxy('http://example.test')
+    .proxy('http://triennale-wp.test')
 
     /**
      * Development origin
@@ -46,7 +46,7 @@ export default async (app) => {
      * URI of the `public` directory
      * @see {@link https://bud.js.org/docs/bud.setPublicPath/}
      */
-    .setPublicPath('/app/themes/sage/public/')
+    .setPublicPath('/app/themes/nhtbl-sage/public/')
 
     /**
      * Generate WordPress `theme.json`
@@ -76,6 +76,10 @@ export default async (app) => {
       spacing: {
         padding: true,
         units: ['px', '%', 'em', 'rem', 'vw', 'vh'],
+      },
+      layout: {
+        "contentSize": "800px",
+        "wideSize": "1000px"
       },
       typography: {
         customFontSize: false,

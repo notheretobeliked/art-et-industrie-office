@@ -64,38 +64,68 @@ add_action('delete_attachment', function ($attachment_id) {
     delete_post_meta($attachment_id, 'image_variants');
 });
 
-add_action( 'graphql_register_types', function () {
-    register_graphql_object_type( 'LoresMedia', [
-      'description' => __( "A list of media by size", 'sage' ),
-      'fields' => [
-        'small' => [
-            'type' => 'String',
-            'description' => __( 'Small image size filename', 'sage' ),
-        ],
-        'medium' => [
-            'type' => 'String',
-            'description' => __( 'Medium image size filename', 'sage' ),
-        ],
-        'large' => [
-            'type' => 'String',
-            'description' => __( 'Large image size filename', 'sage' ),
-        ],
-      ],
-    ] );
+
+add_filter( 'tribe_rest_single_event_data', function(array $event_data) {
+    $event_id = $event_data['id'];
+ 
+    $level = get_field('ressonance', $event_id);
+    error_log(print_r($level, true ));
+ 
+    $event_data['resonances'] = $level;
+ 
+    return $event_data;
 });
 
-add_action( 'graphql_register_types', function () {
-    
-    register_graphql_field( 'ContentNode', 'image_variants', [
-        'type' => 'LoresMedia',
-        'description' => __( 'Image Variants', 'sage' ),
-        'resolve' => function( $post ) {
-            return [
-                "small" => "smallone",
-                "medium" => "mediumone",
-                "large" => "largetwo",
-            ];
-//            return json_encode(get_post_meta( $post->ID, 'image_variants', true ));
-        },
-    ] );
+add_filter( 'acf/settings/rest_api_format', function () {
+    return 'standard';
 } );
+
+
+// add Gutenberg blocks to rest api AND insert custom fields into output
+add_action(
+	'rest_api_init',
+	function () {
+
+		if ( ! function_exists( 'use_block_editor_for_post_type' ) ) {
+			require ABSPATH . 'wp-admin/includes/post.php';
+		}
+
+		// Surface all Gutenberg blocks in the WordPress REST API
+		$post_types = get_post_types_by_support( [ 'editor' ] );
+		foreach ( $post_types as $post_type ) {
+			if ( use_block_editor_for_post_type( $post_type ) ) {
+				register_rest_field(
+					$post_type,
+					'blocks',
+					[
+						'get_callback' => function ( array $post ) {
+							$blocks = parse_blocks( $post['content']['raw'] );
+                            $newblocks = $blocks;
+                            foreach ( $newblocks as &$block ) {
+
+                                // Test block name
+                                if ( 'acf/test' === $block['blockName'] ) {
+                                    error_log(print_r($block, true));
+//                                    echo apply_filters( 'the_content', render_block( $block ) );
+                                    error_log(print_r($block['attrs']['data']['gallery_test_field'], true));
+                                    $images = array();
+                                    foreach($block['attrs']['data']['gallery_test_field'] as $imageId) {
+                                        // get srcset for $imageId
+                                        $images[] = wp_get_attachment_image_srcset($imageId, 'full');
+                                    }
+                                    error_log(print_r($images, true));
+                                    $block['attrs']['data']['gallery_test_field'] = $images;
+                                }  
+                                
+                            
+                            }
+
+                            return $newblocks;
+                        
+						},
+					]
+				);
+			}
+		}
+	}
+);

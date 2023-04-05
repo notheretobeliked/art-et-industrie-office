@@ -52,16 +52,14 @@
     "roots/wordpress": "6.1.1",
     "roots/wp-config": "1.0.0",
     "roots/wp-password-bcrypt": "1.1.0",
-    "wpackagist-theme/twentytwentythree": "^1.0",
     "wp-graphql/wp-graphql": "^1.14",
     "roots/acorn": "^3.1",
     "wpengine/advanced-custom-fields-pro": "^6.0",
     "findcanary/wp-graphql-the-seo-framework": "^0.1.0",
     "sybrew/the-seo-framework": "^4.2",
     "wp-graphql/wp-graphql-acf": "^0.6.1",
-    "wpackagist-plugin/acf-openstreetmap-field": "^1.4",
     "wpackagist-plugin/the-events-calendar": "^6.0",
-    "wpackagist-plugin/performance-lab": "^2.0"
+    "pristas-peter/wp-graphql-gutenberg": "^0.4.1"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.7.1",

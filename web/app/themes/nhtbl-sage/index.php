@@ -11,6 +11,8 @@
     <?php do_action('get_header'); ?>
 
     <div id="app">
+    
+
       <?php echo view(app('sage.view'), app('sage.data'))->render(); ?>
     </div>
 

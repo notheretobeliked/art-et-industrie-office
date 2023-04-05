@@ -1,0 +1,19 @@
+@layer base {
+  body:not(.wp-admin) .app {
+    @apply font-serif;
+  }
+
+  .editor-post-title {
+    @apply font-display uppercase;
+  }
+}
+
+@layer components {
+  header h1.p-name {
+    @apply font-display uppercase;
+  }
+
+  .editor-styles-wrapper p {
+    @apply font-serif;
+  }
+}

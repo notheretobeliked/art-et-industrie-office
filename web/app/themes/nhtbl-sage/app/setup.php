@@ -101,7 +101,12 @@ add_action('after_setup_theme', function () {
         'search-form',
         'script',
         'style',
+        'editor-styles',
     ]);
+
+    add_editor_style(asset('app.css'));
+    add_editor_style(asset('editor.css'));
+
 
     /**
      * Enable selective refresh for widgets in customizer.
