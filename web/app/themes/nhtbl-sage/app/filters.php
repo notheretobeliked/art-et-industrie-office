@@ -61,10 +61,11 @@ add_action('delete_attachment', function ($attachment_id) {
                     }
                 }
             }
+            // Delete the custom field from the attachment post
+            delete_post_meta($attachment_id, 'image_variants');
+            delete_post_meta($attachment_id, 'basedir');
         }
     }
-    // Delete the custom field from the attachment post
-    delete_post_meta($attachment_id, 'image_variants');
 });
 
 
@@ -109,7 +110,39 @@ add_filter('acf/save_post', function ($post_id) {
 	}
 });
 
-// add Gutenberg blocks to rest api AND insert custom fields into output
+// filter default fields for events
+add_filter( 'tribe_events_editor_default_template', function( $template ) {
+    $template = [
+      [ 'tribe/event-datetime' ],
+      [ 'core/paragraph', [
+        'placeholder' => __( 'Description ici...', 'sage' ),
+      ], ],
+    ];
+    return $template;
+  }, 11, 1 );
+
+
+// only allow default blocks
+
+add_filter( 'allowed_block_types_all', function ( $allowed_blocks, $editor_context ) {
+	$allowed_blocks = array(
+		'core/image',
+		'core/paragraph',
+		'core/heading',
+		'core/list',
+		'core/list-item',
+        'acf/galerie',
+        'acf/texte-intro',
+	);
+	return $allowed_blocks;
+ 
+}, 25, 2 );
+
+
+/* add Gutenberg blocks to rest api AND insert custom fields into output
+
+ok so this fucks up the entire editor so let's not use it for now
+
 add_action(
     'rest_api_init',
     function () {
@@ -132,7 +165,7 @@ add_action(
                             foreach ($newblocks as &$block) {
 
                                 // Test block name
-                                if ('acf/test' === $block['blockName']) {
+                                if ('acf/galerie' === $block['blockName']) {
                                     error_log(print_r($block, true));
                                     //                                    echo apply_filters( 'the_content', render_block( $block ) );
                                     error_log(print_r($block['attrs']['data']['gallery_test_field'], true));
@@ -154,3 +187,4 @@ add_action(
         }
     }
 );
+*/
