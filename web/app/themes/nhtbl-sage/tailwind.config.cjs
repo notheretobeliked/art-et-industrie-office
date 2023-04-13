@@ -5,6 +5,11 @@ module.exports = {
     'editor-post-title',
     'p-name',
     'editor-styles-wrapper',
+    'event_tribe_venue',
+    'event_tribe_organizer',
+    'event_url',
+    'event_cost',
+    'eventtable'
   ],
   theme: {
     fontFamily: {
@@ -29,14 +34,23 @@ module.exports = {
         lineHeight: '1.1',
       }],
       '3xl': ['2.4rem', {
-        lineHeight: '1.1rem',
+        lineHeight: '1.1',
       }],
       '4xl': ['2.8rem', {
         lineHeight: '1',
       }],
       '5xl': ['3.8rem', {
-        lineHeight: '1.1rem',
+        lineHeight: '1.1',
       }],
+    },
+    colors: {
+      'black': '#2F2E2B',
+      'white': '#F5F3EC',
+      'gray': {
+        '500': '#807F7C',
+        '100': '#DFDBDA',
+      },
+      transparent: 'transparent',
     },
     extend: {
       colors: {}, // Extend Tailwind's default colors

@@ -69,7 +69,7 @@ export default async (app) => {
       custom: {
         spacing: {},
         typography: {
-          'font-size': {},
+          'font-size': {base: '1.25rem'},
           'line-height': {},
         },
       },
@@ -78,11 +78,29 @@ export default async (app) => {
         units: ['px', '%', 'em', 'rem', 'vw', 'vh'],
       },
       layout: {
-        "contentSize": "800px",
-        "wideSize": "1000px"
+        contentSize: '800px',
+        wideSize: '1000px',
       },
       typography: {
         customFontSize: false,
+      },
+      blocks: {
+        'core/paragraph': {
+          typography: {
+            fontSizes: [
+              {
+                slug: 'base',
+                size: '1.25rem',
+                name: 'Normal',
+              },
+              {
+                slug: 'lg',
+                size: '1.4rem',
+                name: 'Large',
+              },
+            ],
+          },
+        },
       },
     })
     .useTailwindColors()

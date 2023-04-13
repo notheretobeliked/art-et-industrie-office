@@ -1,4 +1,5 @@
 @layer base {
+
   body:not(.wp-admin) .app {
     @apply font-serif;
   }
@@ -16,4 +17,12 @@
   .editor-styles-wrapper p {
     @apply font-serif;
   }
+}
+
+#event_tribe_venue,
+#event_tribe_organizer,
+#event_url,
+#event_cost,
+.eventtable {
+  display: none;
 }
