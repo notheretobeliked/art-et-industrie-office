@@ -17,10 +17,13 @@ function add_image_variant_custom_field($attachment_id, $suffix, $variants) {
 
   // Add the new variant to the existing variants
   $existing_variants[$suffix] = $variants;
+  $directory = wp_upload_dir();
+  
 
   //error_log(print_r($existing_variants, true));
   // Update the custom field value for this attachment
   update_post_meta($attachment_id, 'image_variants', $existing_variants);
+  update_post_meta($attachment_id, 'subdir', $directory['subdir']);
 }
 
 
@@ -65,7 +68,9 @@ function generate_image_variants($attachment_id, $source_path, $destination_path
 
 
       // Save the high-quality AVIF version of the image
-      $destination_path_avif = $destination_path_base . $file . '.avif';
+      $filename_avif = $file . '.avif';
+      $destination_path_avif = $destination_path_base . $filename_avif;
+      
 
       $resized_image_avif = clone $resized_image;
       $resized_image_avif->setImageFormat('avif');
@@ -77,7 +82,8 @@ function generate_image_variants($attachment_id, $source_path, $destination_path
       $resized_image_lowquality->setImageFormat('avif');
       $resized_image_lowquality->posterizeImage(48, true);
       $resized_image_lowquality->setImageCompressionQuality($quality_low);
-      $destination_path_aviflowquality = $destination_path_base . $file . '-low.avif';
+      $filename_aviflowquality = $file . '-low.avif';
+      $destination_path_aviflowquality = $destination_path_base . $filename_aviflowquality;
       $resized_image_lowquality->writeImage($destination_path_aviflowquality);
       $resized_image_lowquality->destroy();
 
@@ -85,21 +91,26 @@ function generate_image_variants($attachment_id, $source_path, $destination_path
       $resized_image_bw->setImageFormat('avif');
       $resized_image_bw->setImageType(2);
       $resized_image_bw->posterizeImage(8, true);
-      $destination_path_avif_bw = $destination_path_base . $file . '-bw.avif';
+      $filename_avif_bw = $file . '-bw.avif';
+      $destination_path_avif_bw = $destination_path_base . $filename_avif_bw;
       $resized_image_bw->setImageCompressionQuality($quality_low);
       $resized_image_bw->writeImage($destination_path_avif_bw);
       $resized_image_bw->destroy();
-
-      
+     
       
       // Save the medium-quality WebP version of the image
-      $destination_path_webp = $destination_path_base . $file . '.webp';
+      $filename_webp = $file . '.webp';
+      $destination_path_webp = $destination_path_base . $filename_webp;
+      
 
       $resized_image->setImageFormat('webp');
 
       $resized_image_lowquality = clone $resized_image;
       $resized_image_lowquality->posterizeImage(48, true);
-      $destination_path_webp_lowquality = $destination_path_base . $file . '-low.webp';
+      $filename_webp_lowquality = $file . '-low.webp';
+      $destination_path_webp_lowquality = $destination_path_base . $filename_webp_lowquality;
+      
+
       $resized_image_lowquality->setImageCompressionQuality($quality_low);
       $resized_image_lowquality->writeImage($destination_path_webp_lowquality);
       $resized_image_lowquality->destroy();
@@ -108,7 +119,8 @@ function generate_image_variants($attachment_id, $source_path, $destination_path
       $resized_image_bw = clone $resized_image;
       $resized_image_bw->setImageType(2);
       $resized_image_bw->posterizeImage(8, true);
-      $destination_path_webp_bw = $destination_path_base . $file . '-bw.webp';
+      $filename_webp_bw = $file . '-bw.webp';
+      $destination_path_webp_bw = $destination_path_base . $filename_webp_bw;
       $resized_image_bw->setImageCompressionQuality($quality_low);
       $resized_image_bw->writeImage($destination_path_webp_bw);
       $resized_image_bw->destroy();
@@ -118,12 +130,12 @@ function generate_image_variants($attachment_id, $source_path, $destination_path
 
       // Add the variants to the custom field for this attachment
       $variants = [
-        'webp' => $destination_path_webp,
-        'webp-low' => $destination_path_webp_lowquality,
-        'avif' => $destination_path_avif,
-        'avif-low' => $destination_path_aviflowquality,
-        'webp-bw' => $destination_path_webp_bw,
-        'avif-bw' => $destination_path_avif_bw,
+        'webp' => $filename_webp,
+        'webp-low' => $filename_webp_lowquality,
+        'avif' => $filename_avif,
+        'avif-low' => $filename_aviflowquality,
+        'webp-bw' => $filename_webp_bw,
+        'avif-bw' => $filename_avif_bw,
       ];
       add_image_variant_custom_field($attachment_id, $suffix, $variants);
 
