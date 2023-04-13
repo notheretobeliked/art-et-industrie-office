@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "22dff8f95d39ec3c2ef9229a60eb45c6",
+    "content-hash": "8b0cef2219981a1fd5c50a767a322c10",
     "packages": [
         {
             "name": "appsero/client",
@@ -5376,6 +5376,57 @@
             "time": "2023-01-20T17:44:14+00:00"
         },
         {
+            "name": "valu/wp-graphql-polylang",
+            "version": "v0.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/valu-digital/wp-graphql-polylang.git",
+                "reference": "a3259fbbbc039c10ebd489a70dda275921d477e1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/valu-digital/wp-graphql-polylang/zipball/a3259fbbbc039c10ebd489a70dda275921d477e1",
+                "reference": "a3259fbbbc039c10ebd489a70dda275921d477e1",
+                "shasum": ""
+            },
+            "require-dev": {
+                "bordoni/phpass": "*",
+                "codeception/module-asserts": "^1.0",
+                "codeception/module-cli": "^1.0",
+                "codeception/module-db": "^1.0",
+                "codeception/module-filesystem": "^1.0",
+                "codeception/module-phpbrowser": "^1.0",
+                "codeception/module-rest": "^1.0",
+                "codeception/module-webdriver": "^1.0",
+                "codeception/util-universalframework": "^1.0",
+                "lucatume/wp-browser": "~2.2",
+                "valu/wp-testing-tools": "^0.4.0"
+            },
+            "type": "wordpress-plugin",
+            "autoload": {
+                "psr-4": {
+                    "WPGraphQL\\Extensions\\Polylang\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Esa-Matti Suuronen",
+                    "email": "esa-matti.suuronen@valu.fi",
+                    "role": "developer"
+                }
+            ],
+            "description": "Polylang bindings for wp-graphql",
+            "support": {
+                "issues": "https://github.com/valu-digital/wp-graphql-polylang/issues",
+                "source": "https://github.com/valu-digital/wp-graphql-polylang"
+            },
+            "time": "2021-09-28T14:37:23+00:00"
+        },
+        {
             "name": "vlucas/phpdotenv",
             "version": "v5.5.0",
             "source": {
@@ -5825,6 +5876,24 @@
             "time": "2022-09-16T16:50:00+00:00"
         },
         {
+            "name": "wpackagist-plugin/polylang",
+            "version": "3.3.3",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/polylang/",
+                "reference": "tags/3.3.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/polylang.3.3.3.zip"
+            },
+            "require": {
+                "composer/installers": "^1.0 || ^2.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/polylang/"
+        },
+        {
             "name": "wpackagist-plugin/the-events-calendar",
             "version": "6.0.11",
             "source": {
@@ -5844,10 +5913,10 @@
         },
         {
             "name": "wpengine/advanced-custom-fields-pro",
-            "version": "6.1.2",
+            "version": "6.1.3",
             "dist": {
                 "type": "zip",
-                "url": "https://connect.advancedcustomfields.com/v2/plugins/composer_download?p=pro&t=6.1.2"
+                "url": "https://connect.advancedcustomfields.com/v2/plugins/composer_download?p=pro&t=6.1.3"
             },
             "require": {
                 "composer/installers": "~1.0 || ~2.0"
@@ -5865,12 +5934,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "49bcdfcfebe63a59d1b19b1eb12737868011e2c7"
+                "reference": "6efa800243b92a3601e0101b0333d45df35832a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/49bcdfcfebe63a59d1b19b1eb12737868011e2c7",
-                "reference": "49bcdfcfebe63a59d1b19b1eb12737868011e2c7",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/6efa800243b92a3601e0101b0333d45df35832a4",
+                "reference": "6efa800243b92a3601e0101b0333d45df35832a4",
                 "shasum": ""
             },
             "conflict": {
@@ -6084,7 +6153,7 @@
                 "kimai/kimai": "<1.1",
                 "kitodo/presentation": "<3.1.2",
                 "klaviyo/magento2-extension": ">=1,<3",
-                "knplabs/knp-snappy": "<=1.4.1",
+                "knplabs/knp-snappy": "<1.4.2",
                 "krayin/laravel-crm": "<1.2.2",
                 "kreait/firebase-php": ">=3.2,<3.8.1",
                 "la-haute-societe/tcpdf": "<6.2.22",
@@ -6124,7 +6193,7 @@
                 "melisplatform/melis-front": "<5.0.1",
                 "mezzio/mezzio-swoole": "<3.7|>=4,<4.3",
                 "mgallegos/laravel-jqgrid": "<=1.3",
-                "microweber/microweber": "<=1.3.2",
+                "microweber/microweber": "<1.3.3",
                 "miniorange/miniorange-saml": "<1.4.3",
                 "mittwald/typo3_forum": "<1.2.1",
                 "mobiledetect/mobiledetectlib": "<2.8.32",
@@ -6457,7 +6526,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-04-03T22:04:05+00:00"
+            "time": "2023-04-06T17:04:19+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
