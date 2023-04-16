@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0788d72a044e0dcef127c1bc4deb5e1a",
+    "content-hash": "5778e0cff848d7706bc7a1262671b327",
     "packages": [
         {
             "name": "appsero/client",
@@ -54,26 +54,25 @@
         },
         {
             "name": "brick/math",
-            "version": "0.10.2",
+            "version": "0.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/brick/math.git",
-                "reference": "459f2781e1a08d52ee56b0b1444086e038561e3f"
+                "reference": "0ad82ce168c82ba30d1c01ec86116ab52f589478"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/brick/math/zipball/459f2781e1a08d52ee56b0b1444086e038561e3f",
-                "reference": "459f2781e1a08d52ee56b0b1444086e038561e3f",
+                "url": "https://api.github.com/repos/brick/math/zipball/0ad82ce168c82ba30d1c01ec86116ab52f589478",
+                "reference": "0ad82ce168c82ba30d1c01ec86116ab52f589478",
                 "shasum": ""
             },
             "require": {
-                "ext-json": "*",
-                "php": "^7.4 || ^8.0"
+                "php": "^8.0"
             },
             "require-dev": {
                 "php-coveralls/php-coveralls": "^2.2",
                 "phpunit/phpunit": "^9.0",
-                "vimeo/psalm": "4.25.0"
+                "vimeo/psalm": "5.0.0"
             },
             "type": "library",
             "autoload": {
@@ -98,7 +97,7 @@
             ],
             "support": {
                 "issues": "https://github.com/brick/math/issues",
-                "source": "https://github.com/brick/math/tree/0.10.2"
+                "source": "https://github.com/brick/math/tree/0.11.0"
             },
             "funding": [
                 {
@@ -106,7 +105,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-08-10T22:54:19+00:00"
+            "time": "2023-01-15T23:15:59+00:00"
         },
         {
             "name": "composer/installers",
@@ -2602,20 +2601,20 @@
         },
         {
             "name": "ramsey/uuid",
-            "version": "4.7.3",
+            "version": "4.7.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "433b2014e3979047db08a17a205f410ba3869cf2"
+                "reference": "60a4c63ab724854332900504274f6150ff26d286"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/433b2014e3979047db08a17a205f410ba3869cf2",
-                "reference": "433b2014e3979047db08a17a205f410ba3869cf2",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/60a4c63ab724854332900504274f6150ff26d286",
+                "reference": "60a4c63ab724854332900504274f6150ff26d286",
                 "shasum": ""
             },
             "require": {
-                "brick/math": "^0.8.8 || ^0.9 || ^0.10",
+                "brick/math": "^0.8.8 || ^0.9 || ^0.10 || ^0.11",
                 "ext-json": "*",
                 "php": "^8.0",
                 "ramsey/collection": "^1.2 || ^2.0"
@@ -2678,7 +2677,7 @@
             ],
             "support": {
                 "issues": "https://github.com/ramsey/uuid/issues",
-                "source": "https://github.com/ramsey/uuid/tree/4.7.3"
+                "source": "https://github.com/ramsey/uuid/tree/4.7.4"
             },
             "funding": [
                 {
@@ -2690,7 +2689,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-01-12T18:13:24+00:00"
+            "time": "2023-04-15T23:01:58+00:00"
         },
         {
             "name": "roots/acorn",
@@ -5368,6 +5367,72 @@
             "time": "2023-01-20T17:44:14+00:00"
         },
         {
+            "name": "the-events-calendar/ql-events",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:notheretobeliked/ql-events.git",
+                "reference": "5fca2e38bf3f440eda4d0725afa669df5533ac80"
+            },
+            "archive": {
+                "name": "ql-events",
+                "exclude": [
+                    "/.*",
+                    "/bin",
+                    "/plugin-build",
+                    "/tests",
+                    "!/vendor",
+                    "/codeception.dist.yml",
+                    "/codeception.tric.yml",
+                    "/codeception.yml",
+                    "/composer.json",
+                    "/composer.lock",
+                    "/docker-compose.yml",
+                    "/Dockerfile",
+                    "/README.md"
+                ]
+            },
+            "require-dev": {
+                "fzaninotto/faker": "*",
+                "lucatume/wp-browser": "*",
+                "squizlabs/php_codesniffer": "^3.5",
+                "wp-cli/wp-cli-bundle": "*",
+                "wp-coding-standards/wpcs": "^2.3",
+                "wp-graphql/wp-graphql-testcase": "^2.3"
+            },
+            "default-branch": true,
+            "type": "wordpress-plugin",
+            "scripts": {
+                "install-test-env": [
+                    "bash bin/install-wp-tests.sh"
+                ],
+                "test": [
+                    "vendor/bin/codecept run"
+                ],
+                "functional-test": [
+                    "vendor/bin/codecept run functional"
+                ],
+                "acceptance-test": [
+                    "vendor/bin/codecept run acceptance"
+                ],
+                "wpunit-test": [
+                    "vendor/bin/codecept run wpunit"
+                ],
+                "lint": [
+                    "vendor/bin/phpcs -vp ."
+                ]
+            },
+            "authors": [
+                {
+                    "name": "Geoff Taylor",
+                    "email": "geoff@axistaylor.com",
+                    "role": "Lead Developer"
+                }
+            ],
+            "description": "The Events Calendar bindings for WPGraphQL",
+            "time": "2023-04-16T20:30:52+00:00"
+        },
+        {
             "name": "vlucas/phpdotenv",
             "version": "v5.5.0",
             "source": {
@@ -6512,6 +6577,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "the-events-calendar/ql-events": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": true,
