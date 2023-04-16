@@ -9,7 +9,10 @@ module.exports = {
     'event_tribe_organizer',
     'event_url',
     'event_cost',
-    'eventtable'
+    'eventtable',
+    'the-content',
+    'alignwide',
+    'alignfull',
   ],
   theme: {
     fontFamily: {
@@ -52,9 +55,22 @@ module.exports = {
       },
       transparent: 'transparent',
     },
+    fluidTypography: {
+      remSize: 12,
+      minScreenSize: 400,
+      maxScreenSize: 1680,
+      minTypeScale: 1.220,
+      maxTypeScale: 1.618,
+      lineHeight: 1.2
+    },
     extend: {
       colors: {}, // Extend Tailwind's default colors
+      spacing: {
+        '128': '32rem',  
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-text-fill-stroke'), // no options to configure
+  ],
 };

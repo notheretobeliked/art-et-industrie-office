@@ -103,7 +103,6 @@ add_action('after_setup_theme', function () {
         'style',
         'editor-styles',
     ]);
-    add_theme_support( 'align-wide' );
 
     add_editor_style(asset('app.css'));
     add_editor_style(asset('editor.css'));

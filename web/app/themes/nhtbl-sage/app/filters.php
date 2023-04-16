@@ -130,19 +130,66 @@ add_filter( 'allowed_block_types_all', function ( $allowed_blocks, $editor_conte
 		'core/paragraph',
 		'core/heading',
 		'core/list',
+        'core/button',
+        'core/cover',
 		'core/list-item',
         'acf/galerie',
         'acf/texte-intro',
+        'acf/visuel-triennale',
+        'acf/liste-des-liens',
 	);
 	return $allowed_blocks;
  
 }, 25, 2 );
 
 
-/* add Gutenberg blocks to rest api AND insert custom fields into output
+/* 
+ * Add custom post type to graphql
+ * https://www.wpgraphql.com/docs/custom-post-types/
+ */
 
-ok so this fucks up the entire editor so let's not use it for now
+add_filter( 'register_post_type_args', function ( $args, $post_type ) {
+	// Let's make sure that we're customizing the post type we really need
+	if ( $post_type !== 'edition' ) {
+		return $args;
+	}
+	
+	// Now, we have access to the $args variable
+	// If you want to modify just one label, you can do something like this
+	$args['show_in_graphql'] = true;
+    $args['graphql_single_name'] = 'Edition';
+    $args['graphql_plural_name'] = 'Editions';
+	$args['publicly_queryable'] = true;
+	
+	return $args;
+}, 10, 2 );
 
+/* 
+ * Fix return value of acf gallery blocks
+ * https://www.wpgraphql.com/docs/custom-post-types/
+ */
+
+add_filter( 'graphql_resolve_field', function( $result, $source, $args, $context, $info, $type_name, $field_key, $field, $field_resolver ) {
+
+    if ( 'AcfGalerieBlock' === $type_name  && 'attributesJSON' === $field_key ) {
+      $newresult = json_decode($result);
+      //error_log(print_r($newresult, true));  
+      $outputresult = array();
+      foreach($newresult->data->galerie as $image) {
+        error_log($image);
+        $outputresult[] = wp_get_attachment_image_src($image, 'large')[0];
+      }
+      error_log(print_r($outputresult, true));  
+      return json_encode($outputresult);
+    }
+  
+    return $result;
+  
+  }, 10, 9 );
+
+
+/* add a new 'clean_data' field to the REST API
+*/
 add_action(
     'rest_api_init',
     function () {
@@ -157,26 +204,45 @@ add_action(
             if (use_block_editor_for_post_type($post_type)) {
                 register_rest_field(
                     $post_type,
-                    'blocks',
+                    'clean_data',
                     [
                         'get_callback' => function (array $post) {
                             $blocks = parse_blocks($post['content']['raw']);
                             $newblocks = $blocks;
                             foreach ($newblocks as &$block) {
-
-                                // Test block name
                                 if ('acf/galerie' === $block['blockName']) {
-                                    error_log(print_r($block, true));
-                                    //                                    echo apply_filters( 'the_content', render_block( $block ) );
-                                    error_log(print_r($block['attrs']['data']['gallery_test_field'], true));
+                                    /* 
+                                    If the block is an acf gallery, add a filed called 'rendered_gallery' which contains the actual
+                                    image srcset for each image in the gallery
+                                    */
                                     $images = array();
-                                    foreach ($block['attrs']['data']['gallery_test_field'] as $imageId) {
+                                    foreach ($block['attrs']['data']['galerie'] as $imageId) {
                                         // get srcset for $imageId
-                                        $images[] = wp_get_attachment_image_srcset($imageId, 'full');
+                                        $images[] = wp_get_attachment_image_srcset($imageId, 'medium-large');
                                     }
                                     error_log(print_r($images, true));
-                                    $block['attrs']['data']['gallery_test_field'] = $images;
+                                    $block['attrs']['data']['rendered_gallery'] = $images;
+                                }  elseif ('acf/liste-des-liens' === $block['blockName']) {
+                                    /* 
+                                    If the block is a list-des-liens block, add a field called 'attached_posts' which contains the metadata
+                                    for each of the posts in the block
+                                    */
+                                    error_log(print_r($block, true));
+                                    //  echo apply_filters( 'the_content', render_block( $block ) );
+                                    error_log(print_r($block['attrs']['data']['galerie'], true));
+                                    $images = array();
+                                    foreach ($block['attrs']['data']['content'] as $contentId) {
+                                        // get srcset for $imageId
+                                        $content[] = [
+                                            'title' => get_the_title($contentId),
+                                            'link' => get_the_permalink($contentId),
+                                            'thumbnail' => wp_get_attachment_image_srcset($contentId, 'medium-large'),
+                                        ];
+                                    }
+                                    error_log(print_r($content, true));
+                                    $block['attrs']['data']['attached_posts'] = $content;
                                 }
+
                             }
 
                             return $newblocks;
@@ -187,4 +253,3 @@ add_action(
         }
     }
 );
-*/

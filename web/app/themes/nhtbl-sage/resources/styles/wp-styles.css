@@ -7,6 +7,18 @@
   .editor-post-title {
     @apply font-display uppercase;
   }
+
+  p {
+    @apply font-serif !text-base mb-4;
+  }
+
+  h2 {
+    @apply font-display uppercase text-2xl tracking-widest text-center my-4;
+  }
+
+  h3 {
+    @apply font-display uppercase text-2xl tracking-widest text-left my-4;
+  }
 }
 
 @layer components {

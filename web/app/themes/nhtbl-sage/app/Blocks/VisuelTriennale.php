@@ -5,21 +5,21 @@ namespace App\Blocks;
 use Log1x\AcfComposer\Block;
 use StoutLogic\AcfBuilder\FieldsBuilder;
 
-class Galerie extends Block
+class VisuelTriennale extends Block
 {
     /**
      * The block name.
      *
      * @var string
      */
-    public $name = 'Galerie';
+    public $name = 'Visuel Triennale';
 
     /**
      * The block description.
      *
      * @var string
      */
-    public $description = 'Galerie d\'images.';
+    public $description = 'A simple Visuel Triennale block.';
 
     /**
      * The block category.
@@ -33,7 +33,7 @@ class Galerie extends Block
      *
      * @var string|array
      */
-    public $icon = '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="36" height="36" aria-hidden="true" focusable="false"><path d="M16.375 4.5H4.625a.125.125 0 0 0-.125.125v8.254l2.859-1.54a.75.75 0 0 1 .68-.016l2.384 1.142 2.89-2.074a.75.75 0 0 1 .874 0l2.313 1.66V4.625a.125.125 0 0 0-.125-.125Zm.125 9.398-2.75-1.975-2.813 2.02a.75.75 0 0 1-.76.067l-2.444-1.17L4.5 14.583v1.792c0 .069.056.125.125.125h11.75a.125.125 0 0 0 .125-.125v-2.477ZM4.625 3C3.728 3 3 3.728 3 4.625v11.75C3 17.273 3.728 18 4.625 18h11.75c.898 0 1.625-.727 1.625-1.625V4.625C18 3.728 17.273 3 16.375 3H4.625ZM20 8v11c0 .69-.31 1-.999 1H6v1.5h13.001c1.52 0 2.499-.982 2.499-2.5V8H20Z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>';
+    public $icon = 'editor-ul';
 
     /**
      * The block keywords.
@@ -82,7 +82,7 @@ class Galerie extends Block
      *
      * @var string
      */
-    public $align_content = 'full';
+    public $align_content = '';
 
     /**
      * The supported block features.
@@ -95,7 +95,7 @@ class Galerie extends Block
         'align_content' => false,
         'full_height' => false,
         'anchor' => false,
-        'mode' => true,
+        'mode' => false,
         'multiple' => true,
         'jsx' => true,
     ];
@@ -106,8 +106,29 @@ class Galerie extends Block
      * @var array
      */
     public $styles = [
+        [
+            'name' => 'light',
+            'label' => 'Light',
+            'isDefault' => true,
+        ],
+        [
+            'name' => 'dark',
+            'label' => 'Dark',
+        ]
     ];
 
+    /**
+     * The block preview example data.
+     *
+     * @var array
+     */
+    public $example = [
+        'items' => [
+            ['item' => 'Item one'],
+            ['item' => 'Item two'],
+            ['item' => 'Item three'],
+        ],
+    ];
 
     /**
      * Data to be passed to the block before rendering.
@@ -117,7 +138,7 @@ class Galerie extends Block
     public function with()
     {
         return [
-            'galerie' => $this->output(),
+            'items' => $this->items(),
         ];
     }
 
@@ -128,12 +149,14 @@ class Galerie extends Block
      */
     public function fields()
     {
-        $galerie = new FieldsBuilder('galerie');
+        $visuelTriennale = new FieldsBuilder('visuel_triennale');
 
-        $galerie
-            ->addGallery('galerie');
+        $visuelTriennale
+            ->addRepeater('items')
+                ->addText('item')
+            ->endRepeater();
 
-        return $galerie->build();
+        return $visuelTriennale->build();
     }
 
     /**
@@ -141,23 +164,9 @@ class Galerie extends Block
      *
      * @return array
      */
-    public function output()
+    public function items()
     {
-        $images = get_field('galerie');
-        $output = array();
-        foreach ($images as $image) {
-            // get image in size medium_large from $image['id']
-            $other_formats = get_post_meta($image['id'], 'image_variants', true);
-            $output[] = array(
-                'src' => wp_get_attachment_image_src($image['id'], 'medium_large'),
-                'srcset' => wp_get_attachment_image_srcset($image['id'], 'medium_large'),
-                'image' => wp_get_attachment_image($image['id'], 'medium_large'),
-                'alt' => $image['alt'],
-                'other_formats' => $other_formats,
-                'caption' => wp_get_attachment_caption($image['id']) ? '<figcaption>' . wp_get_attachment_caption($image['id']) . '</figcaption>' : '',
-            );
-        }
-        return $output;
+        return get_field('items') ?: $this->example['items'];
     }
 
     /**
