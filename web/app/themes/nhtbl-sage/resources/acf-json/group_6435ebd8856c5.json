@@ -123,7 +123,7 @@
         {
             "key": "field_6435ecf22a3ec",
             "label": "Évènements associés",
-            "name": "evenements_lieu",
+            "name": "lieu_event",
             "aria-label": "",
             "type": "relationship",
             "instructions": "",
@@ -229,9 +229,9 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "show_in_graphql": 0,
-    "graphql_field_name": "champsPouréDition",
+    "show_in_graphql": 1,
+    "graphql_field_name": "champsPourEdition",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1681256116
+    "modified": 1681754898
 }
