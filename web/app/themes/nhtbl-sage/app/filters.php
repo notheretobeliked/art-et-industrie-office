@@ -49,10 +49,10 @@ add_action('delete_attachment', function ($attachment_id) {
         if ($variants) {
             $upload_dir = wp_upload_dir();
             $path = $upload_dir['basedir'] . get_post_meta($attachment_id, 'subdir', true) . '/';
-            
+
             // Delete the AVIF and WebP images from disk
             foreach ($variants as $size) {
-                
+
                 foreach ($size as $variant_type => $variant_path) {
                     $variant_path = $path . $variant_path;
                     error_log($variant_path);
@@ -102,46 +102,45 @@ add_action('admin_head', function () {
 
 // add first image from gallery field to thumbnail
 add_filter('acf/save_post', function ($post_id) {
-	$gallery = get_field('galerie', $post_id, false);
-	if ( !empty($gallery) &! has_post_thumbnail($post_id) ) {
-		$image_id = $gallery[0];
+    $gallery = get_field('galerie', $post_id, false);
+    if (!empty($gallery) & !has_post_thumbnail($post_id)) {
+        $image_id = $gallery[0];
         error_log($image_id);
-		set_post_thumbnail($post_id, $image_id);
-	}
+        set_post_thumbnail($post_id, $image_id);
+    }
 });
 
 // filter default fields for events
-add_filter( 'tribe_events_editor_default_template', function( $template ) {
+add_filter('tribe_events_editor_default_template', function ($template) {
     $template = [
-      [ 'tribe/event-datetime' ],
-      [ 'core/paragraph', [
-        'placeholder' => __( 'Description ici...', 'sage' ),
-      ], ],
+        ['tribe/event-datetime'],
+        ['core/paragraph', [
+            'placeholder' => __('Description ici...', 'sage'),
+        ],],
     ];
     return $template;
-  }, 11, 1 );
+}, 11, 1);
 
 
 // only allow default blocks
 
-add_filter( 'allowed_block_types_all', function ( $allowed_blocks, $editor_context ) {
-	$allowed_blocks = array(
-		'core/image',
-		'core/paragraph',
-		'core/heading',
+add_filter('allowed_block_types_all', function ($allowed_blocks, $editor_context) {
+    $allowed_blocks = array(
+        'core/image',
+        'core/paragraph',
         'core/heading',
-		'core/list',
+        'core/heading',
+        'core/list',
         'core/button',
         'core/cover',
-		'core/list-item',
+        'core/list-item',
         'acf/galerie',
         'acf/texte-intro',
         'acf/visuel-triennale',
         'acf/liste-des-liens',
-	);
-	return $allowed_blocks;
- 
-}, 25, 2 );
+    );
+    return $allowed_blocks;
+}, 25, 2);
 
 
 /* 
@@ -149,58 +148,58 @@ add_filter( 'allowed_block_types_all', function ( $allowed_blocks, $editor_conte
  * https://www.wpgraphql.com/docs/custom-post-types/
  */
 
-add_filter( 'register_post_type_args', function ( $args, $post_type ) {
-	// Let's make sure that we're customizing the post type we really need
-	if ( $post_type !== 'edition' ) {
-		return $args;
-	}
-	
-	// Now, we have access to the $args variable
-	// If you want to modify just one label, you can do something like this
-	$args['show_in_graphql'] = true;
+add_filter('register_post_type_args', function ($args, $post_type) {
+    // Let's make sure that we're customizing the post type we really need
+    if ($post_type !== 'edition') {
+        return $args;
+    }
+
+    // Now, we have access to the $args variable
+    // If you want to modify just one label, you can do something like this
+    $args['show_in_graphql'] = true;
     $args['graphql_single_name'] = 'Edition';
     $args['graphql_plural_name'] = 'Editions';
-	$args['publicly_queryable'] = true;
-	
-	return $args;
-}, 10, 2 );
+    $args['publicly_queryable'] = true;
+
+    return $args;
+}, 10, 2);
 
 
-add_filter( 'register_post_type_args', function ( $args, $post_type ) {
-	// Let's make sure that we're customizing the post type we really need
-	if ( $post_type !== 'lieu' ) {
-		return $args;
-	}
-	
-	// Now, we have access to the $args variable
-	// If you want to modify just one label, you can do something like this
-	$args['show_in_graphql'] = true;
+add_filter('register_post_type_args', function ($args, $post_type) {
+    // Let's make sure that we're customizing the post type we really need
+    if ($post_type !== 'lieu') {
+        return $args;
+    }
+
+    // Now, we have access to the $args variable
+    // If you want to modify just one label, you can do something like this
+    $args['show_in_graphql'] = true;
     $args['graphql_single_name'] = 'Lieu';
     $args['graphql_plural_name'] = 'Lieux';
-	$args['publicly_queryable'] = true;
-	
-	return $args;
-}, 10, 2 );
+    $args['publicly_queryable'] = true;
 
-add_filter( 'register_taxonomy_args', function( $args, $taxonomy ) {
-
-    if ( 'lieu_type' === $taxonomy ) {
-      $args['show_in_graphql'] = true;
-      $args['graphql_single_name'] = 'LieuType';
-      $args['graphql_plural_name'] = 'LieuTypes';
-    }
-  
     return $args;
-  
-  }, 10, 2 );
+}, 10, 2);
+
+add_filter('register_taxonomy_args', function ($args, $taxonomy) {
+
+    if ('lieu_type' === $taxonomy) {
+        $args['show_in_graphql'] = true;
+        $args['graphql_single_name'] = 'LieuType';
+        $args['graphql_plural_name'] = 'LieuTypes';
+    }
+
+    return $args;
+}, 10, 2);
 
 
-  /* 
-   * Set relationship fields as biderectional
-   * https://www.advancedcustomfields.com/resources/bidirectional-relationships/
-   * 
-  */
-    function bidirectional_acf_update_value( $value, $post_id, $field  ) {
+/* 
+ * Set relationship fields as biderectional
+ * https://www.advancedcustomfields.com/resources/bidirectional-relationships/
+ * 
+ */
+function bidirectional_acf_update_value($value, $post_id, $field)
+{
 
     // vars
     $field_name = $field['name'];
@@ -210,92 +209,91 @@ add_filter( 'register_taxonomy_args', function( $args, $taxonomy ) {
 
     // bail early if this filter was triggered from the update_field() function called within the loop below
     // - this prevents an inifinte loop
-    if( !empty($GLOBALS[ $global_name ]) ) return $value;
+    if (!empty($GLOBALS[$global_name])) return $value;
 
 
     // set global variable to avoid inifite loop
     // - could also remove_filter() then add_filter() again, but this is simpler
-    $GLOBALS[ $global_name ] = 1;
+    $GLOBALS[$global_name] = 1;
 
 
     // loop over selected posts and add this $post_id
-    if( is_array($value) ) {
+    if (is_array($value)) {
 
-        foreach( $value as $post_id2 ) {
-            
+        foreach ($value as $post_id2) {
+
             // load existing related posts
             $value2 = get_field($field_name, $post_id2, false);
-            
-            
+
+
             // allow for selected posts to not contain a value
-            if( empty($value2) ) {
-                
+            if (empty($value2)) {
+
                 $value2 = array();
-                
             }
-            
-            
+
+
             // bail early if the current $post_id is already found in selected post's $value2
-            if( in_array($post_id, $value2) ) continue;
-            
-            
+            if (in_array($post_id, $value2)) continue;
+
+
             // append the current $post_id to the selected post's 'related_posts' value
             $value2[] = $post_id;
-            
-            
+
+
             // update the selected post's value (use field's key for performance)
             update_field($field_key, $value2, $post_id2);
-            
         }
-
     }
 
 
     // find posts which have been removed
     $old_value = get_field($field_name, $post_id, false);
 
-    if( is_array($old_value) ) {
-        
-        foreach( $old_value as $post_id2 ) {
-            
+    if (is_array($old_value)) {
+
+        foreach ($old_value as $post_id2) {
+
             // bail early if this value has not been removed
-            if( is_array($value) && in_array($post_id2, $value) ) continue;
-            
-            
+            if (is_array($value) && in_array($post_id2, $value)) continue;
+
+
             // load existing related posts
             $value2 = get_field($field_name, $post_id2, false);
-            
-            
+
+
             // bail early if no value
-            if( empty($value2) ) continue;
-            
-            
+            if (empty($value2)) continue;
+
+
             // find the position of $post_id within $value2 so we can remove it
             $pos = array_search($post_id, $value2);
-            
-            
+
+
             // remove
-            unset( $value2[ $pos] );
-            
-            
+            unset($value2[$pos]);
+
+
             // update the un-selected post's value (use field's key for performance)
             update_field($field_key, $value2, $post_id2);
-            
         }
-        
     }
 
 
     // reset global varibale to allow this filter to function as per normal
-    $GLOBALS[ $global_name ] = 0;
+    $GLOBALS[$global_name] = 0;
 
 
     // return
     return $value;
-
 }
 
-add_filter('acf/update_value/name=lieu_event', 'App\bidirectional_acf_update_value', 13, 3);
+/* 
+ * Make sure all relationship fields are biderctional
+ * https://www.advancedcustomfields.com/resources/bidirectional-relationships/
+ * 
+ */
+add_filter('acf/update_value/name=lieu_event', 'App\bidirectional_acf_update_value', 10, 3);
 add_filter('acf/update_value/name=event_artiste', 'App\bidirectional_acf_update_value', 10, 3);
 add_filter('acf/update_value/name=event_edition', 'App\bidirectional_acf_update_value', 10, 3);
 add_filter('acf/update_value/name=artiste_edition', 'App\bidirectional_acf_update_value', 10, 3);
@@ -310,23 +308,22 @@ add_filter('acf/update_value/name=edition_lieu', 'App\bidirectional_acf_update_v
  * https://www.wpgraphql.com/docs/custom-post-types/
  */
 
-add_filter( 'graphql_resolve_field', function( $result, $source, $args, $context, $info, $type_name, $field_key, $field, $field_resolver ) {
+add_filter('graphql_resolve_field', function ($result, $source, $args, $context, $info, $type_name, $field_key, $field, $field_resolver) {
 
-    if ( 'AcfGalerieBlock' === $type_name  && 'attributesJSON' === $field_key ) {
-      $newresult = json_decode($result);
-      //error_log(print_r($newresult, true));  
-      $outputresult = array();
-      foreach($newresult->data->galerie as $image) {
-        error_log($image);
-        $outputresult[] = wp_get_attachment_image_src($image, 'large')[0];
-      }
-      error_log(print_r($outputresult, true));  
-      return json_encode($outputresult);
+    if ('AcfGalerieBlock' === $type_name  && 'attributesJSON' === $field_key) {
+        $newresult = json_decode($result);
+        //error_log(print_r($newresult, true));  
+        $outputresult = array();
+        foreach ($newresult->data->galerie as $image) {
+            error_log($image);
+            $outputresult[] = wp_get_attachment_image_src($image, 'large')[0];
+        }
+        error_log(print_r($outputresult, true));
+        return json_encode($outputresult);
     }
-  
+
     return $result;
-  
-  }, 10, 9 );
+}, 10, 9);
 
 
 /* add a new 'clean_data' field to the REST API

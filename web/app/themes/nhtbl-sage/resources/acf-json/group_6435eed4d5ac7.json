@@ -1,6 +1,6 @@
 {
     "key": "group_6435eed4d5ac7",
-    "title": "Champs pour édition",
+    "title": "Champs pour edition",
     "fields": [
         {
             "key": "field_6435eed53c150",
@@ -140,9 +140,9 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "show_in_graphql": 0,
-    "graphql_field_name": "champPouréDition",
+    "show_in_graphql": 1,
+    "graphql_field_name": "champPourEdition",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1681755184
+    "modified": 1681808338
 }
