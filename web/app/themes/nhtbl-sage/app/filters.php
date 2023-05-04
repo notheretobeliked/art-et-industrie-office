@@ -138,6 +138,7 @@ add_filter('allowed_block_types_all', function ($allowed_blocks, $editor_context
         'acf/texte-intro',
         'acf/visuel-triennale',
         'acf/liste-des-liens',
+        'acf/bouton',
     );
     return $allowed_blocks;
 }, 25, 2);
@@ -303,27 +304,125 @@ add_filter('acf/update_value/name=edition_lieu', 'App\bidirectional_acf_update_v
 
 
 
-/* 
- * Fix return value of acf gallery blocks
- * https://www.wpgraphql.com/docs/custom-post-types/
- */
+add_action('graphql_register_types', function () {
+    register_graphql_field('Block', 'attachedPages', [
+        'type' => ['list_of' => 'ACFListeDesLiensPage'],
+        'resolve' => function ($block, $args, $context, $info) {
+            if ($block['name'] === 'acf/liste-des-liens') {
+                $content = $block['attributes']['data']['content'];
+                error_log(print_r($content, true));
+                return array_map(function ($pageId) use ($context, $info) {
+                    $link = get_the_permalink($pageId);
+                    $title = get_the_title($pageId);
+                    $image = get_post_thumbnail_id($pageId);
 
-add_filter('graphql_resolve_field', function ($result, $source, $args, $context, $info, $type_name, $field_key, $field, $field_resolver) {
+                    if ($image) {
+                        $image = \WPGraphQL\Data\DataSource::resolve_post_object(
+                            $image,
+                            $context,
+                            $info,
+                            'ATTACHMENT'
+                        );
+                    }
+                    return compact('link', 'image', 'title');
+                }, $content);
+            }
 
-    if ('AcfGalerieBlock' === $type_name  && 'attributesJSON' === $field_key) {
-        $newresult = json_decode($result);
-        //error_log(print_r($newresult, true));  
-        $outputresult = array();
-        foreach ($newresult->data->galerie as $image) {
-            error_log($image);
-            $outputresult[] = wp_get_attachment_image_src($image, 'large')[0];
-        }
-        error_log(print_r($outputresult, true));
-        return json_encode($outputresult);
-    }
+            return null;
+        },
+    ]);
 
-    return $result;
-}, 10, 9);
+    register_graphql_field('Block', 'attachedImages', [
+        'type' => ['list_of' => 'AcfGalerieBlockImages'],
+        'resolve' => function ($block, $args, $context, $info) {
+            if ($block['name'] === 'acf/galerie') {
+                $content = $block['attributes']['data']['galerie'];
+
+                return array_map(function ($content) use ($context, $info) {
+                    $image = $content;
+                    $image = \WPGraphQL\Data\DataSource::resolve_post_object(
+                        $content,
+                        $context,
+                        $info,
+                        'ATTACHMENT'
+                    );
+                    return compact('image');
+                }, $content);
+            }
+            return null;
+        },
+    ]);
+});
+
+add_action('graphql_register_types', function () {
+    register_graphql_object_type('ACFListeDesLiensPage', [
+        'fields' => [
+            'link' => ['type' => 'String'],
+            'title' => ['type' => 'String'],
+            'image' => [
+                'type' => 'mediaItem'
+              ],
+              
+        ],
+    ]);
+    register_graphql_object_type('AcfGalerieBlockImages', [
+        'fields' => [
+            'image' => [
+                'type' => 'mediaItem'
+              ],
+              
+        ],
+    ]);
+});
+
+
+/*
+ * Add new fields to mediaItem type to accomodate for different image compression levels
+ * 
+ * 
+*/
+
+add_action('graphql_register_types', function () {
+    // Add new fields to mediaItem type
+    register_graphql_fields('mediaSize', array(
+        'sourceUrlLow' => array(
+            'type' => 'String',
+            'resolve' => function ($image) {
+                $src_url = null;
+
+                if ( ! empty( $image['ID'] ) ) {
+                    $src = wp_get_attachment_image_src( absint( $image['ID'] ), $image['name'] );
+                    if ( ! empty( $src ) ) {
+                        $src_url = $src[0];
+                    }
+                } elseif ( ! empty( $image['file'] ) ) {
+                    $src_url = $image['file'];
+                }
+
+                return $src_url . '-low.webp';
+             }
+        ),
+
+        'sourceUrlBW' => array(
+            'type' => 'String',
+            'resolve' => function ($image) {
+                $src_url = null;
+
+                if ( ! empty( $image['ID'] ) ) {
+                    $src = wp_get_attachment_image_src( absint( $image['ID'] ), $image['name'] );
+                    if ( ! empty( $src ) ) {
+                        $src_url = $src[0];
+                    }
+                } elseif ( ! empty( $image['file'] ) ) {
+                    $src_url = $image['file'];
+                }
+
+                return $src_url . '-bw.webp';
+             }
+        ),
+
+    ));
+});
 
 
 /* add a new 'clean_data' field to the REST API

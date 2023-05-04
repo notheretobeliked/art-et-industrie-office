@@ -60,7 +60,7 @@
     "roots/wordpress": "^6.2",
     "roots/wp-config": "1.0.0",
     "roots/wp-password-bcrypt": "1.1.0",
-    "wp-graphql/wp-graphql": "^1.14",
+    "wp-graphql/wp-graphql": "^1",
     "roots/acorn": "^3.1",
     "wpengine/advanced-custom-fields-pro": "^6",
     "findcanary/wp-graphql-the-seo-framework": "^0.1.0",
