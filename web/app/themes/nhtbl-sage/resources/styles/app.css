@@ -5,9 +5,45 @@
 @import 'fonts.css';
 @import 'menu.css';
 
+@layer utilities {
+  .tracking-superwide {
+    letter-spacing: 0.15em;
+  }
+
+  .tracking-megawide {
+    letter-spacing: 0.2em;
+  }
+
+  .grid-cols-3-w {
+    grid-template-columns: 1fr 2fr 1fr;
+  }
+
+  .spaced-out {
+    word-spacing: 2rem;
+  }
+
+  .spaced-out::after {
+    content: "\00a0";
+    min-width: 80vw;
+    display: inline-block;
+  }
+
+  .text-stroke-05 {
+    -webkit-text-stroke: 0.5px;
+  }
+
+  .uppercase-small {
+    @apply tracking-superwide tracking-wide uppercase font-ui;
+  }
+}
+
 @layer base {
   body {
     @apply bg-white text-black;
+  }
+
+  figure:empty {
+    @apply hidden;
   }
 
   p {
@@ -22,8 +58,9 @@
     @apply font-display uppercase text-2xl tracking-widest text-left my-4;
   }
 
+  .main > *:not(.alignwide):not(.alignfull),
   .the-content > *:not(.alignwide):not(.alignfull) {
-    @apply mx-auto max-w-4xl;
+    @apply mx-auto max-w-4xl my-8;
   }
 
   .alignwide {

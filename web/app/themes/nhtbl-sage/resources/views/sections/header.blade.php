@@ -18,14 +18,12 @@
       </button>
 
     </div>
-    <nav class="hidden md:flex w-2/3 flex-row gap-4 items-center justify-evenly" aria-label="Menu principal">
-      <ul class="flex flex-row gap-4 uppercase-small flex-grow justify-center" aria-label="Menu principal">
-        <li><a href="/">Chaleur Humaine</a></li>
-        <li><a href="/agenda">Agenda</a></li>
-        <li><a href="/visiter">Visiter</a></li>
-
-      </ul>
+  @if (has_nav_menu('shortcut_navigation'))
+    <nav class="hidden md:flex w-2/3 flex-row gap-4 items-center justify-evenly" aria-label="Menu principal"
+      aria-label="{{ wp_get_nav_menu_name('shortcut_navigation') }}">
+      {!! wp_nav_menu(['theme_location' => 'shortcut_navigation', 'menu_class' => 'flex flex-row gap-4 uppercase-small flex-grow justify-center', 'echo' => false]) !!}
     </nav>
+  @endif
 
   </div>
 

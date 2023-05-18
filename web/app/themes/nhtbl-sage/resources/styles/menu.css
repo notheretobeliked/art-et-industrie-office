@@ -9,10 +9,10 @@
   }
 
   #menu-main-menu li {
-    @apply font-normal text-center flex items-center flex-col text-4xl font-display uppercase tracking-wide  text-stroke-2 text-fill-transparent hover:text-fill;
+    @apply mt-4 font-normal text-center flex items-center flex-col text-4xl font-display uppercase tracking-wide  text-stroke-2 text-fill-transparent hover:text-fill;
 
     ul li {
-      @apply font-serif uppercase text-base ;
+      @apply mt-0 font-serif uppercase text-base text-fill-black text-stroke-0;
     }
   }
 }
