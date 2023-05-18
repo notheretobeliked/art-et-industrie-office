@@ -44,6 +44,5 @@
       </article>
     @endforeach
 
-</div>
 @endif
 </div>

@@ -76,11 +76,11 @@
           </clipPath>
         </defs>
       </svg>
+      <div class="absolute backdrop-blur-3xl left-0 w-full h-128 top-0 right-0 bottom-0" />
 
 
-    <div class="absolute backdrop-blur-3xl left-0 w-full h-128 top-0 right-0 bottom-0" />
-    
-    
+    </div>
+
   </div>
-
-</div>
+  </div>
+  </div>
