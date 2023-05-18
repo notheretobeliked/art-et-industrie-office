@@ -164,7 +164,6 @@ class ListeDesLiens extends Block
             'post_status' => 'all',
         ];
             $items = get_posts($args);
-            error_log(print_r($items,true) );
             return $items;
     }
 
