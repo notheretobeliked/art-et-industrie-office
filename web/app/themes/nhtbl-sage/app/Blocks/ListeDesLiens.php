@@ -136,7 +136,7 @@ class ListeDesLiens extends Block
                 'elements' => '',
                 'min' => '',
                 'max' => '',
-                'return_format' => 'object',        
+                'return_format' => 'value',        
             ])
             ->addTrueFalse('show_image', [
                 'label' => __('Afficher image','sage'),
@@ -157,7 +157,15 @@ class ListeDesLiens extends Block
      */
     public function content()
     {
-        return get_field('content');
+        if (! get_field('content')) return null;
+        $args = [
+            'post__in' => get_field('content'),
+            'post_type' => get_post_types(),
+            'post_status' => 'all',
+        ];
+            $items = get_posts($args);
+            error_log(print_r($items,true) );
+            return $items;
     }
 
     public function showImage()
