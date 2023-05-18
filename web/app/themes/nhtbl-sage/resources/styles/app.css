@@ -3,6 +3,7 @@
 @import 'tailwindcss/utilities';
 
 @import 'fonts.css';
+@import 'menu.css';
 
 @layer base {
   body {

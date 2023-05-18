@@ -24,6 +24,7 @@
     "@roots/sage": "6.9.0"
   },
   "dependencies": {
+    "alpinejs": "^3.12.1",
     "postcss-import": "^15.1.0",
     "postcss-loader": "^7.0.2",
     "postcss-nested": "^6.0.1",

@@ -1,0 +1,18 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer components {
+  #menu-main-menu {
+    @apply flex flex-col items-center justify-center;
+    
+  }
+
+  #menu-main-menu li {
+    @apply font-normal text-center flex items-center flex-col text-4xl font-display uppercase tracking-wide  text-stroke-2 text-fill-transparent hover:text-fill;
+
+    ul li {
+      @apply font-serif uppercase text-base ;
+    }
+  }
+}

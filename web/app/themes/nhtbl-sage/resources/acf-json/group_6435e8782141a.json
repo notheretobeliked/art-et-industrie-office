@@ -103,6 +103,7 @@
                 "class": "",
                 "id": ""
             },
+            "show_in_graphql": 1,
             "post_type": [
                 "artistes"
             ],
@@ -116,10 +117,7 @@
             "return_format": "object",
             "min": "",
             "max": "",
-            "elements": "",
-            "show_in_graphql": 1,
-            "graphql_description": "",
-            "graphql_field_name": "eventArtiste2"
+            "elements": ""
         }
     ],
     "location": [
@@ -144,5 +142,5 @@
     "graphql_field_name": "EvenementsFields",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1683191114
+    "modified": 1684404440
 }
