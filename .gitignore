@@ -1,5 +1,7 @@
 # Application
 web/app/plugins/*
+!web/app/plugins/polylang-pro-master
+!web/app/plugins/wp-graphql-polylang-master
 !web/app/plugins/.gitkeep
 web/app/mu-plugins/*/
 web/app/themes/twentytwentythree/
