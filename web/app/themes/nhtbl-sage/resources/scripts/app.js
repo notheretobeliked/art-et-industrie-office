@@ -17,7 +17,7 @@ domReady(async () => {
       let acceleration = 1;
       let scrollSpeed = 2;
       let maxScrollSpeed = 20;
-      let accelerationInterval = 500;
+      let accelerationFactor = 0.05; // Adjust this value to control the acceleration sensitivity
       let isMouseInside = false;
       let mousePos = { x: 0, y: 0 };
 
@@ -30,7 +30,6 @@ domReady(async () => {
         isMouseInside = false;
         resetScroll();
         nav.style.overflowY = "hidden";
-        clearInterval(idx);
       });
 
       function resetScroll() {
@@ -45,27 +44,25 @@ domReady(async () => {
           x: event.clientX - rect.left,
           y: event.clientY - rect.top
         };
+
+        let containerCenterX = rect.width / 2;
+        let mouseOffsetX = mousePos.x - containerCenterX;
+        let distanceFromCenter = Math.abs(mouseOffsetX);
+
+        let accelerationMultiplier = 1 + distanceFromCenter * accelerationFactor;
+        scrollSpeed = Math.min(maxScrollSpeed, scrollSpeed * accelerationMultiplier);
+
+        let scrollDirection = mouseOffsetX < 0 ? -1 : 1;
+        nav.scrollLeft += scrollDirection * scrollSpeed;
       });
 
+      idx = setInterval(updateScroll, 5);
+      
       function updateScroll() {
         if (isMouseInside) {
-          if (mousePos.x < nav.offsetWidth / 2) {
-            nav.scrollLeft -= scrollSpeed;
-          } else {
-            nav.scrollLeft += scrollSpeed;
-          }
-
-          if (scrollSpeed < maxScrollSpeed) {
-            acceleration += 1;
-            if (acceleration >= accelerationInterval) {
-              scrollSpeed += 1;
-              acceleration = 1;
-            }
-          }
+          // No need to update scroll position here
         }
       }
-
-      setInterval(updateScroll, 5);
     });
   }
   // ...

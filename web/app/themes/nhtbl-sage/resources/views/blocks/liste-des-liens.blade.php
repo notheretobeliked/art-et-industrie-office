@@ -8,8 +8,8 @@
         @if (!is_admin())
           <a href="{!! get_permalink($contentitem->ID) !!}">
         @endif
-        <div class="max-w-full overflow-hidden scroll-container">
-        <div class="flex flex-row border-b border-black py-4 gap-4 items-center">
+        <div class="max-w-full overflow-hidden scroll-container border-b border-black">
+        <div class="flex flex-row py-4 gap-4 items-center">
           @if ($showImage && get_the_post_thumbnail($contentitem->ID, 'post-thumbnail'))
             <figure>
               {!! get_the_post_thumbnail($contentitem->ID, 'post-thumbnail') !!}

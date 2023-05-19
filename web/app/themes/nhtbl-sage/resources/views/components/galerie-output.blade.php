@@ -1,4 +1,4 @@
-<div class="w-full overflow-y-hidden h-128 gap-4 gallery-container overflow-hidden">
+<div class="w-full overflow-y-scroll h-128 gap-4 scroll-container overflow-hidden">
   <div class="flex flex-row h-128 gap-4 flex-grow">
     @foreach ($images as $image)
       <figure class="h-full max-w-fit">
