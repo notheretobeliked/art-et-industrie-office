@@ -28,7 +28,7 @@
   </div>
 
   @if (has_nav_menu('primary_navigation'))
-    <nav class="nav-primary flex flex-col fixed z-10 bg-white w-full h-screen" x-show="showMenu"
+    <nav class="nav-primary flex flex-col fixed z-10 bg-white w-full h-screen" x-show="showMenu" x-transition.duration.500ms
       aria-label="{{ wp_get_nav_menu_name('primary_navigation') }}">
       {!! wp_nav_menu(['theme_location' => 'primary_navigation', 'menu_class' => 'nav', 'echo' => false]) !!}
     </nav>
