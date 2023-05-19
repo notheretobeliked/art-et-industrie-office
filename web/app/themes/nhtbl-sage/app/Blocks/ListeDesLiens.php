@@ -162,6 +162,7 @@ class ListeDesLiens extends Block
             'post__in' => get_field('content'),
             'post_type' => get_post_types(),
             'post_status' => 'all',
+            'numberposts' => -1,
         ];
             $items = get_posts($args);
             return $items;
