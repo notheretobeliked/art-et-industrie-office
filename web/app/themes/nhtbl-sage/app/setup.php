@@ -26,6 +26,11 @@ add_action('enqueue_block_editor_assets', function () {
     bundle('editor')->enqueue();
 }, 100);
 
+add_action('enqueue_block_editor_assets', function () {
+    wp_enqueue_style('mapbox', 'https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css');
+    wp_enqueue_script('mapbox', 'https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js');
+}, 200);
+
 /**
  * Register the initial theme setup.
  *

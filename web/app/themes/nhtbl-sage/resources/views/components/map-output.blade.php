@@ -2,14 +2,13 @@
   <!-- Live as if you were to die tomorrow. Learn as if you were to live forever. - Mahatma Gandhi -->
   <div class="absolute -right-128 w-128 z-20 bg-white p-4 transition-all" id="feature-info"></div>
 </div>
-
 <script>
   const initializeMap = () => {
     mapboxgl.accessToken = '{{ $mapboxApiToken }}';
 
     const map = new mapboxgl.Map({
       container: '{{ $uniqueMapId }}',
-      style: 'mapbox://styles/mapbox/streets-v11',
+      style: 'mapbox://styles/erikhartin/cli27x8hu02he01pnhn0v9171',
       center: [2.3755593500912586, 51.04759496120762], // Set the initial map center
       zoom: 10, // Set the initial zoom level
       language: 'fr' // Set the language to French
@@ -48,25 +47,36 @@
               data: categoryData
             });
 
+            // Load the custom icon image
+            map.loadImage(`@asset('images')/pin-${categorySlug}.png`, function(error, image) {
+              if (error) throw error;
+
+              // Add the loaded icon image to the map
+              console.log('image:')
+              console.log(image)
+              console.log('image name:')
+              console.log(categorySlug + '-icon-image')
+              map.addImage(categorySlug + '-icon-image', image);
+            });
+
             map.addLayer({
-              id: categorySlug,
-              type: 'circle',
+              id: categorySlug + '-icon',
+              type: 'symbol',
               source: categorySlug,
-              paint: {
-                'circle-color': getCircleColor(
-                  categorySlug), // Custom function to determine circle color based on category
-                'circle-radius': 6,
-                'circle-stroke-width': 2,
-                'circle-stroke-color': '#ffffff'
+              layout: {
+                'icon-image': categorySlug + '-icon-image', // Use a unique identifier for the icon image
+                'icon-size': 0.5 // Adjust the icon size as needed
               }
             });
+
+            
             // Apply pointer cursor on hover
-            map.on('mouseenter', categorySlug, function() {
+            map.on('mouseenter', categorySlug + '-icon', function() {
               map.getCanvas().style.cursor = 'pointer';
             });
 
             // Revert cursor to default on mouseleave
-            map.on('mouseleave', categorySlug, function() {
+            map.on('mouseleave', categorySlug + '-icon', function() {
               map.getCanvas().style.cursor = '';
             });
           }
@@ -96,7 +106,7 @@
 
           // Add click event listener to the layers
           Object.keys(categories).forEach(categorySlug => {
-            map.on('click', categorySlug, function(e) {
+            map.on('click', categorySlug + '-icon', function(e) {
               
               const clickedFeature = e.features[0];
 

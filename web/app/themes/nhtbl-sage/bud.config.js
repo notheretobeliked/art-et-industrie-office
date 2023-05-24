@@ -17,8 +17,8 @@ export default async (app) => {
    */
   app
     .entry({
-      app: ['@scripts/app', '@styles/app'],
-      editor: ['@scripts/editor', '@styles/editor'],
+      app: ['@scripts/app', '@styles/app', '@scripts/mapbox'],
+      editor: ['@scripts/editor', '@styles/editor', '@scripts/mapbox'],
     })
 
     /**

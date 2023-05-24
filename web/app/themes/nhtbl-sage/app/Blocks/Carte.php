@@ -4,6 +4,7 @@ namespace App\Blocks;
 
 use Log1x\AcfComposer\Block;
 use StoutLogic\AcfBuilder\FieldsBuilder;
+use function Roots\bundle;
 
 class Carte extends Block
 {

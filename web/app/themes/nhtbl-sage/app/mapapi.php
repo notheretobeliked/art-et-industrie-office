@@ -30,8 +30,8 @@ function returnMapMarkers($data)
           'title' => $post->post_title,
           'description' => get_the_excerpt($post),
           'category' => array (
-            'slug' => get_field('type', $post->ID)["value"],
-            'name' => get_field('type', $post->ID)["label"]
+            'slug' => get_field('type', $post->ID)["value"] ? get_field('type', $post->ID)["value"] :  'wee',
+            'name' => get_field('type', $post->ID)["label"] ? get_field('type', $post->ID)["value"] :  'wee',
           )
         ),
         'geometry' => array(
