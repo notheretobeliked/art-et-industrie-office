@@ -5,7 +5,7 @@
 
 
   @if ($intro)
-    <p class="text-lg mb-4">{!! $intro !!}</h2>
+    <p class="text-lg mb-4">{!! $intro !!}</p>
   @endif
 
   @if ($events)
@@ -24,7 +24,7 @@
             <p>{{ $event['time'] }} – {{ $event['end_time'] }} </p>
           </div>
           <div>
-            <h3 class="text-base m-0">{{ $event['title'] }}</h3>
+            <h3 class="text-base m-0">{!! $event['title'] !!}</h3>
             @if ($event['categories'])
               <p class="m-0">
                 @foreach ($event['categories'] as $category)
@@ -37,7 +37,7 @@
             @endif
           </div>
           <div>
-            {{ $event["lieu"]['title']}}
+            {!! $event["lieu"]['title']!!}
           </div>
 
         @if (!is_admin()) </a>@endif

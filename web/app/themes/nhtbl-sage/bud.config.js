@@ -7,6 +7,9 @@
  * @typedef {import('@roots/bud').Bud} Bud
  * @param {Bud} app
  */
+
+
+
 export default async (app) => {
   /**
    * Application entrypoints
@@ -41,6 +44,7 @@ export default async (app) => {
      * @see {@link https://bud.js.org/docs/bud.serve/}
      */
     .serve('http://localhost:3000')
+
 
     /**
      * URI of the `public` directory

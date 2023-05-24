@@ -109,6 +109,7 @@ class ListeDesLiens extends Block
     public function with()
     {
         return [
+            'title' => get_field('has_title') ? get_field('title') : '',
             'content' => $this->content(),
             'showImage' => $this->showImage(),
             'template' => $this->template(),
@@ -125,6 +126,19 @@ class ListeDesLiens extends Block
         $listeDesLiens = new FieldsBuilder('liste_des_liens');
 
         $listeDesLiens
+        ->addTrueFalse('has_title', [
+            'label' => 'Titre',
+            'instructions' => '',
+            'default_value' => 0,
+            'ui' => 1,
+        ])
+        ->addText('title', [
+            'label' => 'Titre',
+            'instructions' => '',
+            'allow_null' => 1,
+        ])
+        ->conditional('has_title', '==', '1')
+
             ->addRelationship('content', [
                 'post_type' => [],
                 'taxonomy' => [],

@@ -1,8 +1,11 @@
 <div class="{{ $block->classes }}">
+  @if ($title)
+    <h2 class="text-left border-b border-black text-2xl uppercase mb-4">{{ $title }}</h2>
+  @endif
   @if ($content)
-    <div>
-      <InnerBlocks template="{!! $template !!}" templateLock="all" />
-    </div>
+    @if ($intro)
+      <h2 class="text-lg mb-4">{!! $intro !!}</h2>
+    @endif
     <div class="flex flex-col gap-4 w-full max-w-full">
       @foreach ($content as $contentitem)
         @if (!is_admin())
@@ -23,6 +26,7 @@
           </a>
         @endif
       @endforeach
+    </div>
     @else
       <p>{{ $block->preview ? 'Add an item...' : 'No items found!' }}</p>
   @endif

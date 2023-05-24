@@ -108,16 +108,20 @@
                 "class": "",
                 "id": ""
             },
-            "show_in_graphql": 1,
             "choices": {
                 "triennale": "Lieu triennale",
-                "resonance": "Lieu résonance"
+                "resonance": "Lieu résonance",
+                "oeuvre-public": "Œuvre publique"
             },
             "default_value": "triennale",
-            "return_format": "value",
+            "return_format": "array",
+            "translations": "copy_once",
             "allow_null": 0,
             "other_choice": 0,
             "layout": "vertical",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "type",
             "save_other_choice": 0
         },
         {
@@ -233,5 +237,5 @@
     "graphql_field_name": "champsPourEdition",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1684427163
+    "modified": 1684929396
 }

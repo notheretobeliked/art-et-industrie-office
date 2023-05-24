@@ -155,7 +155,7 @@ class Evenements extends Block
         ])
         ->conditional('has_title', '==', '1')
         ->addTrueFalse('has_intro', [
-            'label' => 'Titre',
+            'label' => 'Texte d\'intro',
             'instructions' => '',
             'default_value' => 0,
             'ui' => 1,

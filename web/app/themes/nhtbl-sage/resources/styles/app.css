@@ -51,16 +51,21 @@
   }
 
   h2 {
-    @apply font-display uppercase text-2xl tracking-widest text-center my-4;
+    @apply font-display uppercase text-2xl tracking-widest text-center my-0 border-b border-black;
   }
 
   h3 {
     @apply font-display uppercase text-2xl tracking-widest text-left my-4;
   }
 
-  .main > *:not(.alignwide):not(.alignfull),
+  .main > *:not(.alignwide):not(.alignfull):not(article),
   .the-content > *:not(.alignwide):not(.alignfull) {
-    @apply mx-auto max-w-4xl my-8;
+    @apply mx-auto max-w-4xl;
+  }
+
+  .main > *,
+  .the-content > * {
+    @apply  my-8;
   }
 
   .alignwide {

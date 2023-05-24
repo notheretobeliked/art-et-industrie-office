@@ -5,21 +5,21 @@ namespace App\Blocks;
 use Log1x\AcfComposer\Block;
 use StoutLogic\AcfBuilder\FieldsBuilder;
 
-class Bouton extends Block
+class Carte extends Block
 {
     /**
      * The block name.
      *
      * @var string
      */
-    public $name = 'Bouton';
+    public $name = 'Carte';
 
     /**
      * The block description.
      *
      * @var string
      */
-    public $description = 'Un bouton ou bannière.';
+    public $description = 'Carte Triennale.';
 
     /**
      * The block category.
@@ -33,7 +33,7 @@ class Bouton extends Block
      *
      * @var string|array
      */
-    public $icon = 'button';
+    public $icon = 'editor-ul';
 
     /**
      * The block keywords.
@@ -90,7 +90,7 @@ class Bouton extends Block
      * @var array
      */
     public $supports = [
-        'align' => false,
+        'align' => true,
         'align_text' => false,
         'align_content' => false,
         'full_height' => false,
@@ -98,6 +98,23 @@ class Bouton extends Block
         'mode' => false,
         'multiple' => true,
         'jsx' => true,
+    ];
+
+    /**
+     * The block styles.
+     *
+     * @var array
+     */
+    public $styles = [
+        [
+            'name' => 'light',
+            'label' => 'Light',
+            'isDefault' => true,
+        ],
+        [
+            'name' => 'dark',
+            'label' => 'Dark',
+        ]
     ];
 
 
@@ -109,10 +126,7 @@ class Bouton extends Block
     public function with()
     {
         return [
-            'url' => $this->url(),
-            'size' => get_field('taille'),
-            'label' => get_field('label'),
-            'template' => $this->template(),
+            'items' => $this->fields(),
         ];
     }
 
@@ -123,43 +137,14 @@ class Bouton extends Block
      */
     public function fields()
     {
-        $bouton = new FieldsBuilder('bouton');
+        $carte = new FieldsBuilder('carte');
 
-        $bouton
-            ->addText('label', [
-                'label' => 'Texte',
-                'instructions' => '',
-                'required' => 0,
-                'wrapper' => [
-                    'width' => '',
-                    'class' => '',
-                    'id' => '',
-                ],
-                'default_value' => '',
-                'placeholder' => 'Texte sur le bouton',
-                'prepend' => '',
-                'append' => '',
-                'maxlength' => '',
-            ])
-            ->addPageLink('link', [
-                'label' => 'Lien vers page',
-                'type' => 'page_link',
-                'instructions' => '',
-                'required' => 0,
-                'multiple' => 0,
-            ])
-            ->addRadio('taille', [
-                'label' => 'Taille',
-                'choices' => ['grand' => 'Grand', 'petit' => 'Petit'],
-                'default_value' => ['grand'],
-                'allow_null' => 0,
-                'multiple' => 0,
-                'ui' => 0,
-                'ajax' => 0,
-                'return_format' => 'value',
-                'placeholder' => '',
-            ]);
-        return $bouton->build();
+        $carte
+            ->addRepeater('items')
+                ->addText('item')
+            ->endRepeater();
+
+        return $carte->build();
     }
 
     /**
@@ -167,9 +152,9 @@ class Bouton extends Block
      *
      * @return array
      */
-    public function url()
+    public function items()
     {
-        return get_field('link');
+        return get_field('items');
     }
 
     /**
@@ -179,17 +164,8 @@ class Bouton extends Block
      */
     public function enqueue()
     {
-        //
-    }
-    public function template()
-    {
-        $template = array(
-            array('core/paragraph', array(
-                'fontSize' => 'lg',
-                'placeholder' => __('Texte ici...', 'sage'),
-                'align' => 'center'
-            ))
-        );
-        return esc_attr(wp_json_encode($template));
+        wp_enqueue_style('mapbox', 'https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css');
+        wp_enqueue_script('mapbox', 'https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js');
+
     }
 }
