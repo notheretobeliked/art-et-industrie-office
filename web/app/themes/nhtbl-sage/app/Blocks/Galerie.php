@@ -147,6 +147,7 @@ class Galerie extends Block
         $output = array();
         foreach ($images as $image) {
             // get image in size medium_large from $image['id']
+            $subdir = get_post_meta($image['id'], 'subdir', true);
             $other_formats = get_post_meta($image['id'], 'image_variants', true);
             $output[] = array(
                 'src' => wp_get_attachment_image_src($image['id'], 'medium_large'),
@@ -154,6 +155,7 @@ class Galerie extends Block
                 'image' => wp_get_attachment_image($image['id'], 'medium_large'),
                 'alt' => $image['alt'],
                 'other_formats' => $other_formats,
+                'subdir' => $subdir,
                 'caption' => wp_get_attachment_caption($image['id']) ? '<figcaption>' . wp_get_attachment_caption($image['id']) . '</figcaption>' : '',
             );
         }
