@@ -110,6 +110,7 @@ class ListeDesLiens extends Block
     {
         return [
             'title' => get_field('has_title') ? get_field('title') : '',
+            'intro' => get_field('has_intro') ? get_field('texte_intro') : '',
             'content' => $this->content(),
             'showImage' => $this->showImage(),
             'template' => $this->template(),
@@ -138,6 +139,29 @@ class ListeDesLiens extends Block
             'allow_null' => 1,
         ])
         ->conditional('has_title', '==', '1')
+        ->addTrueFalse('has_intro', [
+            'label' => 'Texte d\'intro',
+            'instructions' => '',
+            'default_value' => 0,
+            'ui' => 1,
+        ])
+        ->addWysiwyg('texte_intro', [
+            'label' => 'Texte d\'intro',
+            'instructions' => 'Laisser vide pour ne pas avoir de texte d\'intro',
+            'required' => 0,
+            'conditional_logic' => [],
+            'wrapper' => [
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ],
+            'default_value' => '',
+            'tabs' => 'all',
+            'toolbar' => 'full',
+            'media_upload' => 0,
+            'delay' => 0,
+        ])
+        ->conditional('has_intro', '==', '1')
 
             ->addRelationship('content', [
                 'post_type' => [],

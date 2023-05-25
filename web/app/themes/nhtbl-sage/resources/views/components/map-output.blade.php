@@ -48,7 +48,7 @@
             });
 
             // Load the custom icon image
-            map.loadImage(`@asset('images')/pin-${categorySlug}.png`, function(error, image) {
+            map.loadImage(`@asset('./')../map-pins/pin-${categorySlug}.png`, function(error, image) {
               if (error) throw error;
 
               // Add the loaded icon image to the map
