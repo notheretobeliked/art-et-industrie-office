@@ -5,7 +5,7 @@
   </a>
   <div class="w-full flex flex-row gap-4 bg-white">
     <div class="flex w-1/6 flex-row gap-0 items-center top-0">
-      <button @click="showMenu = !showMenu" class="px-2 py-4 flex flex-row">
+      <button @click="showMenu = !showMenu" class="items-center px-2 py-4 flex flex-row gap-2">
         <svg x-show="showMenu" class="w-6 h-6" fill="none" stroke-linecap="round" stroke-linejoin="round"
           stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
           <path d="M6 18L18 6M6 6l12 12"></path>
@@ -14,14 +14,14 @@
           stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
           <path d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
-        <div class="uppercase-small">Menu</div>
+        <p class="m-0 uppercase-small">Menu</p>
       </button>
 
     </div>
   @if (has_nav_menu('shortcut_navigation'))
     <nav class="hidden md:flex w-2/3 flex-row gap-4 items-center justify-evenly" aria-label="Menu principal"
       aria-label="{{ wp_get_nav_menu_name('shortcut_navigation') }}">
-      {!! wp_nav_menu(['theme_location' => 'shortcut_navigation', 'menu_class' => 'flex flex-row gap-4 uppercase-small flex-grow justify-center', 'echo' => false]) !!}
+      {!! wp_nav_menu(['theme_location' => 'shortcut_navigation', 'menu_class' => 'flex flex-row gap-4 uppercase-small flex-grow justify-center !font-ui', 'echo' => false]) !!}
     </nav>
   @endif
 

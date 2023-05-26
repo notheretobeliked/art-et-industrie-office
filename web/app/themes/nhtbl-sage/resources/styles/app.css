@@ -46,9 +46,8 @@
     @apply hidden;
   }
 
-  .main p,
-  .main li,
-  .main a {
+  p,
+  li {
     @apply font-serif text-base mb-4;
   }
 
