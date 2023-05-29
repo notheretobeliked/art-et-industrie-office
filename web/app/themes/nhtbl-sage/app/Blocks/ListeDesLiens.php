@@ -195,15 +195,7 @@ class ListeDesLiens extends Block
      */
     public function content()
     {
-        if (! get_field('content')) return null;
-        $args = [
-            'post__in' => get_field('content'),
-            'post_type' => get_post_types(),
-            'post_status' => 'all',
-            'numberposts' => -1,
-        ];
-            $items = get_posts($args);
-            return $items;
+        return get_field('content');
     }
 
     public function showImage()

@@ -129,7 +129,6 @@
                 "class": "",
                 "id": ""
             },
-            "show_in_graphql": 1,
             "post_type": [
                 "tribe_events"
             ],
@@ -140,10 +139,14 @@
             "filters": [
                 "search"
             ],
-            "return_format": "object",
+            "return_format": "id",
+            "translations": "copy_once",
             "min": "",
             "max": "",
-            "elements": ""
+            "elements": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "eventArtiste"
         },
         {
             "key": "field_6435eb2bfd906",
@@ -159,7 +162,6 @@
                 "class": "",
                 "id": ""
             },
-            "show_in_graphql": 1,
             "post_type": [
                 "edition"
             ],
@@ -168,10 +170,14 @@
             ],
             "taxonomy": "",
             "filters": "",
-            "return_format": "object",
+            "return_format": "id",
+            "translations": "copy_once",
             "min": "",
             "max": "",
-            "elements": ""
+            "elements": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "artisteEdition"
         },
         {
             "key": "field_6435eb64fd907",
@@ -187,7 +193,6 @@
                 "class": "",
                 "id": ""
             },
-            "show_in_graphql": 1,
             "post_type": [
                 "lieu"
             ],
@@ -198,10 +203,14 @@
             "filters": [
                 "search"
             ],
-            "return_format": "object",
+            "return_format": "id",
+            "translations": "copy_once",
             "min": "",
             "max": "",
-            "elements": ""
+            "elements": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "artisteLieu"
         }
     ],
     "location": [
@@ -226,5 +235,5 @@
     "graphql_field_name": "champsPourArtistes",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1684427119
+    "modified": 1685114344
 }

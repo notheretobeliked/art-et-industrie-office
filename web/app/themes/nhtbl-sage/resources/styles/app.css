@@ -23,7 +23,7 @@
   }
 
   .spaced-out::after {
-    content: "\00a0";
+    content: '\00a0';
     min-width: 80vw;
     display: inline-block;
   }
@@ -55,6 +55,10 @@
     @apply font-display uppercase text-2xl tracking-widest text-center my-0 border-b border-black;
   }
 
+  h2.wp-block-heading {
+    @apply border-0;
+  }
+
   h3 {
     @apply font-display uppercase text-2xl tracking-widest text-left my-4;
   }
@@ -64,11 +68,18 @@
     @apply mx-auto max-w-4xl;
   }
 
-  .main > *,
-  .the-content > * {
-    @apply  my-8 px-2;
+  .main > *:not(p):not(.wp-block-heading),
+  .the-content > *:not(p):not(.wp-block-heading) {
+    @apply mb-14 px-2;
   }
 
+  .main > p,
+  .main > .wp-block-heading,
+  .the-content > p,
+  .the-content > .wp-block-heading {
+    @apply mb-4 px-2;
+  }
+  
   .alignwide {
     @apply mx-auto max-w-7xl;
   }

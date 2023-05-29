@@ -1,6 +1,6 @@
 <div class="{{ $block->classes }}">
-  <div class="w-full h-full">
-    <div class="w-full h-128 relative">
+  <div class="w-full h-[60vh]">
+    <div class="w-full h-full relative">
       <svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 1440 920" fill="none"
         xmlns="http://www.w3.org/2000/svg">
         <g clip-path="url(#clip0_202_5603)">
@@ -76,11 +76,18 @@
           </clipPath>
         </defs>
       </svg>
-      <div class="absolute backdrop-blur-3xl left-0 w-full h-128 top-0 right-0 bottom-0" />
+      <div class="absolute backdrop-blur-3xl left-0 w-full h-full top-0 right-0 bottom-0"></div>
 
-
+      <hgroup class="text-black dark:text-black uppercase absolute text-center w-full h-full top-0 bottom-0 flex items-center">
+        <div class="w-full">
+          <p class="tracking-wider text-sm md:text-base xl:text-lg !leading-supertight font-ui">du 10 juin 2023<br />
+            au 14 janvier 2024</p>
+          <h2 class="border-0 my-8 fluid-3xl px-3 lg:px-48 tracking-superwide lg:tracking-megawide blur-sm lg:blur">
+            Chaleur<br>Humaine
+          </h2>
+          <p class="tracking-widest text-sm md:text-base xl:text-lg font-ui">Consciences énergétiques</p>
+        </div>
+      </hgroup>
     </div>
-
   </div>
-  </div>
-  </div>
+</div>

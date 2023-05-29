@@ -1,5 +1,6 @@
 // https://tailwindcss.com/docs/configuration
 module.exports = {
+  darkMode: 'class',
   content: ['./index.php', './app/**/*.php', './resources/**/*.{php,vue,js}'],
   safelist: [
     'editor-post-title',
@@ -13,6 +14,8 @@ module.exports = {
     'the-content',
     'alignwide',
     'alignfull',
+    'has-lg-font-size',
+    'wp-block-heading',
   ],
   theme: {
     fontFamily: {
@@ -83,8 +86,8 @@ module.exports = {
       remSize: 12,
       minScreenSize: 400,
       maxScreenSize: 1680,
-      minTypeScale: 1.22,
-      maxTypeScale: 1.618,
+      minTypeScale: 1.32,
+      maxTypeScale: 1.718,
       lineHeight: 1.2,
     },
     extend: {
@@ -95,10 +98,13 @@ module.exports = {
       gridTemplateColumns: {
         // Simple 16 column grid
         'event': '1fr 5fr 1fr',
+        'menu': '1fr 4fr 1fr',
+        'logo': '8fr 1fr 8fr',
       },
     },
   },
   plugins: [
+    require("tailwind-fluid-typography"),
     require('tailwindcss-text-fill-stroke'), // no options to configure
   ],
 };

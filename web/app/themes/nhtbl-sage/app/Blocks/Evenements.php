@@ -278,10 +278,12 @@ class Evenements extends Block
                 'permalink' => get_permalink($lieu[0]->ID),
             ] : $lieu = null;
 
-            $date = tribe_get_start_date($item->ID, false, 'd F Y');
-            if (tribe_get_start_date($item->ID, false, 'd F Y') != tribe_get_end_date($item->ID, false, 'd F Y')) {
-                $end_date = tribe_get_end_date($item->ID, false, 'd F Y');
-                if (tribe_get_start_date($item->ID, false, 'Y') === tribe_get_end_date($item->ID, false, 'Y')) $date = (tribe_get_start_date($item->ID, false, 'd F'));
+            $start_date = tribe_get_start_date($item->ID, false, 'j/n/Y');
+            if (tribe_get_start_date($item->ID, false, 'j F Y') != tribe_get_end_date($item->ID, false, 'j F Y')) {
+                $end_date = tribe_get_end_date($item->ID, false, 'j/n/Y');
+                $startMonth = (tribe_get_start_date($item->ID, false, '/n/'));
+                if ($startMonth === tribe_get_end_date($item->ID, false, '/n/')) $startMonth = "";
+                if (tribe_get_start_date($item->ID, false, 'Y') === tribe_get_end_date($item->ID, false, 'Y')) $start_date = (tribe_get_start_date($item->ID, false, 'j') . " " . $startMonth);
             } else $end_date = null;
 
             $return[] = [
@@ -289,10 +291,10 @@ class Evenements extends Block
                 'title' => get_the_title($item->ID),
                 'permalink' => get_permalink($item->ID),
                 'thumbnail' => get_the_post_thumbnail_url($item->ID, 'medium'),
-                'date' => $date,
-                'time' => tribe_get_start_date($item->ID, false, 'H:i'),
+                'date' => $start_date,
+                'time' => tribe_event_is_all_day($item->ID) ? null : tribe_get_start_date($item->ID, false, 'H:i'),
                 'end_date' => $end_date,
-                'end_time' => tribe_get_end_date($item->ID, false, 'H:i'),
+                'end_time' => tribe_event_is_all_day($item->ID) ? null : tribe_get_end_date($item->ID, false, 'H:i'),
                 'excerpt' => get_the_excerpt($item->ID),
                 'categories' => $categories,
                 'tags' => $tags,

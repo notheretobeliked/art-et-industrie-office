@@ -1,7 +1,7 @@
 <div class="{{ $block->classes }}">
   @if ($items)
     @if ($title)
-      <h2 class="text-left border-b border-black text-2xl uppercase mb-4">{{ $title }}</h2>
+      <h2 class="text-left border-b border-black dark:border-white text-2xl uppercase mb-4">{{ $title }}</h2>
     @endif
     @if ($mode == 'all')
       <ul class="list-none columns-2 lg:columns-3 gap-4 p-0 m-0">

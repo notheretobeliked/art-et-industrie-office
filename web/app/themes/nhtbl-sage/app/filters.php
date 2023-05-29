@@ -17,13 +17,6 @@ add_filter('jpeg_quality', function ($arg) {
 });
 
 
-add_filter( 'wp_get_attachment_image', function ( $html, $attachment_id, $size, $icon, $attr ){
-    if ( is_admin() || $size == 'medium' || $size == 'thumbnail' ) return $html;
-        $srcset = wp_get_attachment_image_srcset( $attachment_id, $size );
-        $html = '<picture><source srcset="'.$srcset.'">'.$html.'</picture>';
-    return $html;
-}, 10, 5 );
-
 
 add_filter('wp_editor_set_quality', function ($quality, $mime_type) {
     if ('image/webp' === $mime_type) {

@@ -27,6 +27,7 @@ function generate_image_variants($attachment_id, $source_path, $destination_path
   $original_file_name = pathinfo($source_path, PATHINFO_FILENAME);
 
   error_log($original_file_name);
+  error_log("Source path:" . $source_path);
   $image = new \Imagick($source_path);
 
   foreach ($variants as $suffix => $size_info) {

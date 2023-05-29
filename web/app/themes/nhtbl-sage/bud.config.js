@@ -99,7 +99,7 @@ export default async (app) => {
               },
               {
                 slug: 'lg',
-                size: '1.4rem',
+                size: '2rem',
                 name: 'Large',
               },
             ],

@@ -45,7 +45,6 @@
                 "class": "",
                 "id": ""
             },
-            "show_in_graphql": 1,
             "post_type": [
                 "tribe_events"
             ],
@@ -56,10 +55,14 @@
             "filters": [
                 "search"
             ],
-            "return_format": "object",
+            "return_format": "id",
+            "translations": "copy_once",
             "min": "",
             "max": "",
-            "elements": ""
+            "elements": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "eventEdition"
         },
         {
             "key": "field_6435ef233c152",
@@ -144,5 +147,5 @@
     "graphql_field_name": "champPourEdition",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1684427148
+    "modified": 1685114243
 }

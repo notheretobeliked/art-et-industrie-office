@@ -9161,6 +9161,11 @@ svgo@^2.7.0:
     picocolors "^1.0.0"
     stable "^0.1.8"
 
+tailwind-fluid-typography@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/tailwind-fluid-typography/-/tailwind-fluid-typography-1.3.0.tgz#243ba14cad3baada94a9a80f8007aafc7c6f47a6"
+  integrity sha512-W6zqO8xD1FAtAOBiWArvpyI5CMzKek9tIjOmwwzDCsiEJaGvhv2WGlEaV0Sl1O5Bn5hMBHiNMdzhz/QIblvIyQ==
+
 tailwindcss-text-fill-stroke@^2.0.0-beta.1:
   version "2.0.0-beta.1"
   resolved "https://registry.yarnpkg.com/tailwindcss-text-fill-stroke/-/tailwindcss-text-fill-stroke-2.0.0-beta.1.tgz#159d8ec97033b59809873e791b5276ccef6720f9"
