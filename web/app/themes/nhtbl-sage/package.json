@@ -26,6 +26,7 @@
     "browser-sync-webpack-plugin": "^2.3.0"
   },
   "dependencies": {
+    "@alpinejs/collapse": "^3.12.1",
     "alpinejs": "^3.12.1",
     "caniuse-lite": "^1.0.30001489",
     "postcss-import": "^15.1.0",

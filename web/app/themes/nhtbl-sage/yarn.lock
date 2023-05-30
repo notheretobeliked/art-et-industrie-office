@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@alpinejs/collapse@^3.12.1":
+  version "3.12.1"
+  resolved "https://registry.yarnpkg.com/@alpinejs/collapse/-/collapse-3.12.1.tgz#97c7a70675a6b056d1095a46ccd9122dc2050f19"
+  integrity sha512-B2psRpFIadRXKibnp2BMKP1XMjEg1ocms7h84fYhMLPdOTZBmrTpX9atLSIxW7Fc/mG/Mx9f7tiZdQW4q/4++Q==
+
 "@ampproject/remapping@^2.2.0":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@ampproject/remapping/-/remapping-2.2.1.tgz#99e8e11851128b8702cd57c33684f1d0f260b630"
