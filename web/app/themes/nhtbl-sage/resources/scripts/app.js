@@ -25,13 +25,11 @@ domReady(async () => {
 
       nav.addEventListener("mouseenter", () => {
         isMouseInside = true;
-        nav.style.overflowY = "scroll";
       });
 
       nav.addEventListener("mouseleave", () => {
         isMouseInside = false;
         resetScroll();
-        nav.style.overflowY = "hidden";
       });
 
       function resetScroll() {

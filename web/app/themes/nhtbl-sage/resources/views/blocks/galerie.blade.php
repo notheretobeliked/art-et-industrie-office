@@ -1,4 +1,4 @@
-<div class="{{ $block->classes }}">
+<div class="{{ $block->classes }} !px-0">
 
   @if ($galerie)
     <x-galerie-output :images="$galerie" />
