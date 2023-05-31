@@ -12,7 +12,7 @@
     @apply mt-4 m-0 font-normal text-center flex items-center flex-col text-4xl font-display uppercase tracking-wide  text-stroke-2 text-fill-transparent hover:text-fill;
 
     ul li {
-      @apply mt-0 font-serif uppercase text-base text-fill-black text-stroke-0;
+      @apply mt-0 font-serif uppercase text-base text-fill-black hover:italic text-stroke-0;
     }
   }
 
