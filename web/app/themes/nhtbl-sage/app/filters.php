@@ -31,8 +31,9 @@ add_action('add_attachment', function ($attachment_id) {
 
         // Get the file paths for the source and destination images
         $source_path = get_attached_file($attachment_id);
+        //error_log('source path: ' . $source_path);
         $destination_path_base = pathinfo($source_path, PATHINFO_DIRNAME) . '/';
-
+        //error_log('destination_path_base: ' . $destination_path_base);
         // Generate the image variants
         generate_image_variants($attachment_id, $source_path, $destination_path_base);
     }
@@ -41,7 +42,7 @@ add_action('add_attachment', function ($attachment_id) {
 add_action('delete_attachment', function ($attachment_id) {
     // Get the image variants custom field for the attachment post
     $attachment = get_post($attachment_id);
-    if (strpos($attachment->post_mime_type, 'image') === 0) {
+    if ((strpos($attachment->post_mime_type, 'image')) === 0 && (pll_get_post_language( $attachment_id ) === 'fr')) {
 
         $variants = get_post_meta($attachment_id, 'image_variants', true);
 
@@ -54,7 +55,7 @@ add_action('delete_attachment', function ($attachment_id) {
 
                 foreach ($size as $variant_type => $variant_path) {
                     $variant_path = $path . $variant_path;
-                    error_log($variant_path);
+                    //error_log($variant_path);
                     if (file_exists($variant_path)) {
                         unlink($variant_path);
                     }
