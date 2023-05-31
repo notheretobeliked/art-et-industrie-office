@@ -18,6 +18,8 @@ module.exports = {
     'wp-block-heading',
     'h-12',
     'w-48',
+    'h-128',
+    'h+132',
     'object-center',
     'object-cover',
   ],
@@ -98,6 +100,7 @@ module.exports = {
       colors: {}, // Extend Tailwind's default colors
       spacing: {
         128: '32rem',
+        136: '36rem',
       },
       gridTemplateColumns: {
         // Simple 16 column grid

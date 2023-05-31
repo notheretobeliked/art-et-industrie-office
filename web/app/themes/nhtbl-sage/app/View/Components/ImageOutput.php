@@ -43,7 +43,7 @@ class ImageOutput extends Component
             'alt' => $image_alt,
             'other_formats' => $other_formats[$size],
             'subdir' => $subdir,
-            'caption' => wp_get_attachment_caption($imageId) ? '<figcaption>' . wp_get_attachment_caption($imageId) . '</figcaption>' : '',
+            'caption' => wp_get_attachment_caption($imageId) ? '<figcaption class="font-serif text-sm mt-2">' . wp_get_attachment_caption($imageId) . '</figcaption>' : '',
         );
 
         return $output;
