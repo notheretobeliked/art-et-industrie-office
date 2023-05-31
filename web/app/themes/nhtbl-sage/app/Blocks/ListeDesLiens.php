@@ -181,8 +181,13 @@ class ListeDesLiens extends Block
                 'ui' => 1,
                 'ui_on_text' => 'Oui',
                 'ui_off_text' => 'Non',
+            ])
+            ->addTrueFalse('show_intro', [
+                'label' => __('Afficher le début du texte', 'sage'),
+                'ui' => 1,
+                'ui_on_text' => 'Oui',
+                'ui_off_text' => 'Non',
             ]);
-
 
 
         return $listeDesLiens->build();
@@ -196,6 +201,7 @@ class ListeDesLiens extends Block
     public function content()
     {
         $contents = get_field('content');
+        $showIntro = get_field('show_intro');
         $output = array();
         foreach ($contents as $content) {
             $image = \get_post_thumbnail_id($content);
@@ -220,7 +226,7 @@ class ListeDesLiens extends Block
             $output[] = [
                 'url' => \get_permalink($content),
                 'title' => \get_the_title($content),
-                'introtext' => \get_the_excerpt($content),
+                'introtext' => $showIntro ? \get_the_excerpt($content) : '',
                 'image' => $image,
             ];
         }

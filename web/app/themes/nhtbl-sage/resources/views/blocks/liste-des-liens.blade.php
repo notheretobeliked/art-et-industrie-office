@@ -13,13 +13,14 @@
           <a href="{!! $contentitem["url"] !!}">
         @endif
         <div class="max-w-full overflow-hidden scroll-container border-b border-black dark:border-white hover:text-stroke-0">
-          <div class="flex flex-row py-4 gap-4 items-center">
+          <div class="flex flex-row py-4 gap-4 items-center content-center">
             @if ($showImage && $contentitem["image"])
               <x-image-output :image="$contentitem['image']" size="medium" customsize class="h-12 w-48" />
             @endif
             <p
               class="whitespace-nowrap text-4xl uppercase tracking-wider font-display text-stroke-2 text-fill-transparent hover:text-fill !mb-0">
               {!! $contentitem["title"] !!} </p>
+            <p class="!mb-0 font-ui text-base uppercase whitespace-nowrap">{!! $contentitem["introtext"] !!}</p>
           </div>
         </div>
         @if (!is_admin())
