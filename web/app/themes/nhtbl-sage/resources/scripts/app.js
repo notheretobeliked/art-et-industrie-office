@@ -17,9 +17,9 @@ domReady(async () => {
     containers.forEach(function(nav) {
       let idx;
       let acceleration = 1;
-      let scrollSpeed = 2;
-      let maxScrollSpeed = 20;
-      let accelerationFactor = 0.05; // Adjust this value to control the acceleration sensitivity
+      let scrollSpeed = 1.2;
+      let maxScrollSpeed = 8;
+      let accelerationFactor = 0.6; // Adjust this value to control the acceleration sensitivity
       let isMouseInside = false;
       let mousePos = { x: 0, y: 0 };
 
@@ -36,7 +36,7 @@ domReady(async () => {
 
       function resetScroll() {
         acceleration = 1;
-        scrollSpeed = 2;
+        scrollSpeed = 1.3;
       }
 
       nav.addEventListener("mousemove", (event) => {

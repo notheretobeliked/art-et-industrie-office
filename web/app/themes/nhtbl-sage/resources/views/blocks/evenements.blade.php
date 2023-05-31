@@ -1,6 +1,6 @@
 <div class="{{ $block->classes }}">
   @if ($title)
-    <h2 class="text-left border-b border-black dark:border-white text-2xl uppercase mb-4">{{ $title }}</h2>
+    <h2 class="text-left border-b border-black dark:border-white text-lg md:text-xl lg:text-2xl uppercase mb-4">{{ $title }}</h2>
   @endif
 
 
