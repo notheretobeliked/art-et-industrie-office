@@ -253,8 +253,8 @@ class Evenements extends Block
 
         $return = [];
         foreach ($items as $item) {
+            $tags = [];
             if (get_the_terms($item->ID, 'post_tag')) {
-                $tags = [];
                 foreach (get_the_terms($item->ID, 'tribe_events_cat') as $cat) {
                     $categories[] = [
                         'name' => $cat->name,
@@ -262,8 +262,8 @@ class Evenements extends Block
                     ];
                 }
             }
+            $categories = [];
             if (get_the_terms($item->ID, 'tribe_events_cat')) {
-                $categories = [];
                 foreach (get_the_terms($item->ID, 'tribe_events_cat') as $cat) {
                     $categories[] = [
                         'name' => $cat->name,

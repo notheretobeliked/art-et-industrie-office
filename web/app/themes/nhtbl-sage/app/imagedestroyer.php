@@ -4,15 +4,22 @@ namespace App;
 
 function add_image_variant_custom_field($attachment_id, $suffix, $variants)
 {
+    $source_path = get_attached_file($attachment_id);
+    $destination_path_base = pathinfo($source_path, PATHINFO_DIRNAME) . '/';
+
+    if ( false !== strpos( $destination_path_base, 'app/uploads' ) ) {
+        // Get the directory name relative to the upload directory (adjusted for Bedrock path).
+        $dirname = substr( $destination_path_base, strpos( $destination_path_base, 'app/uploads' ) + 11 );
+        $dirname = rtrim( $dirname, '/' );
+    }
     $existing_variants = get_post_meta($attachment_id, 'image_variants', true);
     if (!is_array($existing_variants)) {
         $existing_variants = [];
     }
     $existing_variants[$suffix] = $variants;
-    $directory = wp_upload_dir();
 
     update_post_meta($attachment_id, 'image_variants', $existing_variants);
-    update_post_meta($attachment_id, 'subdir', $directory['subdir']);
+    update_post_meta($attachment_id, 'subdir', $dirname);
 }
 
 function generate_image_variants($attachment_id, $source_path, $destination_path_base)

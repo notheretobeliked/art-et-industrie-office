@@ -33,6 +33,7 @@ add_action('add_attachment', function ($attachment_id) {
         $source_path = get_attached_file($attachment_id);
         //error_log('source path: ' . $source_path);
         $destination_path_base = pathinfo($source_path, PATHINFO_DIRNAME) . '/';
+
         //error_log('destination_path_base: ' . $destination_path_base);
         // Generate the image variants
         generate_image_variants($attachment_id, $source_path, $destination_path_base);
@@ -73,7 +74,6 @@ add_filter('tribe_rest_single_event_data', function (array $event_data) {
     $event_id = $event_data['id'];
 
     $level = get_field('ressonance', $event_id);
-    error_log(print_r($level, true));
 
     $event_data['resonances'] = $level;
 
@@ -105,7 +105,6 @@ add_filter('acf/save_post', function ($post_id) {
     $gallery = get_field('galerie', $post_id, false);
     if (!empty($gallery) & !has_post_thumbnail($post_id)) {
         $image_id = $gallery[0];
-        error_log($image_id);
         set_post_thumbnail($post_id, $image_id);
     }
 });
@@ -312,7 +311,6 @@ add_action('graphql_register_types', function () {
         'resolve' => function ($block, $args, $context, $info) {
             if ($block['name'] === 'acf/liste-des-liens') {
                 $content = $block['attributes']['data']['content'];
-                error_log(print_r($content, true));
                 return array_map(function ($pageId) use ($context, $info) {
                     $link = get_the_permalink($pageId);
                     $title = get_the_title($pageId);
