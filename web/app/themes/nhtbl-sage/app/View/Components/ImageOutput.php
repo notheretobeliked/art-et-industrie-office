@@ -16,14 +16,16 @@ class ImageOutput extends Component
     public $class = 'h-full max-w-fit';
     public $size = 'medium_large';
     public $customsize = false;
+    public $caption = false;
     
 
-    public function __construct($image, $size = 'medium_large', $class = 'h-full max-w-fit', $customsize = false)
+    public function __construct($image, $size = 'medium_large', $class = 'h-full max-w-fit', $customsize = false, $caption = false)
     {
         $this->image = $this->transformImage($image, $size);
         $this->size = $size;
         $this->class = $class;
         $this->customsize = $customsize;
+        $this->caption = $caption;
     }
 
     public function transformImage($image, $size)
