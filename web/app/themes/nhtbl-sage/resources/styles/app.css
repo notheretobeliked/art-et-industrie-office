@@ -100,4 +100,8 @@
     width: 0;
     display: none;
   }
+
+  .inter-character {
+    text-justify: inter-character;
+  }
 }
