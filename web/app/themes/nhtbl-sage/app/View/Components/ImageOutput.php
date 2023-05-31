@@ -13,11 +13,17 @@ class ImageOutput extends Component
      */
 
     public $image;
+    public $class = 'h-full max-w-fit';
     public $size = 'medium_large';
+    public $customsize = false;
+    
 
-    public function __construct($image, $size = 'medium_large')
+    public function __construct($image, $size = 'medium_large', $class = 'h-full max-w-fit', $customsize = false)
     {
         $this->image = $this->transformImage($image, $size);
+        $this->size = $size;
+        $this->class = $class;
+        $this->customsize = $customsize;
     }
 
     public function transformImage($image, $size)
@@ -28,6 +34,8 @@ class ImageOutput extends Component
         $other_formats = get_post_meta($imageId, 'image_variants', true);
         $output = array(
             'src' => wp_get_attachment_image_src($imageId, $size),
+            'width' => wp_get_attachment_image_src($imageId, $size)[1],
+            'height' => wp_get_attachment_image_src($imageId, $size)[2],
             'srcset' => wp_get_attachment_image_srcset($imageId, $size),
             'image' => wp_get_attachment_image($imageId, $size),
             'alt' => $image_alt,

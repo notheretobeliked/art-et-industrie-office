@@ -16,6 +16,10 @@ module.exports = {
     'alignfull',
     'has-lg-font-size',
     'wp-block-heading',
+    'h-12',
+    'w-48',
+    'object-center',
+    'object-cover',
   ],
   theme: {
     fontFamily: {

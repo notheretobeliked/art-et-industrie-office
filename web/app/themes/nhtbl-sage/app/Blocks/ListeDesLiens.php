@@ -127,41 +127,41 @@ class ListeDesLiens extends Block
         $listeDesLiens = new FieldsBuilder('liste_des_liens');
 
         $listeDesLiens
-        ->addTrueFalse('has_title', [
-            'label' => 'Titre',
-            'instructions' => '',
-            'default_value' => 0,
-            'ui' => 1,
-        ])
-        ->addText('title', [
-            'label' => 'Titre',
-            'instructions' => '',
-            'allow_null' => 1,
-        ])
-        ->conditional('has_title', '==', '1')
-        ->addTrueFalse('has_intro', [
-            'label' => 'Texte d\'intro',
-            'instructions' => '',
-            'default_value' => 0,
-            'ui' => 1,
-        ])
-        ->addWysiwyg('texte_intro', [
-            'label' => 'Texte d\'intro',
-            'instructions' => 'Laisser vide pour ne pas avoir de texte d\'intro',
-            'required' => 0,
-            'conditional_logic' => [],
-            'wrapper' => [
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ],
-            'default_value' => '',
-            'tabs' => 'all',
-            'toolbar' => 'full',
-            'media_upload' => 0,
-            'delay' => 0,
-        ])
-        ->conditional('has_intro', '==', '1')
+            ->addTrueFalse('has_title', [
+                'label' => 'Titre',
+                'instructions' => '',
+                'default_value' => 0,
+                'ui' => 1,
+            ])
+            ->addText('title', [
+                'label' => 'Titre',
+                'instructions' => '',
+                'allow_null' => 1,
+            ])
+            ->conditional('has_title', '==', '1')
+            ->addTrueFalse('has_intro', [
+                'label' => 'Texte d\'intro',
+                'instructions' => '',
+                'default_value' => 0,
+                'ui' => 1,
+            ])
+            ->addWysiwyg('texte_intro', [
+                'label' => 'Texte d\'intro',
+                'instructions' => 'Laisser vide pour ne pas avoir de texte d\'intro',
+                'required' => 0,
+                'conditional_logic' => [],
+                'wrapper' => [
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ],
+                'default_value' => '',
+                'tabs' => 'all',
+                'toolbar' => 'full',
+                'media_upload' => 0,
+                'delay' => 0,
+            ])
+            ->conditional('has_intro', '==', '1')
 
             ->addRelationship('content', [
                 'post_type' => [],
@@ -174,15 +174,15 @@ class ListeDesLiens extends Block
                 'elements' => '',
                 'min' => '',
                 'max' => '',
-                'return_format' => 'value',        
+                'return_format' => 'value',
             ])
             ->addTrueFalse('show_image', [
-                'label' => __('Afficher image','sage'),
+                'label' => __('Afficher image', 'sage'),
                 'ui' => 1,
                 'ui_on_text' => 'Oui',
                 'ui_off_text' => 'Non',
             ]);
-        
+
 
 
         return $listeDesLiens->build();
@@ -195,7 +195,36 @@ class ListeDesLiens extends Block
      */
     public function content()
     {
-        return get_field('content');
+        $contents = get_field('content');
+        $output = array();
+        foreach ($contents as $content) {
+            $image = \get_post_thumbnail_id($content);
+            // get image in size medium_large from $image['id']
+            if ($image) {
+                $subdir = get_post_meta($image, 'subdir', true);
+                $other_formats = get_post_meta($image, 'image_variants', true);
+                $alt = get_post_meta($image, '_wp_attachment_image_alt', TRUE);
+                $image = array(
+                    'id' => $image,
+                    'src' => wp_get_attachment_image_src($image, 'medium_large'),
+                    'width' => wp_get_attachment_metadata($image)['width'],
+                    'height' => wp_get_attachment_metadata($image)['height'],
+                    'srcset' => wp_get_attachment_image_srcset($image, 'medium_large'),
+                    'image' => wp_get_attachment_image($image, 'medium_large'),
+                    'alt' => $alt,
+                    'other_formats' => $other_formats,
+                    'subdir' => $subdir,
+                    'caption' => wp_get_attachment_caption($image) ? '<figcaption>' . wp_get_attachment_caption($image) . '</figcaption>' : '',
+                );
+            }
+            $output[] = [
+                'url' => \get_permalink($content),
+                'title' => \get_the_title($content),
+                'introtext' => \get_the_excerpt($content),
+                'image' => $image,
+            ];
+        }
+        return $output;
     }
 
     public function showImage()
@@ -203,15 +232,15 @@ class ListeDesLiens extends Block
         return get_field('show_image');
     }
 
-    public function template() 
+    public function template()
     {
         $template = array(
-            array( 'core/heading', array(
+            array('core/heading', array(
                 'level' => 3,
-                'placeholder' => __('Titre du bloc','sage'),
-            ) )
+                'placeholder' => __('Titre du bloc', 'sage'),
+            ))
         );
-        return esc_attr(wp_json_encode( $template ));
+        return esc_attr(wp_json_encode($template));
     }
 
     /**

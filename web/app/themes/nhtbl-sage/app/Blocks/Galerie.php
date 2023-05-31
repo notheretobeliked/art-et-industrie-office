@@ -150,6 +150,9 @@ class Galerie extends Block
             $subdir = get_post_meta($image['id'], 'subdir', true);
             $other_formats = get_post_meta($image['id'], 'image_variants', true);
             $output[] = array(
+                'id' => $image['id'],
+                'width' => wp_get_attachment_metadata($image['id'])['width'],
+                'height' => wp_get_attachment_metadata($image['id'])['height'],
                 'src' => wp_get_attachment_image_src($image['id'], 'medium_large'),
                 'srcset' => wp_get_attachment_image_srcset($image['id'], 'medium_large'),
                 'image' => wp_get_attachment_image($image['id'], 'medium_large'),
