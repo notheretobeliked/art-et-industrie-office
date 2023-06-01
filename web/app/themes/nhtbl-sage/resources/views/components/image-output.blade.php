@@ -1,4 +1,4 @@
-<div>
+<div class="snap-start">
   <figure>
     <picture class="block object-cover {{$class}}">
       <source srcset="/app/uploads{!! $image['subdir'] !!}/{!! $image['other_formats']['webp-low'] !!}" media="(min-width: 0px)"

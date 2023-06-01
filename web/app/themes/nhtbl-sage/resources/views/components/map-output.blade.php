@@ -109,6 +109,8 @@
             }
           }
 
+          @if ( in_array($slug, ['resonances','all', 'triennale', 'oeuvres-publics'], true ) )
+
           // Add click event listener to the layers
           Object.keys(categories).forEach(categorySlug => {
             map.on('click', categorySlug + '-icon', function(e) {
@@ -132,6 +134,8 @@
               featureInfoDiv.appendChild(description);
             });
           });
+
+          @endif
         })
         .catch(error => {
           console.error('Error:', error);
@@ -139,5 +143,5 @@
     });
   }
 
-  window.addEventListener('DOMContentLoaded', initializeMap);
+  typeof wp !== 'undefined' ? wp.domReady(initializeMap) : window.addEventListener('DOMContentLoaded', initializeMap);
 </script>
