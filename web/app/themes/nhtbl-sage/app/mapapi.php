@@ -29,7 +29,38 @@ function returnMapMarkers($data)
         'properties' => array(
           'title' => $post->post_title,
           'description' => get_the_excerpt($post),
-          'category' => array (
+          'category' => array(
+            'slug' => get_field('type', $post->ID)["value"] ? get_field('type', $post->ID)["value"] :  'wee',
+            'name' => get_field('type', $post->ID)["label"] ? get_field('type', $post->ID)["value"] :  'wee',
+          )
+        ),
+        'geometry' => array(
+          'coordinates' => array_values($coordinates),
+          'type' => 'Point',
+        ),
+      );
+    }
+  } elseif ($lieu === 'resonance' || $lieu === 'triennale'  || $lieu === 'oeuvre-public') {
+    $posts = get_posts(array(
+      'post_type' => 'lieu',
+      'status' => 'publish',
+      'meta_key'      => 'type',
+      'meta_value'    => $lieu,
+      'numberposts' => -1,
+    ));
+
+    foreach ($posts as $post) {
+      $coordinates = array(
+        'longitude' => get_field('longitude', $post->ID),
+        'latitude' => get_field('latitude', $post->ID),
+      );
+
+      $lieux[] = array(
+        'type' => 'Feature',
+        'properties' => array(
+          'title' => $post->post_title,
+          'description' => get_the_excerpt($post),
+          'category' => array(
             'slug' => get_field('type', $post->ID)["value"] ? get_field('type', $post->ID)["value"] :  'wee',
             'name' => get_field('type', $post->ID)["label"] ? get_field('type', $post->ID)["value"] :  'wee',
           )
@@ -59,7 +90,7 @@ function returnMapMarkers($data)
         'properties' => array(
           'title' => $posts[0]->post_title,
           'description' => get_the_excerpt($posts[0]),
-          'category' => array (
+          'category' => array(
             'slug' => get_field('type', $posts[0]->ID)["value"],
             'name' => get_field('type', $posts[0]->ID)["label"]
           )

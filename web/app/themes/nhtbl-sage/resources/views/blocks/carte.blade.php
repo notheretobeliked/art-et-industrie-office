@@ -1,3 +1,3 @@
 <div class="{{ $block->classes }}">
-  <x-map-output />
+  <x-map-output :slug="$slug" />
 </div>

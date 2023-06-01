@@ -101,23 +101,6 @@ class Carte extends Block
         'jsx' => true,
     ];
 
-    /**
-     * The block styles.
-     *
-     * @var array
-     */
-    public $styles = [
-        [
-            'name' => 'light',
-            'label' => 'Light',
-            'isDefault' => true,
-        ],
-        [
-            'name' => 'dark',
-            'label' => 'Dark',
-        ]
-    ];
-
 
     /**
      * Data to be passed to the block before rendering.
@@ -127,8 +110,13 @@ class Carte extends Block
     public function with()
     {
         return [
-            'items' => $this->fields(),
+            'slug' => $this->returnSlug(),
         ];
+    }
+
+    public function returnSlug()
+    {
+        return get_field("choix_par") == 'cat' ? get_field("type") : get_field("single_lieu")[0]->post_name;
     }
 
     /**
@@ -141,21 +129,44 @@ class Carte extends Block
         $carte = new FieldsBuilder('carte');
 
         $carte
-            ->addRepeater('items')
-                ->addText('item')
-            ->endRepeater();
+        ->addRadio('choix_par', [
+            'label' => 'Catégorie',
+            'choices' => ['cat' => 'Catégorie', 'lieu' => 'Lieu specifique'],
+            'default_value' => ['cat'],
+            'allow_null' => 0,
+            'multiple' => 0,
+            'ui' => 0,
+            'ajax' => 0,
+            'return_format' => 'value',
+            'placeholder' => '',
+        ])
+            ->addRadio('type', [
+                'label' => 'Catégorie',
+                'choices' => ['all' => 'Tous les lieux', 'triennale' => 'Lieux triennale', 'resonance' => 'Lieux résonance', 'oeuvre-public' => 'Œuvres publiques'],
+                'default_value' => ['all'],
+                'allow_null' => 0,
+                'multiple' => 0,
+                'ui' => 0,
+                'ajax' => 0,
+                'return_format' => 'value',
+                'placeholder' => '',
+            ])
+            ->conditional('choix_par', '==', 'cat')
+            ->addRelationship('single_lieu', [
+                'label' => 'Lien vers page',
+                'post_type' => ['lieu'],
+                'instructions' => '',
+                'filters' => [
+                    0 => 'search',
+                ],
+                'min' => '1',
+                'max' => '1',
+                'return_format' => 'object',
+            ])
+            ->conditional('choix_par', '==', 'lieu');
+
 
         return $carte->build();
-    }
-
-    /**
-     * Return the items field.
-     *
-     * @return array
-     */
-    public function items()
-    {
-        return get_field('items');
     }
 
     /**
@@ -167,6 +178,5 @@ class Carte extends Block
     {
         wp_enqueue_style('mapbox', 'https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css');
         wp_enqueue_script('mapbox', 'https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js');
-
     }
 }

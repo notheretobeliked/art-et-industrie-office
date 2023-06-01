@@ -18,7 +18,7 @@
 
     map.on('load', function() {
       // Fetch the markers data from the API route
-      fetch('/wp-json/triennale/v1/lieux/all')
+      fetch('/wp-json/triennale/v1/lieux/{{ $slug }}')
         .then(response => response.json())
         .then(data => {
           // Create separate layers for each category
@@ -69,7 +69,7 @@
               }
             });
 
-            
+
             // Apply pointer cursor on hover
             map.on('mouseenter', categorySlug + '-icon', function() {
               map.getCanvas().style.cursor = 'pointer';
@@ -82,13 +82,18 @@
           }
 
           // Fit the map to display all the markers
-          var bounds = new mapboxgl.LngLatBounds();
-          data.features.forEach(marker => {
-            bounds.extend(marker.geometry.coordinates);
-          });
-          map.fitBounds(bounds, {
-            padding: 50
-          });
+          @if ($slug == 'lieux' || $slug == 'all' || $slug == 'oeuvres-publics')
+            var bounds = new mapboxgl.LngLatBounds();
+            data.features.forEach(marker => {
+              bounds.extend(marker.geometry.coordinates);
+            });
+            map.fitBounds(bounds, {
+              padding: 50
+            });
+          @else
+            map.setCenter(data.features[0].geometry.coordinates);
+          @endif
+
 
           // Custom function to determine circle color based on category
           function getCircleColor(categorySlug) {
@@ -107,7 +112,7 @@
           // Add click event listener to the layers
           Object.keys(categories).forEach(categorySlug => {
             map.on('click', categorySlug + '-icon', function(e) {
-              
+
               const clickedFeature = e.features[0];
 
               // Create HTML content for the feature information
