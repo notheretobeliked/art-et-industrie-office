@@ -42,6 +42,11 @@
     @apply bg-white text-black;
   }
 
+  main.main,
+  .the-content {
+    @apply min-h-screen;
+  }
+
   figure:empty {
     @apply hidden;
   }
