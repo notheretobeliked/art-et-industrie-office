@@ -3,6 +3,9 @@ module.exports = {
   darkMode: 'class',
   content: ['./index.php', './app/**/*.php', './resources/**/*.{php,vue,js}'],
   safelist: [
+    { 
+      pattern: /tribe-events-./ 
+    },
     'grid-cols-mapandcontent',
     'editor-post-title',
     'p-name',
@@ -98,9 +101,9 @@ module.exports = {
       lineHeight: 1.2,
     },
     blur: {
-      'lg': '11px',
-      'sm': '6px',
-      'xl': '40px',
+      lg: '11px',
+      sm: '6px',
+      xl: '40px',
     },
     extend: {
       colors: {}, // Extend Tailwind's default colors

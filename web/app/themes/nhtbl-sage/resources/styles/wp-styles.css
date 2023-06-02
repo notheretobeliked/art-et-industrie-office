@@ -1,5 +1,4 @@
 @layer base {
-
   body:not(.wp-admin) .app {
     @apply font-serif;
   }
@@ -28,6 +27,11 @@
 
   .editor-styles-wrapper p {
     @apply font-serif;
+  }
+
+  .tribe-events-schedule__datetime,
+  .tribe-events-schedule h2 {
+    @apply font-ui uppercase !text-black dark:!text-white;
   }
 }
 

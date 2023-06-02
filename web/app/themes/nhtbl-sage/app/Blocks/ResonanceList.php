@@ -121,8 +121,6 @@ class ResonanceList extends Block
     {
         $resonanceList = new FieldsBuilder('resonance_list');
 
-
-
         return $resonanceList->build();
     }
 
@@ -139,52 +137,52 @@ class ResonanceList extends Block
             'meta_key'      => 'type',
             'meta_value'    => 'resonance',
             'numberposts' => -1,
-          ));
-      
-          foreach ($posts as $post) {
+        ));
+        $lieux = [];
+        foreach ($posts as $post) {
             $coordinates = array(
-              'longitude' => get_field('longitude', $post->ID),
-              'latitude' => get_field('latitude', $post->ID),
+                'longitude' => get_field('longitude', $post->ID),
+                'latitude' => get_field('latitude', $post->ID),
             );
 
             $image = \get_post_thumbnail_id($post->ID);
 
-            if ($image) {
-              $subdir = get_post_meta($image, 'subdir', true);
-              $other_formats = get_post_meta($image, 'image_variants', true);
-              $alt = get_post_meta($image, '_wp_attachment_image_alt', TRUE);
-              $image = array(
-                'id' => $image,
-                'src' => wp_get_attachment_image_src($image, 'medium_large'),
-                'width' => wp_get_attachment_metadata($image)['width'],
-                'height' => wp_get_attachment_metadata($image)['height'],
-                'srcset' => wp_get_attachment_image_srcset($image, 'medium_large'),
-                'image' => wp_get_attachment_image($image, 'medium_large'),
-                'alt' => $alt,
-                'other_formats' => $other_formats,
-                'subdir' => $subdir,
-                'caption' => wp_get_attachment_caption($image) ? '<figcaption>' . wp_get_attachment_caption($image) . '</figcaption>' : '',
-              );
+            if ($image > 0) {
+                $subdir = get_post_meta($image, 'subdir', true);
+                $other_formats = get_post_meta($image, 'image_variants', true);
+                $alt = get_post_meta($image, '_wp_attachment_image_alt', TRUE);
+
+                $image = array(
+                    'id' => $image,
+                    'src' => wp_get_attachment_image_src($image, 'medium_large'),
+                    'width' => wp_get_attachment_metadata($image)['width'],
+                    'height' => wp_get_attachment_metadata($image)['height'],
+                    'srcset' => wp_get_attachment_image_srcset($image, 'medium_large'),
+                    'image' => wp_get_attachment_image($image, 'medium_large'),
+                    'alt' => $alt,
+                    'other_formats' => $other_formats,
+                    'subdir' => $subdir,
+                    'caption' => wp_get_attachment_caption($image) ? '<figcaption>' . wp_get_attachment_caption($image) . '</figcaption>' : '',
+                );
             }
-      
+
             $lieux[] = array(
-              'type' => 'Feature',
-              'image' => $image,
-              'properties' => array(
                 'title' => $post->post_title,
                 'description' => get_the_excerpt($post),
+                'permalink' => get_permalink($post->ID),
                 'category' => array(
-                  'slug' => get_field('type', $post->ID)["value"] ? get_field('type', $post->ID)["value"] :  'wee',
-                  'name' => get_field('type', $post->ID)["label"] ? get_field('type', $post->ID)["value"] :  'wee',
-                )
-              ),
-              'geometry' => array(
-                'coordinates' => array_values($coordinates),
-                'type' => 'Point',
-              ),
+                    'slug' => get_field('type', $post->ID)["value"] ? get_field('type', $post->ID)["value"] :  'wee',
+                    'name' => get_field('type', $post->ID)["label"] ? get_field('type', $post->ID)["value"] :  'wee',
+                ),
+                'geometry' => array(
+                    'coordinates' => array_values($coordinates),
+                    'type' => 'Point',
+                ),
+                'image' => $image,
             );
-          }
-      
+        }
+
+        return $lieux;
     }
 
     /**
