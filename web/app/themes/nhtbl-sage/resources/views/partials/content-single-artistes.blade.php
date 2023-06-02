@@ -34,7 +34,7 @@
               <x-image-output :image="$contentitem['image']" size="medium" customsize class="h-12 w-48" />
             @endif
             <p
-              class="whitespace-nowrap text-lg md:text-xl lg:text-4xl uppercase tracking-wider font-display text-stroke md:text-stroke-2 text-fill-transparent hover:text-fill !mb-0">
+              class="whitespace-nowrap text-lg md:text-xl lg:text-4xl uppercase tracking-wider font-display text-stroke-05 md:text-stroke  text-fill-transparent hover:text-fill !mb-0">
               {!! $contentitem["title"] !!} </p>
             <p class="!mb-0 font-ui text-base uppercase whitespace-nowrap">{!! $contentitem["introtext"] !!}</p>
           </div>

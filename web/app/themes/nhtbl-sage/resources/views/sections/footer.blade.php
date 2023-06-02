@@ -1,6 +1,6 @@
 <footer class="content-info">
   <div
-    class="px-2 font-ui text-xs text-fill-transparent text-stroke-05 md:text-stroke text-stroke text-stroke-black tracking-wider lg:tracking-widest uppercase md:fluid-xl hover:text-fill-black hover:text-stroke-0 dark:hover:text-fill-white">
+    class="px-2 font-ui text-xs text-fill-transparent text-stroke-05 md:text-stroke  text-stroke-black tracking-wider lg:tracking-widest uppercase md:fluid-xl hover:text-fill-black hover:text-stroke-0 dark:hover:text-fill-white">
     <div class="flex justify-between w-full">
       <div class="flex-shrink">T</div>
       <div class="flex-shrink">r</div>
