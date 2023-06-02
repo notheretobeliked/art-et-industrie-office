@@ -1,4 +1,4 @@
-<div id="{{ $uniqueMapId }}" class="w-full h-[60vh] relative">
+<div id="{{ $uniqueMapId }}" class="w-full @if ($size=="large") h-[60vh] @else h-96 @endif relative">
   <!-- Live as if you were to die tomorrow. Learn as if you were to live forever. - Mahatma Gandhi -->
   <div class="absolute -right-128 w-128 z-20 bg-white p-4 transition-all" id="feature-info"></div>
 </div>
@@ -109,32 +109,31 @@
             }
           }
 
-          @if ( in_array($slug, ['resonances','all', 'triennale', 'oeuvres-publics'], true ) )
+          @if (in_array($slug, ['resonances', 'all', 'triennale', 'oeuvres-publics'], true))
 
-          // Add click event listener to the layers
-          Object.keys(categories).forEach(categorySlug => {
-            map.on('click', categorySlug + '-icon', function(e) {
+            // Add click event listener to the layers
+            Object.keys(categories).forEach(categorySlug => {
+              map.on('click', categorySlug + '-icon', function(e) {
 
-              const clickedFeature = e.features[0];
+                const clickedFeature = e.features[0];
 
-              // Create HTML content for the feature information
-              const title = document.createElement('h3');
-              title.innerHTML = clickedFeature.properties.title;
+                // Create HTML content for the feature information
+                const title = document.createElement('h3');
+                title.innerHTML = clickedFeature.properties.title;
 
-              const description = document.createElement('p');
-              description.innerHTML = clickedFeature.properties.description;
+                const description = document.createElement('p');
+                description.innerHTML = clickedFeature.properties.description;
 
-              // Clear existing content in the #feature-info div
-              const featureInfoDiv = document.getElementById('feature-info');
-              featureInfoDiv.classList.add('right-0');
-              featureInfoDiv.innerHTML = '';
+                // Clear existing content in the #feature-info div
+                const featureInfoDiv = document.getElementById('feature-info');
+                featureInfoDiv.classList.add('right-0');
+                featureInfoDiv.innerHTML = '';
 
-              // Append the title and description to the #feature-info div
-              featureInfoDiv.appendChild(title);
-              featureInfoDiv.appendChild(description);
+                // Append the title and description to the #feature-info div
+                featureInfoDiv.appendChild(title);
+                featureInfoDiv.appendChild(description);
+              });
             });
-          });
-
           @endif
         })
         .catch(error => {

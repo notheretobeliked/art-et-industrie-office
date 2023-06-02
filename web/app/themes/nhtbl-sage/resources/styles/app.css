@@ -61,7 +61,7 @@
   }
 
   h2 {
-    @apply font-display uppercase text-lg md:text-xl lg:text-2xl tracking-widest text-center my-0 border-b border-black;
+    @apply font-display uppercase text-lg md:text-xl lg:text-2xl tracking-widest my-0 border-b border-black;
   }
 
   h2.wp-block-heading {

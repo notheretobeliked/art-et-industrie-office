@@ -138,7 +138,6 @@
                 "class": "",
                 "id": ""
             },
-            "show_in_graphql": 1,
             "post_type": [
                 "tribe_events"
             ],
@@ -149,10 +148,14 @@
             "filters": [
                 "search"
             ],
-            "return_format": "object",
+            "return_format": "id",
+            "translations": "copy_once",
             "min": "",
             "max": "",
-            "elements": ""
+            "elements": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "lieuEvent"
         },
         {
             "key": "field_6435ed522a3ed",
@@ -168,7 +171,6 @@
                 "class": "",
                 "id": ""
             },
-            "show_in_graphql": 1,
             "post_type": [
                 "artistes"
             ],
@@ -179,10 +181,14 @@
             "filters": [
                 "search"
             ],
-            "return_format": "object",
+            "return_format": "id",
+            "translations": "copy_once",
             "min": "",
             "max": "",
-            "elements": ""
+            "elements": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "artisteLieu"
         },
         {
             "key": "field_6435ed872a3ee",
@@ -237,5 +243,5 @@
     "graphql_field_name": "champsPourEdition",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1684958416
+    "modified": 1685698271
 }

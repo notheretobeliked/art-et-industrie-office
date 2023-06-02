@@ -15,11 +15,13 @@ class MapOutput extends Component
 
     public $uniqueMapId;
     public $slug = 'all';
+    public $size = 'large';
 
-    public function __construct($slug = 'all')
+    public function __construct($slug = 'all', $size = 'large')
     {
         $this->uniqueMapId = uniqid('map-');
         $this->slug = $slug;
+        $this->size = $size;
     }
 
     public function mapboxApiToken(): string

@@ -3,6 +3,7 @@ module.exports = {
   darkMode: 'class',
   content: ['./index.php', './app/**/*.php', './resources/**/*.{php,vue,js}'],
   safelist: [
+    'grid-cols-mapandcontent',
     'editor-post-title',
     'p-name',
     'editor-styles-wrapper',
@@ -104,6 +105,7 @@ module.exports = {
       },
       gridTemplateColumns: {
         // Simple 16 column grid
+        'mapandcontent': '3fr 5fr',
         'event': '1fr 5fr 1fr',
         'menu': '1fr 4fr 1fr',
         'logo': '8fr 1fr 8fr',
