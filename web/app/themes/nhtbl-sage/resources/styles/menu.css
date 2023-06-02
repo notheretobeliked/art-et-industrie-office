@@ -9,7 +9,7 @@
   }
 
   #menu-main-menu li {
-    @apply mt-4 m-0 font-normal text-center flex items-center flex-col text-lg md:text-xl lg:text-4xl font-display uppercase tracking-wide md:text-stroke-2 md:text-fill-transparent hover:text-fill;
+    @apply mt-4 m-0 font-normal text-center flex items-center flex-col text-lg md:text-xl lg:text-4xl font-display uppercase tracking-wide md:text-stroke md:text-fill-transparent hover:text-fill;
 
     ul li {
       @apply mt-0 font-serif uppercase text-base text-fill-black hover:italic text-stroke-0;
@@ -22,5 +22,14 @@
 
   #menu-menu-top li {
     @apply m-0;
+  }
+
+  .shortcut_navigation li a {
+    @apply hover:italic;
+  }
+
+
+  .shortcut_navigation li a[aria-current="page"] {
+    @apply hover:italic;
   }
 }

@@ -10,7 +10,7 @@
             <!-- this should output 'A', 'B' etc -->
             <ul class="list-none p-0 m-0">
               @foreach ($group as $subitem)
-                <li class="!m-0 !p-0"><a class="!no-underline" href="{!! $subitem['permalink'] !!}">{!! $subitem['title'] !!}</a></li>
+                <li class="!m-0 !p-0"><a class="!no-underline hover:italic" href="{!! $subitem['permalink'] !!}">{!! $subitem['title'] !!}</a></li>
               @endforeach
             </ul>
           </li>
@@ -19,7 +19,7 @@
     @else
       <ul class="list-none p-0 m-0">
         @foreach ($items as $item)
-          <li class="m-0 p-0">{!! $item['title'] !!}</li>
+          <li class="!m-0 !p-0"><a class="!no-underline hover:italic" href="{!! $subitem['permalink'] !!}">{!! $subitem['title'] !!}</a></li>
         @endforeach
       </ul>
     @endif

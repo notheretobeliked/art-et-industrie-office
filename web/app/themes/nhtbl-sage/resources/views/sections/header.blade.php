@@ -29,7 +29,7 @@
           aria-label="{{ wp_get_nav_menu_name('shortcut_navigation') }}">
           {!! wp_nav_menu([
               'theme_location' => 'shortcut_navigation',
-              'menu_class' => 'flex flex-row gap-4 uppercase-small flex-grow justify-center !font-ui',
+              'menu_class' => 'shortcut_navigation flex flex-row gap-8 uppercase-small flex-grow justify-center !font-ui',
               'echo' => false,
           ]) !!}
         </nav>

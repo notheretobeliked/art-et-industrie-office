@@ -40,7 +40,7 @@
     <h2>{{ __('Artistes associés') }}</h2>
     <ul class="list-none columns-2 lg:columns-3 gap-4 p-0 m-0">
       @foreach ($lieu_listofartistes as $artiste)
-        <li class="m-0 p-0"><a href="{!! $artiste['permalink'] !!}">{!! $artiste['title'] !!}</a></li>
+        <li class="!m-0 !p-0"><a class="!no-underline hover:italic" href="{!! $artiste['permalink'] !!}">{!! $artiste['title'] !!}</a></li>
       @endforeach
     </ul>
   </div>
