@@ -90,12 +90,17 @@ module.exports = {
       transparent: 'transparent',
     },
     fluidTypography: {
-      remSize: 12,
+      remSize: 13,
       minScreenSize: 400,
       maxScreenSize: 1680,
-      minTypeScale: 1.32,
-      maxTypeScale: 1.718,
+      minTypeScale: 1.42,
+      maxTypeScale: 1.818,
       lineHeight: 1.2,
+    },
+    blur: {
+      'lg': '11px',
+      'sm': '6px',
+      'xl': '30px',
     },
     extend: {
       colors: {}, // Extend Tailwind's default colors
@@ -105,15 +110,15 @@ module.exports = {
       },
       gridTemplateColumns: {
         // Simple 16 column grid
-        'mapandcontent': '3fr 5fr',
-        'event': '1fr 5fr 1fr',
-        'menu': '1fr 4fr 1fr',
-        'logo': '8fr 1fr 8fr',
+        mapandcontent: '3fr 5fr',
+        event: '1fr 5fr 1fr',
+        menu: '1fr 4fr 1fr',
+        logo: '8fr 1fr 8fr',
       },
     },
   },
   plugins: [
-    require("tailwind-fluid-typography"),
+    require('tailwind-fluid-typography'),
     require('tailwindcss-text-fill-stroke'), // no options to configure
   ],
-};
+}
