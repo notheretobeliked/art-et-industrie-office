@@ -286,11 +286,31 @@ class Evenements extends Block
                 if (tribe_get_start_date($item->ID, false, 'Y') === tribe_get_end_date($item->ID, false, 'Y')) $start_date = (tribe_get_start_date($item->ID, false, 'j') . " " . $startMonth);
             } else $end_date = null;
 
+            $image = \get_post_thumbnail_id($item->ID);
+            // get image in size medium_large from $image['id']
+            if ($image) {
+                $subdir = get_post_meta($image, 'subdir', true);
+                $other_formats = get_post_meta($image, 'image_variants', true);
+                $alt = get_post_meta($image, '_wp_attachment_image_alt', TRUE);
+                $image = array(
+                    'id' => $image,
+                    'src' => wp_get_attachment_image_src($image, 'medium_large'),
+                    'width' => wp_get_attachment_metadata($image)['width'],
+                    'height' => wp_get_attachment_metadata($image)['height'],
+                    'srcset' => wp_get_attachment_image_srcset($image, 'medium_large'),
+                    'image' => wp_get_attachment_image($image, 'medium_large'),
+                    'alt' => $alt,
+                    'other_formats' => $other_formats,
+                    'subdir' => $subdir,
+                    'caption' => wp_get_attachment_caption($image) ? '<figcaption>' . wp_get_attachment_caption($image) . '</figcaption>' : '',
+                );
+            }
+
             $return[] = [
                 'lieu' => $lieu,
                 'title' => get_the_title($item->ID),
                 'permalink' => get_permalink($item->ID),
-                'thumbnail' => get_the_post_thumbnail_url($item->ID, 'medium'),
+                'thumbnail' => $image,
                 'date' => $start_date,
                 'time' => tribe_event_is_all_day($item->ID) ? null : tribe_get_start_date($item->ID, false, 'H:i'),
                 'end_date' => $end_date,

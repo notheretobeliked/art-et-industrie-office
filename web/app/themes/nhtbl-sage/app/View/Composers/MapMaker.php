@@ -13,6 +13,7 @@ class MapMaker extends Composer
      */
     protected static $views = [
         'partials.content-*',
+        'tribe.events.*'
     ];
 
     /**

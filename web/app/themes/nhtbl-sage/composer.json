@@ -40,7 +40,8 @@
   },
   "require": {
     "php": "^8.0",
-    "log1x/acf-composer": "^2.1"
+    "log1x/acf-composer": "^2.1",
+    "supermundano/sage-the-events-calendar": "^1.0"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "3.7.1"

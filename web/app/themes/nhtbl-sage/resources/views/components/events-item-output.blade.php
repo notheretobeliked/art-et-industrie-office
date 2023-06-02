@@ -1,6 +1,7 @@
-<article>
+<article class="border-b border-black dark:border-white py-2">
   @if (!is_admin())
-    <a href="{{ $event['permalink'] }}" class="grid md:grid-cols-event gap-2 py-2 border-b border-black dark:border-white">
+    <a href="{{ $event['permalink'] }}"
+      class="grid md:grid-cols-event gap-2">
   @endif
   <div class="flex flex-row md:flex-col content-between gap-2">
     <p class="m-0 w-full text-sm">
@@ -28,10 +29,14 @@
     @endif
   </div>
   <div>
-    <p>{!! $event['lieu']['title'] !!}</p>
+    <p class="text-sm m-0 w-full text-right md:text-left">{!! $event['lieu']['title'] !!}</p>
   </div>
 
+  @if ($event['image'])
+    <x-image-output :image="$event['image']" size="medium" customsize class="h-12 w-48" />
+  @endif
   @if (!is_admin())
     </a>
   @endif
+  
 </article>
