@@ -26,24 +26,23 @@
     </div>
   </div>  
 
-  @if ($lieu_event)
+  @if ($lieu_listofevent)
   <div class="alignwide">
-  <h2>{{ __('Evènements associés') }}</h2>
-    @foreach ($lieu_event as $event)
+    <h2>{{ __('Evènements associés') }}</h2>
+    @foreach ($lieu_listofevent as $event)
       <x-events-item-output :event="$event" />
     @endforeach
-</div>
-@endif
+  </div>
+  @endif
 
-@if ($artiste_lieu)
-<div class="alignwide">
+  @if ($lieu_listofartistes)
+  <div class="alignwide">
     <h2>{{ __('Artistes associés') }}</h2>
-
-<ul class="list-none columns-2 lg:columns-3 gap-4 p-0 m-0">
-    @foreach ($artiste_lieu as $artiste)
-      <li class="m-0 p-0"><a href="{!! $artiste['permalink'] !!}">{!! $artiste['title'] !!}</a></li>
-    @endforeach
+    <ul class="list-none columns-2 lg:columns-3 gap-4 p-0 m-0">
+      @foreach ($lieu_listofartistes as $artiste)
+        <li class="m-0 p-0"><a href="{!! $artiste['permalink'] !!}">{!! $artiste['title'] !!}</a></li>
+      @endforeach
     </ul>
-</div>
-@endif
+  </div>
+  @endif
   </article>
