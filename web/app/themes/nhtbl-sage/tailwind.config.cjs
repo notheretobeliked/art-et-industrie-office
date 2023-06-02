@@ -100,7 +100,7 @@ module.exports = {
     blur: {
       'lg': '11px',
       'sm': '6px',
-      'xl': '30px',
+      'xl': '40px',
     },
     extend: {
       colors: {}, // Extend Tailwind's default colors

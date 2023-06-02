@@ -138,7 +138,7 @@
           </clipPath>
         </defs>
       </svg>
-      <div class="absolute backdrop-blur-3xl left-0 w-full h-full top-0 right-0 bottom-0"></div>
+      <div class="absolute backdrop-blur-xl left-0 w-full h-full top-0 right-0 bottom-0"></div>
       <div class="absolute left-0 top-0 z-50 px-2">
         <button @click="showMenu = !showMenu" class="items-center py-4 flex flex-row gap-2">
           <svg x-show="showMenu" class="w-6 h-6" fill="none" stroke-linecap="round" stroke-linejoin="round"
