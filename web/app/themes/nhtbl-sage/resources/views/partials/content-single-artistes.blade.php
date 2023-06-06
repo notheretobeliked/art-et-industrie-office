@@ -48,7 +48,6 @@
     </div>
   @endif
 
-@dump($artiste_listoflieux)
   </div>
 
 
