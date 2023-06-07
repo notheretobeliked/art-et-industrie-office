@@ -31,7 +31,7 @@
 
     </div>
     @if (has_nav_menu('shortcut_navigation'))
-      <nav class="hidden md:flex flex-row gap-4 items-center justify-evenly" aria-label="Menu principal"
+      <nav class="hidden lg:flex flex-row gap-4 items-center justify-evenly" aria-label="Menu principal"
         aria-label="{{ wp_get_nav_menu_name('shortcut_navigation') }}">
         {!! wp_nav_menu([
             'theme_location' => 'shortcut_navigation',
@@ -42,9 +42,9 @@
     @else
       <div></div>
     @endif
-    <div class="flex flex-row items-center">
-      <p class="text-sm mb-0 mr-2 text-serif">{{ __('Mode', '_sage') }}</p>
-      <div x-cloak class="relative flex items-center gap-1 rounded-3xl p-1 border h-8 justify-self-end">
+    <div class="flex flex-row items-center justify-end">
+      <p class="text-sm mb-0 mr-2 text-serif hidden md:block">{{ __('Mode', '_sage') }}</p>
+      <div x-cloak class="mr-2 lg:mr-4 relative flex items-center gap-1 rounded-3xl p-1 border h-8 justify-self-end">
         <button x-on:click="darkMode = 'light'">
           <svg xmlns="http://www.w3.org/2000/svg" 
             class="w-6 h-6 p-1 text-black transition rounded-full cursor-pointer bg-gray-50 hover:bg-gray-200 stroke-white dark:stroke-black bg-red dark:bg-transparent"
@@ -66,7 +66,7 @@
         </button>
       </div>
 
-      <p class="text-sm mb-0 mr-2 ml-4 text-serif">{{ __('Energie', '_sage') }}</p>
+      <p class="hidden md:block text-sm mb-0 mr-2 text-serif">{{ __('Energie', '_sage') }}</p>
       <div class="relative flex items-center gap-1 rounded-3xl p-1 border h-8 justify-self-end">
         <button  x-on:click="$store.quality.qualitySwitch = 'webp-bw'; $store.utils.setCookie('qualitySwitch', 'webp-bw', 365)">
           <svg class="w-6 h-6" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -103,9 +103,9 @@
     <nav class="nav-primary flex flex-col fixed top-0 z-10 bg-white text-black w-full h-screen" x-show="showMenu"
       x-collapse.duration.1000ms aria-label="{{ wp_get_nav_menu_name('primary_navigation') }}">
       <div class="w-full h-screen relative">
-        <svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 1440 920" fill="none"
+        <svg  :class="{ 'hidden': $store.quality.qualitySwitch === 'webp-bw' }" width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 1440 920" fill="none"
           xmlns="http://www.w3.org/2000/svg">
-          <g clip-path="url(#clip0_202_56030)">
+            <g clip-path="url(#clip0_202_56030)">
             <rect width="1440" height="920" fill="#5A8BFF" />
             <path
               d="M503.536 -22.3029C524.503 10.3564 529.862 57.1264 509.474 97.7493C489.087 138.372 397.115 253.26 369.92 275.384C342.724 297.509 342.7 333.338 415.616 334.876C488.532 336.415 533.556 341.999 513.396 393.228C493.237 444.457 388.618 569.09 283.782 594.811C208.196 613.331 -341.204 518.537 -56.9393 61.5356C87.3328 -170.413 457.161 -94.4951 503.536 -22.3029Z"
