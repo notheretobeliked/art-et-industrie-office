@@ -274,8 +274,8 @@ class Evenements extends Block
 
             $lieu = get_field('lieu_event', $item->ID);
             $lieu ? $lieu = [
-                'title' => get_the_title($lieu[0]->ID),
-                'permalink' => get_permalink($lieu[0]->ID),
+                'title' => get_the_title($lieu[0]),
+                'permalink' => get_permalink($lieu[0]),
             ] : $lieu = null;
 
             $start_date = tribe_get_start_date($item->ID, false, 'j/n/Y');
