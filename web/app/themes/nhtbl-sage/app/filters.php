@@ -102,6 +102,37 @@ add_action('add_attachment', function ($attachment_id) {
     }
 });
 
+
+add_filter( 'render_block', function ( $block_content, $block ) {
+    // Check if the block is of type 'core/image'
+    if ( 'core/image' === $block['blockName'] ) {
+        error_log(print_r($block, true));
+        // Extract the image URL and alt text from the block attributes
+        $imageId = $block['attrs']['id'];
+        $size = $block['attrs']['sizeSlug'];
+        $image_alt = get_post_meta($imageId, '_wp_attachment_image_alt', TRUE);
+        $subdir = get_post_meta($imageId, 'subdir', true);
+        $other_formats = get_post_meta($imageId, 'image_variants', true);
+        $output = array(
+            'src' => wp_get_attachment_image_src($imageId, $size),
+            'width' => wp_get_attachment_image_src($imageId, $size)[1],
+            'height' => wp_get_attachment_image_src($imageId, $size)[2],
+            'srcset' => wp_get_attachment_image_srcset($imageId, $size),
+            'image' => wp_get_attachment_image($imageId, $size),
+            'alt' => $image_alt,
+            'other_formats' => $other_formats[$size],
+            'subdir' => $subdir,
+            'caption' => wp_get_attachment_caption($imageId) ? '<figcaption class="font-serif text-sm mt-2">' . wp_get_attachment_caption($imageId) . '</figcaption>' : '',
+        );
+
+        // Return the custom output instead of the original $block_content
+        return \Roots\view('components.image-output', ['class' => 'w-full max-w-full', 'crop' => true, 'image' => $output, 'size' => $size, 'caption' => true])->render();    
+    }
+
+    // For other blocks, return the original $block_content
+    return $block_content;
+}, 10, 2 );
+
 add_action('delete_attachment', function ($attachment_id) {
     // Get the image variants custom field for the attachment post
     $attachment = get_post($attachment_id);
