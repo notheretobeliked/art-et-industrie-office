@@ -1,14 +1,31 @@
 import domReady from '@roots/sage/client/dom-ready'
 import Alpine from 'alpinejs'
 import collapse from '@alpinejs/collapse'
+import {setCookie, getCookie} from './qualityswitcher.js'
 
 window.Alpine = Alpine
 Alpine.plugin(collapse)
 
+window.getCookie = getCookie
+window.setCookie = setCookie
+
 /**
  * Application entrypoint
  */
+
 domReady(async () => {
+  
+  document.addEventListener('alpine:init', () => {
+    Alpine.store('utils', {
+      setCookie: (name, value, days) => window.setCookie(name, value, days),
+      getCookie: (name, value, days) => window.getCookie(name, value, days),
+    }),
+    Alpine.store('quality', {
+      qualitySwitch: window.getCookie('qualitySwitch') || 'webp-low'
+    })
+  })
+
+  
   Alpine.start()
 
   let containers = document.querySelectorAll('.scroll-container')

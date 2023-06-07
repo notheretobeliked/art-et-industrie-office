@@ -19,14 +19,15 @@
     "translate:mo": "wp i18n make-mo ./resources/lang ./resources/lang"
   },
   "devDependencies": {
-    "@roots/bud": "6.12.3",
-    "@roots/bud-tailwindcss": "6.12.3",
-    "@roots/sage": "6.12.3",
+    "@roots/bud": "6.12.2",
+    "@roots/bud-tailwindcss": "6.12.2",
+    "@roots/sage": "6.12.2",
     "browser-sync": "^2.29.3",
     "browser-sync-webpack-plugin": "^2.3.0"
   },
   "dependencies": {
     "@alpinejs/collapse": "^3.12.1",
+    "@roots/browserslist-config": "^6.12.3",
     "alpinejs": "^3.12.1",
     "postcss-import": "^15.1.0",
     "postcss-loader": "^7.0.2",

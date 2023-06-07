@@ -37,6 +37,12 @@
   }
 }
 
+@layer components {
+  .qualitySelector-active svg circle {
+    @apply fill-black dark:fill-white;
+  }
+}
+
 @layer base {
   body {
     @apply bg-white text-black;

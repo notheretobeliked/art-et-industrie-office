@@ -33,6 +33,21 @@
           "color": "#807f7c"
         },
         {
+          "name": "Green",
+          "slug": "green",
+          "color": "#8cfdcc"
+        },
+        {
+          "name": "Yellow",
+          "slug": "yellow",
+          "color": "#f3ce45"
+        },
+        {
+          "name": "Red",
+          "slug": "red",
+          "color": "#ff6918"
+        },
+        {
           "name": "Transparent",
           "slug": "transparent",
           "color": "transparent"

@@ -90,6 +90,9 @@ module.exports = {
         500: '#807F7C',
         100: '#DFDBDA',
       },
+      green: '#8CFDCC',
+      yellow: '#F3CE45',
+      red: '#FF6918',
       transparent: 'transparent',
     },
     fluidTypography: {

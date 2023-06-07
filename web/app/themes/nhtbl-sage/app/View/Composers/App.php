@@ -24,6 +24,7 @@ class App extends Composer
     {
         return [
             'siteName' => $this->siteName(),
+            'qualitySwitch' => $_COOKIE['qualitySwitch'],
         ];
     }
 

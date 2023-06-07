@@ -3,6 +3,7 @@
     <a href="{{ $event['permalink'] }}"
       class="grid md:grid-cols-event gap-2">
   @endif
+  
   <div class="flex flex-row md:flex-col content-between gap-2">
     <p class="m-0 w-full text-sm">
       @if ($event['end_date'])
