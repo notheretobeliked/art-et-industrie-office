@@ -67,7 +67,7 @@
   }
 
   h2 {
-    @apply font-display uppercase text-lg md:text-xl lg:text-2xl tracking-widest my-0 border-b border-black;
+    @apply font-display uppercase text-lg md:text-xl lg:text-2xl tracking-widest my-0 border-b border-black dark:border-white;
   }
 
   h2.wp-block-heading {
@@ -75,7 +75,7 @@
   }
 
   h3 {
-    @apply font-display uppercase text-2xl tracking-widest text-left my-4;
+    @apply font-display uppercase text-base tracking-widest text-left my-4 border-b border-black dark:border-white;
   }
 
   .main > *:not(.alignwide):not(.alignfull):not(article),

@@ -15,7 +15,8 @@
   </h1>
 </a>
 <header class="banner sticky top-0 bg-white dark:bg-black z-10" x-data="{ showMenu: false }">
-  <div class="px-2 w-full grid grid-cols-2 md:grid-cols-menu gap-4 bg-white dark:bg-black items-center">
+  <div class="px-2 w-full grid grid-cols-2 md:grid-cols-menu gap-4 bg-white dark:bg-black items-center"
+    x-data="{ 'showModal': false }" @keydown.escape="showModal = false">
     <div class="flex flex-row gap-0 items-center top-0">
       <button @click="showMenu = !showMenu" class="items-center py-4 flex flex-row gap-2">
         <svg x-show="showMenu" class="w-6 h-6" fill="none" stroke-linecap="round" stroke-linejoin="round"
@@ -42,11 +43,13 @@
     @else
       <div></div>
     @endif
-    <div class="flex flex-row items-center justify-end">
+    <div class="flex flex-row items-center justify-end relative" x-data="{ popupOpen: false }" @mouseleave="popupOpen = false"
+      @mouseover="popupOpen = true">
+
       <p class="text-sm mb-0 mr-2 text-serif hidden md:block">{{ __('Mode', '_sage') }}</p>
       <div x-cloak class="mr-2 lg:mr-4 relative flex items-center gap-1 rounded-3xl p-1 border h-8 justify-self-end">
         <button x-on:click="darkMode = 'light'">
-          <svg xmlns="http://www.w3.org/2000/svg" 
+          <svg xmlns="http://www.w3.org/2000/svg"
             class="w-6 h-6 p-1 text-black transition rounded-full cursor-pointer bg-gray-50 hover:bg-gray-200 stroke-white dark:stroke-black bg-red dark:bg-transparent"
             fill="none" viewBox="0 0 24 24" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round"
@@ -68,33 +71,86 @@
 
       <p class="hidden md:block text-sm mb-0 mr-2 text-serif">{{ __('Energie', '_sage') }}</p>
       <div class="relative flex items-center gap-1 rounded-3xl p-1 border h-8 justify-self-end">
-        <button  x-on:click="$store.quality.qualitySwitch = 'webp-bw'; $store.utils.setCookie('qualitySwitch', 'webp-bw', 365)">
-          <svg class="w-6 h-6" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle :class="{ 'fill-green': $store.quality.qualitySwitch === 'webp-bw' }" cx="9" cy="9" r="9" />
+        <button
+          x-on:click="$store.quality.qualitySwitch = 'webp-bw'; $store.utils.setCookie('qualitySwitch', 'webp-bw', 365)">
+          <svg class="w-6 h-6" width="18" height="18" viewBox="0 0 18 18" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <circle :class="{ 'fill-green': $store.quality.qualitySwitch === 'webp-bw' }" cx="9" cy="9"
+              r="9" />
           </svg>
 
 
           <span class="sr-only">{{ __('Utilisation d\'energie basse', 'sage') }} </span>
         </button>
 
-        <button x-on:click="$store.quality.qualitySwitch = 'webp-low'; $store.utils.setCookie('qualitySwitch', 'webp-low', 365)">
-          <svg class="w-6 h-6" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle :class="{ 'fill-yellow': $store.quality.qualitySwitch === 'webp-low' }" cx="9" cy="9" r="9" />
+        <button
+          x-on:click="$store.quality.qualitySwitch = 'webp-low'; $store.utils.setCookie('qualitySwitch', 'webp-low', 365)">
+          <svg class="w-6 h-6" width="18" height="18" viewBox="0 0 18 18" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <circle :class="{ 'fill-yellow': $store.quality.qualitySwitch === 'webp-low' }" cx="9"
+              cy="9" r="9" />
           </svg>
 
           <span class="sr-only">{{ __('Utilisation d\'energie moyenne', 'sage') }} </span>
         </button>
 
 
-        <button x-on:click="$store.quality.qualitySwitch = 'webp'; $store.utils.setCookie('qualitySwitch', 'webp', 365)">
-          <svg class="w-6 h-6" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle :class="{ 'fill-red': $store.quality.qualitySwitch === 'webp' }" cx="9" cy="9" r="9" />
+        <button
+          x-on:click="$store.quality.qualitySwitch = 'webp'; $store.utils.setCookie('qualitySwitch', 'webp', 365)">
+          <svg class="w-6 h-6" width="18" height="18" viewBox="0 0 18 18" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <circle :class="{ 'fill-red': $store.quality.qualitySwitch === 'webp' }" cx="9" cy="9"
+              r="9" />
           </svg>
 
           <span class="sr-only">{{ __('Utilisation d\'energie elevée', 'sage') }} </span>
         </button>
+      </div>
+      <div x-show="popupOpen" class="absolute rounded-2 top-8 transform -translate-x-1/2 left-1/2">
+        <svg class="text-black h-5 w-full left-0" x="0px" y="0px" viewBox="0 0 255 255"
+          xml:space="preserve">
+          <path d="M0 255L127.5 127.5L255 255H0Z" class="fill-black dark:fill-white" />
+        </svg>
+        <div class="py-4 px-8 bg-black dark:bg-white">
+          <button @click="() => { showModal = true; popupOpen = false}"
+            class="text-white dark:text-black w-full text-center text-xs font-serif whitespace-nowrap">{{ __('Controler votre impact énergétique', 'sage') }}</button>
+        </div>
+      </div>
+    </div>
+    <div class="fixed inset-0 top-0 left-0 z-30 flex items-center justify-center overflow-auto bg-black dark:bg-gray-500 bg-opacity-50 dark:bg-opacity-50 max-h-screen"
+      x-show="showModal">
+
+      <div @click.away="showModal = false" x-transition:enter="motion-safe:ease-out duration-300"
+        x-transition:enter-start="opacity-0 scale-90" x-transition:enter-end="opacity-100 scale-100"
+        class="max-w-3xl px-6 py-4 max-h-screen overflow-y-scroll mx-auto text-left bg-white dark:bg-black rounded shadow-lg">
+        <div class="flex items-center justify-between">
+          <h2 class="mr-3 text-black dark:text-white max-w-none">Gestions Énergétiques</h5>
+
+          <button type="button" class="z-50 cursor-pointer" @click="showModal = false">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="w-full mt-4">
+          <p>Pour contrôler l’impact énergétique de votre visite sur ce site, vous pouvez ajuster certains paramètres. </p>
+          <h3>Mode sombre / clair</h3>
+          <p>Par défaut, ce site suit le réglage de votre appareil. Cependant, une récente étude a montré que le mode sombre sur un appareil mobile peut économiser jusqu’à 40% de batterie.</p>
+          <p>Imaginez à l’échelle mondiale combien d’énergie serait économisée si cela devenait un paramètre par défaut ou si tout le monde l’activait?</p>
+          <h3>Qualité des images</h3>
+          <p>Vous pouvez modifier la qualité des images: noir & blanc très compressées / compressées / haute-définition. Plus les images sont compressées, moins elles consomment de l’énergie. À l’inverse, les images HD sont deux fois plus lourdes. </p>
+          <p>À l’échelle de la consommation d’énergie planétaire, l’impact de vos choix pour ce site sont négligeables, mais posent la question de la responsabilité de l'industrie du numérique face à la massification des données dans le contexte de la crise climatique.</p>
+          
+          
+
+          <p>Vous pouvez mesurer l'empreinte carbone de ce site ou d'autres avec le Calculateur d'empreinte carbone pour
+            sites web.</p>
+        </div>
 
       </div>
+
     </div>
 
   </div>
@@ -103,9 +159,9 @@
     <nav class="nav-primary flex flex-col fixed top-0 z-10 bg-white text-black w-full h-screen" x-show="showMenu"
       x-collapse.duration.1000ms aria-label="{{ wp_get_nav_menu_name('primary_navigation') }}">
       <div class="w-full h-screen relative">
-        <svg  :class="{ 'hidden': $store.quality.qualitySwitch === 'webp-bw' }" width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 1440 920" fill="none"
-          xmlns="http://www.w3.org/2000/svg">
-            <g clip-path="url(#clip0_202_56030)">
+        <svg :class="{ 'hidden': $store.quality.qualitySwitch === 'webp-bw' }" width="100%" height="100%"
+          preserveAspectRatio="none" viewBox="0 0 1440 920" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip0_202_56030)">
             <rect width="1440" height="920" fill="#5A8BFF" />
             <path
               d="M503.536 -22.3029C524.503 10.3564 529.862 57.1264 509.474 97.7493C489.087 138.372 397.115 253.26 369.92 275.384C342.724 297.509 342.7 333.338 415.616 334.876C488.532 336.415 533.556 341.999 513.396 393.228C493.237 444.457 388.618 569.09 283.782 594.811C208.196 613.331 -341.204 518.537 -56.9393 61.5356C87.3328 -170.413 457.161 -94.4951 503.536 -22.3029Z"
