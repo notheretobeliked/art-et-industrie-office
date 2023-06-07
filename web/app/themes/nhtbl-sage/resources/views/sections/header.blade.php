@@ -113,7 +113,7 @@
         </svg>
         <div class="py-4 px-8 bg-black dark:bg-white">
           <button @click="() => { showModal = true; popupOpen = false}"
-            class="text-white dark:text-black w-full text-center text-xs font-serif whitespace-nowrap">{{ __('Controler votre impact énergétique', 'sage') }}</button>
+            class="text-white dark:text-black w-full text-center text-xs font-serif whitespace-nowrap hover:italic">{!! $qualitySwitchData["tooltip"] !!}</button>
         </div>
       </div>
     </div>
@@ -124,7 +124,7 @@
         x-transition:enter-start="opacity-0 scale-90" x-transition:enter-end="opacity-100 scale-100"
         class="max-w-3xl px-6 py-4 max-h-screen overflow-y-scroll mx-auto text-left bg-white dark:bg-black rounded shadow-lg">
         <div class="flex items-center justify-between">
-          <h2 class="mr-3 text-black dark:text-white max-w-none">Gestions Énergétiques</h5>
+          <h2 class="mr-3 text-black dark:text-white max-w-none">{!! $qualitySwitchData["modal_title"] !!}</h5>
 
           <button type="button" class="z-50 cursor-pointer" @click="showModal = false">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -135,18 +135,7 @@
         </div>
 
         <div class="w-full mt-4">
-          <p>Pour contrôler l’impact énergétique de votre visite sur ce site, vous pouvez ajuster certains paramètres. </p>
-          <h3>Mode sombre / clair</h3>
-          <p>Par défaut, ce site suit le réglage de votre appareil. Cependant, une récente étude a montré que le mode sombre sur un appareil mobile peut économiser jusqu’à 40% de batterie.</p>
-          <p>Imaginez à l’échelle mondiale combien d’énergie serait économisée si cela devenait un paramètre par défaut ou si tout le monde l’activait?</p>
-          <h3>Qualité des images</h3>
-          <p>Vous pouvez modifier la qualité des images: noir & blanc très compressées / compressées / haute-définition. Plus les images sont compressées, moins elles consomment de l’énergie. À l’inverse, les images HD sont deux fois plus lourdes. </p>
-          <p>À l’échelle de la consommation d’énergie planétaire, l’impact de vos choix pour ce site sont négligeables, mais posent la question de la responsabilité de l'industrie du numérique face à la massification des données dans le contexte de la crise climatique.</p>
-          
-          
-
-          <p>Vous pouvez mesurer l'empreinte carbone de ce site ou d'autres avec le Calculateur d'empreinte carbone pour
-            sites web.</p>
+            {!! $qualitySwitchData["modal_content"] !!}
         </div>
 
       </div>

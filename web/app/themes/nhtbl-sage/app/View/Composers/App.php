@@ -25,6 +25,7 @@ class App extends Composer
         return [
             'siteName' => $this->siteName(),
             'qualitySwitch' => $_COOKIE['qualitySwitch'],
+            'qualitySwitchData' => get_field('energy_selector', 'option')
         ];
     }
 

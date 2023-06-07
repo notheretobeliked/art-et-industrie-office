@@ -1,6 +1,3 @@
-<div class="w-screen">
-  @php error_log("cookie value:" . $_COOKIE['qualitySwitch']) @endphp
-</div>
 <div class="snap-start">
   <figure>
     <picture class="block object-cover {{ $class }}" x-data="{

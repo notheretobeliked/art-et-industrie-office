@@ -44,6 +44,10 @@
 }
 
 @layer base {
+  p > a {
+    @apply py-2 dark:hover:text-black bg-gradient-to-r from-yellow to-red bg-no-repeat [background-position:0_88%] [background-size:100%_0.12em] motion-safe:transition-all motion-safe:duration-200 hover:[background-size:100%_100%] focus:[background-size:100%_100%] ;
+  }
+
   body {
     @apply bg-white text-black;
   }
@@ -67,7 +71,7 @@
   }
 
   h2 {
-    @apply font-display uppercase text-lg md:text-xl lg:text-2xl tracking-widest my-0 border-b border-black dark:border-white;
+    @apply pb-2 font-display uppercase text-lg md:text-xl lg:text-2xl tracking-widest my-0 border-b border-black dark:border-white;
   }
 
   h2.wp-block-heading {
@@ -105,7 +109,7 @@
     scrollbar-width: none;
     scrollbar-color: transparent;
   }
-  
+
   /* Chrome, Edge, and Safari */
   .hide-scrollbar::-webkit-scrollbar {
     width: 0;

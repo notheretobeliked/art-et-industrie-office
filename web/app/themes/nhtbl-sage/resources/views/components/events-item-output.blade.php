@@ -1,9 +1,12 @@
-<article class="border-b border-black dark:border-white py-2">
+<article 
+  x-data="{ showDetail: false }" 
+  x-on:mouseenter="showDetail = true"
+  x-on:mouseleave="showDetail = false"
+  class="border-b border-black dark:border-white py-2 grid md:grid-cols-event gap-2 hover:bg-black dark:hover:bg-white hover:bg-opacity-10 dark:hover:bg-opacity-10">
   @if (!is_admin())
-    <a href="{{ $event['permalink'] }}"
-      class="grid md:grid-cols-event gap-2">
+    <a href="{{ $event['permalink'] }}" class="contents">
   @endif
-  
+
   <div class="flex flex-row md:flex-col content-between gap-2">
     <p class="m-0 w-full text-sm">
       @if ($event['end_date'])
@@ -17,7 +20,7 @@
     @endif
   </div>
   <div>
-    <h3 class="text-base m-0">{!! $event['title'] !!}</h3>
+    <h3 class="text-base m-0 border-0">{!! $event['title'] !!}</h3>
     @if ($event['categories'])
       <p class="m-0">
         @foreach ($event['categories'] as $category)
@@ -32,12 +35,13 @@
   <div>
     <p class="text-sm m-0 w-full text-right md:text-left">{!! $event['lieu']['title'] !!}</p>
   </div>
-
-  @if ($event['image'])
-    <x-image-output :image="$event['image']" size="medium" customsize class="h-12 w-48" />
-  @endif
   @if (!is_admin())
     </a>
   @endif
-  
+  @if ($event['thumbnail'])
+    <div></div>
+    <div x-show="showDetail" x-collapse.duration.200ms>
+      <x-image-output :image="$event['thumbnail']" size="large" customsize class="w-1/2" />
+    </div>
+  @endif
 </article>

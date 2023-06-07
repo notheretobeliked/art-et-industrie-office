@@ -113,6 +113,16 @@ add_action('after_setup_theme', function () {
     add_editor_style(asset('app.css'));
     add_editor_style(asset('editor.css'));
 
+    if( function_exists('acf_add_options_page') ) {
+        acf_add_options_page(array(
+            'page_title'    => 'Paramètres generaux',
+            'menu_title'    => 'Paramètres generaux',
+            'menu_slug'     => 'general-settings',
+            'capability'    => 'edit_posts',
+            'redirect'      => false
+        ));
+    }
+
 
     /**
      * Enable selective refresh for widgets in customizer.
