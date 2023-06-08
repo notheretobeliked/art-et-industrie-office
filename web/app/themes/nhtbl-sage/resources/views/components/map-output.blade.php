@@ -1,9 +1,49 @@
-<div id="{{ $uniqueMapId }}" class="w-full @if ($size=="large") h-[60vh] @else h-96 @endif relative">
-  <!-- Live as if you were to die tomorrow. Learn as if you were to live forever. - Mahatma Gandhi -->
-  <div class="absolute -right-128 w-128 z-20 bg-white p-4 transition-all" id="feature-info"></div>
+<div class="relative w-full max-w-screen @if ($size == 'large') h-[80vh] @else h-96 @endif">
+  <div id="{{ $uniqueMapId }}" class="w-full @if ($size == 'large') h-[80vh] @else h-96 @endif">
+  </div>
+  @if (in_array($slug, ['resonance', 'all', 'triennale', 'oeuvres-publics'], true))
+    <div @pin.window="placedata = $event.detail.features[0].properties; console.log(placedata)" x-data="{ placedata: null }"
+      class="flex flex-col gap-3 text-black absolute -right-128 max-w-full lg:w-128 z-20 bg-white p-4 transition-all top-0 bottom-0 h-full max-h-full overflow-y-scroll"
+      id="feature-info" @click.away="document.getElementById('feature-info').classList.remove('right-0')">
+      <div class="flex items-center justify-between">
+        <h3 x-html="placedata.title" x-data="console.log(placedata.image)"></h3>
+        <button type="button" class="z-50 cursor-pointer" @click="document.getElementById('feature-info').classList.remove('right-0')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <a :href="placedata.permalink"
+        class="text-center inline-flex p-4 border border-black font-ui uppercase tracking-wider hover:bg-black hover:bg-opacity-10">Evènements
+        et plus d'informations</a>
+      <figure>
+        <picture class="block object-cover" x-data="{
+            qualitySwitch: $store.utils.getCookie('qualitySwitch') || 'webp-low',
+            basePath: '/app/uploads' + placedata.image.subdir + '/,
+            imageSources: {
+                'webp': placedata.image.other_formats.large.webp,
+                'webp-low': placedata.image.other_formats.large.webp - low,
+                'webp-bw': placedata.image.other_formats.large.webp - bw
+            }
+        }">
+          <source x-data="console.log(basePath)" :srcset="basePath + qualitySwitch" media="(min-width: 0px)" alt=" ">
+          <img :width="placedata.image.width" :height="placedata.image.height" class="w-full h-auto"
+            :src="placedata.image.src[0]" :alt="placedata.image.alt" />
+        </picture>
+      </figure>
+      <div x-html="placedata.acces" class="pb-3"></div>
+
+
+    </div>
+  @endif
 </div>
+
+
 <script>
   const initializeMap = () => {
+
     mapboxgl.accessToken = '{{ $mapboxApiToken }}';
 
     const map = new mapboxgl.Map({
@@ -12,8 +52,15 @@
       center: [2.3755593500912586, 51.04759496120762], // Set the initial map center
       zoom: 10, // Set the initial zoom level
       language: 'fr' // Set the language to French
-
     });
+
+    const dispatchDetails = (slug) => {
+      const event = new CustomEvent('pin', {
+        detail: slug,
+        bubbles: true
+      });
+      window.dispatchEvent(event);
+    }
 
 
     map.on('load', function() {
@@ -82,7 +129,7 @@
           }
 
           // Fit the map to display all the markers
-          @if ($slug == 'lieux' || $slug == 'all' || $slug == 'oeuvres-publics')
+          @if (in_array($slug, ['resonance', 'all', 'triennale', 'oeuvres-publics'], true))
             var bounds = new mapboxgl.LngLatBounds();
             data.features.forEach(marker => {
               bounds.extend(marker.geometry.coordinates);
@@ -91,7 +138,12 @@
               padding: 50
             });
           @else
-            map.setCenter(data.features[0].geometry.coordinates);
+            map.flyTo({
+              center: data.features[0].geometry.coordinates,
+              essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+              duration: 1000,
+              zoom: 12.5,
+            });
           @endif
 
 
@@ -109,29 +161,44 @@
             }
           }
 
-          @if (in_array($slug, ['resonances', 'all', 'triennale', 'oeuvres-publics'], true))
+          @if (in_array($slug, ['resonance', 'all', 'triennale', 'oeuvres-publics'], true))
 
             // Add click event listener to the layers
             Object.keys(categories).forEach(categorySlug => {
               map.on('click', categorySlug + '-icon', function(e) {
+                e.preventDefault();
 
                 const clickedFeature = e.features[0];
 
-                // Create HTML content for the feature information
-                const title = document.createElement('h3');
-                title.innerHTML = clickedFeature.properties.title;
+                fetch(`/wp-json/triennale/v1/lieux/${clickedFeature.properties.slug}`)
+                  .then(response => response.json())
+                  .then(data => {
+                    // Display the returned data in the green div
+                    dispatchDetails(data)
+                    console.log(clickedFeature)
+                    document.getElementById('feature-info').classList.add('right-0')
+                    map.flyTo({
+                      center: clickedFeature.geometry.coordinates,
+                      essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+                      duration: 1000,
+                      zoom: 12.5,
+                    });
+                  })
+                  .catch(error => {
+                    console.error('Error:', error);
+                  });
+              });
 
-                const description = document.createElement('p');
-                description.innerHTML = clickedFeature.properties.description;
-
-                // Clear existing content in the #feature-info div
-                const featureInfoDiv = document.getElementById('feature-info');
-                featureInfoDiv.classList.add('right-0');
-                featureInfoDiv.innerHTML = '';
-
-                // Append the title and description to the #feature-info div
-                featureInfoDiv.appendChild(title);
-                featureInfoDiv.appendChild(description);
+              map.on('click', function(e) {
+                if (e.defaultPrevented === false) {
+                  var bounds = new mapboxgl.LngLatBounds();
+                  data.features.forEach(marker => {
+                    bounds.extend(marker.geometry.coordinates);
+                  });
+                  map.fitBounds(bounds, {
+                    padding: 50
+                  });
+                }
               });
             });
           @endif

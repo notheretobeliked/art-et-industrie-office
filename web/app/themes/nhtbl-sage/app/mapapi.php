@@ -28,6 +28,7 @@ function returnMapMarkers($data)
         'type' => 'Feature',
         'properties' => array(
           'title' => $post->post_title,
+          'slug' => $post->post_name,
           'description' => get_the_excerpt($post),
           'category' => array(
             'slug' => get_field('type', $post->ID)["value"] ? get_field('type', $post->ID)["value"] :  'wee',
@@ -58,6 +59,7 @@ function returnMapMarkers($data)
       $lieux[] = array(
         'type' => 'Feature',
         'properties' => array(
+          'slug' => $post->post_name,
           'title' => $post->post_title,
           'description' => get_the_excerpt($post),
           'category' => array(
@@ -84,10 +86,32 @@ function returnMapMarkers($data)
         'longitude' => get_field('longitude', $posts[0]->ID),
         'latitude' => get_field('latitude', $posts[0]->ID),
       );
-
+      $image = \get_post_thumbnail_id($posts[0]->ID) ? \get_post_thumbnail_id($posts[0]->ID) : null;
+      // get image in size medium_large from $image['id']
+      if ($image) {
+          $subdir = get_post_meta($image, 'subdir', true);
+          $other_formats = get_post_meta($image, 'image_variants', true);
+          $alt = get_post_meta($image, '_wp_attachment_image_alt', TRUE);
+          $image = array(
+              'id' => $image,
+              'src' => wp_get_attachment_image_src($image, 'medium_large'),
+              'width' => wp_get_attachment_metadata($image)['width'],
+              'height' => wp_get_attachment_metadata($image)['height'],
+              'srcset' => wp_get_attachment_image_srcset($image, 'medium_large'),
+              'image' => wp_get_attachment_image($image, 'medium_large'),
+              'alt' => $alt,
+              'other_formats' => $other_formats,
+              'subdir' => $subdir,
+              'caption' => wp_get_attachment_caption($image) ? '<figcaption>' . wp_get_attachment_caption($image) . '</figcaption>' : '',
+          );
+      }
       $lieux[] = array(
         'type' => 'Feature',
         'properties' => array(
+          'slug' => $posts[0]->post_name,
+          'image' => $image,
+          'acces' => get_field('address', $posts[0]->ID),
+          'permalink' => get_permalink($posts[0]->ID),
           'title' => $posts[0]->post_title,
           'description' => get_the_excerpt($posts[0]),
           'category' => array(
