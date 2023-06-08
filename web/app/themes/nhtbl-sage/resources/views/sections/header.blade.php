@@ -14,7 +14,7 @@
     <span class="sr-only"> Triennale Art & Industrie Dunkerque Hauts–de–France </span>
   </h1>
 </a>
-<header class="banner sticky top-0 bg-white dark:bg-black z-10" @keydown.escape="showMenu = false" x-data="{ showMenu: false }">
+<header x-cloak class="banner sticky top-0 bg-white dark:bg-black z-10" @keydown.escape="showMenu = false" x-data="{ showMenu: false }">
   <div class="px-2 w-full grid grid-cols-2 md:grid-cols-menu gap-4 bg-white dark:bg-black items-center"
     x-data="{ 'showModal': false }" @keydown.escape="showModal = false">
     <div class="flex flex-row gap-0 items-center top-0">
@@ -118,7 +118,7 @@
       </div>
     </div>
     <div class="fixed inset-0 top-0 left-0 z-30 flex items-center justify-center overflow-auto bg-black dark:bg-gray-500 bg-opacity-50 dark:bg-opacity-50 max-h-screen"
-      x-show="showModal">
+      x-show="showModal" >
 
       <div @click.away="showModal = false" x-transition:enter="motion-safe:ease-out duration-300"
         x-transition:enter-start="opacity-0 scale-90" x-transition:enter-end="opacity-100 scale-100"

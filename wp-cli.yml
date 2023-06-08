@@ -3,9 +3,9 @@ server:
   docroot: web
 
 @prod:
-  ssh: forge@office.triennale.fr:/home/forge/office.triennale.fr/public/current
+  ssh: forge@triennale.fr:/home/forge/triennale.fr/public/current
 
 @staging:
-  ssh: forge@office.triennale.fr:/home/forge/office.triennale.fr/public/current
+  ssh: forge@triennale.fr:/home/forge/triennale.fr/public/current
 
 @dev: ''
