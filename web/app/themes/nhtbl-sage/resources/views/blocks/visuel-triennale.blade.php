@@ -1,5 +1,5 @@
 <div class="{{ $block->classes }}" @if (!is_admin()):class="{ 'grayscale': $store.quality.qualitySwitch === 'webp-bw' }" @endif>
-  <div class="w-full h-[60vh]">
+  <div class="w-full h-[50vh] md:h-[75vh]">
     <div class="w-full h-full relative">
       <img src="@asset('images/degrade.svg')" :class="{ 'grayscale': $store.quality.qualitySwitch === 'webp-bw' }" class="w-full h-full" alt="Degrade d'un charte chaleur" />
       <div class="absolute backdrop-blur-xl left-0 w-full h-full top-0 right-0 bottom-0"></div>
