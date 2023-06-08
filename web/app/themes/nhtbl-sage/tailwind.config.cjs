@@ -90,9 +90,10 @@ module.exports = {
         500: '#807F7C',
         100: '#DFDBDA',
       },
-      green: '#8CFDCC',
+      green: '#52ddb7',
       yellow: '#F3CE45',
-      red: '#FF6918',
+      red: '#ff674b',
+      blue: '#4f84d3',
       transparent: 'transparent',
     },
     fluidTypography: {
@@ -121,6 +122,9 @@ module.exports = {
         menu: '1fr 4fr 1fr',
         logo: '8fr 1fr 8fr',
       },
+      listStyleType: {
+        alpha: 'upper-alpha',
+      }  
     },
   },
   plugins: [

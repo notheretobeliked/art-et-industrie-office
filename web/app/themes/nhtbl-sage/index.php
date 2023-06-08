@@ -18,6 +18,7 @@ x-bind:class="{'dark': darkMode === 'dark' || (darkMode === 'system' && prefersD
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <?php wp_head(); ?>
+  <script defer data-domain="triennale.fr" src="https://plausible.io/js/script.js"></script>
 </head>
 
 <body x-cloak <?php body_class('transition-all duration-400 bg-white dark:bg-black text-black dark:text-white'); ?>>

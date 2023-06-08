@@ -111,8 +111,15 @@ class Carte extends Block
     {
         return [
             'slug' => $this->returnSlug(),
+            'type' => $this->returnType()
         ];
     }
+
+    public function returnType()
+    {
+        return get_field("carte_type") != 'svg' ? 'mapbox' : 'svg';
+    }
+
 
     public function returnSlug()
     {
@@ -129,6 +136,17 @@ class Carte extends Block
         $carte = new FieldsBuilder('carte');
 
         $carte
+        ->addRadio('carte_type', [
+            'label' => 'Type de carte',
+            'choices' => ['mapbox' => 'Carte interactive', 'svg' => 'Carte des œuvres publiques'],
+            'default_value' => ['mapbox'],
+            'allow_null' => 0,
+            'multiple' => 0,
+            'ui' => 0,
+            'ajax' => 0,
+            'return_format' => 'value',
+            'placeholder' => '',
+        ])
         ->addRadio('choix_par', [
             'label' => 'Catégorie',
             'choices' => ['cat' => 'Catégorie', 'lieu' => 'Lieu specifique'],
@@ -140,6 +158,7 @@ class Carte extends Block
             'return_format' => 'value',
             'placeholder' => '',
         ])
+        ->conditional('carte_type', '!=', 'svg')
             ->addRadio('type', [
                 'label' => 'Catégorie',
                 'choices' => ['all' => 'Tous les lieux', 'triennale' => 'Lieux triennale', 'resonance' => 'Lieux résonance', 'oeuvre-public' => 'Œuvres publiques'],

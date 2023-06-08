@@ -3,6 +3,7 @@
 @import 'tailwindcss/utilities';
 
 @import 'fonts.css';
+@import 'carte.css';
 
 .editor-styles-wrapper {
   @apply font-serif;
