@@ -102,6 +102,9 @@ add_action('add_attachment', function ($attachment_id) {
     }
 });
 
+add_action( 'admin_enqueue_scripts', function () {
+    wp_deregister_style( 'tribe-admin-v2-single-blocks' );
+}, 1 );
 
 add_filter( 'render_block', function ( $block_content, $block ) {
     // Check if the block is of type 'core/image'
