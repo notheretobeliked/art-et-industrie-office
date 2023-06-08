@@ -120,6 +120,7 @@ module.exports = {
         event: '1fr 5fr 1fr',
         menu: '1fr 4fr 1fr',
         logo: '8fr 1fr 8fr',
+        eventmenu: '1fr 5fr',
       },
     },
   },

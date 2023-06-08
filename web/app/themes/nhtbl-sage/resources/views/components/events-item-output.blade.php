@@ -1,8 +1,13 @@
 <article 
-  x-data="{ showDetail: false }" 
+  x-data="eventList" 
   x-on:mouseenter="showDetail = true"
   x-on:mouseleave="showDetail = false"
+  x-bind:data-datestart="{{ json_encode($event['start_date']) }}"
+  x-bind:data-dateend="{{ json_encode($event['end_date']) }}"
+  
+  x-transition
   class="border-b border-black dark:border-white py-2 grid md:grid-cols-event gap-2 hover:bg-black dark:hover:bg-white hover:bg-opacity-10 dark:hover:bg-opacity-10">
+
   @if (!is_admin())
     <a href="{{ $event['permalink'] }}" class="contents">
   @endif
