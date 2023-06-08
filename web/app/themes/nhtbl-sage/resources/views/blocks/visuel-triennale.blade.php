@@ -1,4 +1,4 @@
-<div class="{{ $block->classes }}" :class="{ 'grayscale': $store.quality.qualitySwitch === 'webp-bw' }">
+<div class="{{ $block->classes }}" @if (!is_admin()):class="{ 'grayscale': $store.quality.qualitySwitch === 'webp-bw' }" @endif>
   <div class="w-full h-[60vh]">
     <div class="w-full h-full relative">
       <svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 1440 920" fill="none"

@@ -1,7 +1,7 @@
-<article 
+<article @if (!is_admin())
   x-data="{ showDetail: false }" 
   x-on:mouseenter="showDetail = true"
-  x-on:mouseleave="showDetail = false"
+  x-on:mouseleave="showDetail = false" @endif
   class="border-b border-black dark:border-white py-2 grid md:grid-cols-event gap-2 hover:bg-black dark:hover:bg-white hover:bg-opacity-10 dark:hover:bg-opacity-10">
   @if (!is_admin())
     <a href="{{ $event['permalink'] }}" class="contents">
@@ -38,7 +38,7 @@
   @if (!is_admin())
     </a>
   @endif
-  @if ($event['thumbnail'])
+  @if ($event['thumbnail'] || !is_admin())
     <div></div>
     <div x-show="showDetail" x-collapse.duration.200ms>
       <x-image-output :image="$event['thumbnail']" size="large" customsize class="w-1/2" />
