@@ -3,9 +3,6 @@ module.exports = {
   darkMode: 'class',
   content: ['./index.php', './app/**/*.php', './resources/**/*.{php,vue,js}'],
   safelist: [
-    { 
-      pattern: /tribe-events-./ 
-    },
     'grid-cols-mapandcontent',
     'editor-post-title',
     'p-name',
