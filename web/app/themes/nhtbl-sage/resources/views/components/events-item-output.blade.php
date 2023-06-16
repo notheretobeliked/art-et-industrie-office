@@ -35,13 +35,14 @@
   <div>
     <p class="text-sm m-0 w-full text-right md:text-left">{!! $event['lieu']['title'] !!}</p>
   </div>
-  @if (!is_admin())
-    </a>
-  @endif
-  @if ($event['thumbnail'] || !is_admin())
+
+  @if (is_array($event['thumbnail']) && !is_admin())
     <div></div>
     <div x-show="showDetail" x-collapse.duration.200ms>
       <x-image-output :image="$event['thumbnail']" size="large" customsize class="w-1/2" />
     </div>
+  @endif
+    @if (!is_admin())
+    </a>
   @endif
 </article>

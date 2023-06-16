@@ -219,25 +219,29 @@ add_filter('tribe_events_editor_default_template', function ($template) {
 
 // only allow default blocks
 
-// add_filter('allowed_block_types_all', function ($allowed_blocks, $editor_context) {
-//     $allowed_blocks = array(
-//         'core/image',
-//         'core/paragraph',
-//         'core/heading',
-//         'core/heading',
-//         'core/list',
-//         'core/button',
-//         'core/cover',
-//         'core/list-item',
-//         'acf/galerie',
-//         'acf/texte-intro',
-//         'acf/visuel-triennale',
-//         'acf/liste-des-liens',
-//         'acf/bouton',
-//         'acf/evenements',
-//     );
-//     return $allowed_blocks;
-// }, 25, 2);
+add_filter('allowed_block_types_all', function ($allowed_blocks, $editor_context) {
+    $allowed_blocks = array(
+        'core/paragraph',
+        'core/heading',
+        'core/columns',
+        'core/embed',
+        'core/list',
+        'core/button',
+        'core/list-item',
+        'acf/galerie',
+        'acf/texte-intro',
+        'acf/visuel-triennale',
+        'acf/liste-des-liens',
+        'acf/bouton',
+        'acf/evenements',
+        'acf/artistes',
+        'acf/carte',
+        'acf/logos-partenaires',
+        'acf/resonance-list',
+        'acf/telechargement',
+    );
+    return $allowed_blocks;
+}, 25, 2);
 
 
 /* 
