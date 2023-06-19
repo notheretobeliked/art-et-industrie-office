@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@alpinejs/collapse": "^3.12.1",
-    "@roots/browserslist-config": "^6.12.3",
+    "@roots/browserslist-config": "^6.12.2",
     "alpinejs": "^3.12.1",
     "postcss-import": "^15.1.0",
     "postcss-loader": "^7.0.2",

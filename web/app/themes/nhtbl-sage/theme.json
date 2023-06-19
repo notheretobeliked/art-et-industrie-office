@@ -35,7 +35,7 @@
         {
           "name": "Green",
           "slug": "green",
-          "color": "#8cfdcc"
+          "color": "#52ddb7"
         },
         {
           "name": "Yellow",
@@ -45,7 +45,12 @@
         {
           "name": "Red",
           "slug": "red",
-          "color": "#ff6918"
+          "color": "#ff674b"
+        },
+        {
+          "name": "Blue",
+          "slug": "blue",
+          "color": "#4f84d3"
         },
         {
           "name": "Transparent",

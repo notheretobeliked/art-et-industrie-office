@@ -1,10 +1,10 @@
 <!doctype html>
 <html class="" <?php language_attributes(); ?> x-data="{
-    darkMode: localStorage.getItem('darkMode') || localStorage.setItem('darkMode', 'system'),
+    darkMode: localStorage.getItem('darkMode'),
     prefersDarkMode: window.matchMedia('(prefers-color-scheme: dark)').matches,
     classList: document.documentElement.classList,
     setClass: function() {
-        this.classList.toggle('dark', this.darkMode === 'dark' || (this.darkMode === 'system' && this.prefersDarkMode));
+        this.classList.toggle('dark', this.darkMode === 'dark' || this.prefersDarkMode);
     },
     toggleDarkMode: function() {
         this.darkMode = this.darkMode === 'dark' ? 'light' : 'dark';
@@ -12,12 +12,18 @@
         localStorage.setItem('darkMode', this.darkMode);
     }
 }"
-x-init="setClass()"
-x-bind:class="{'dark': darkMode === 'dark' || (darkMode === 'system' && prefersDarkMode)}">
+x-init="$watch('darkMode', val => localStorage.setItem('darkMode', val))"
+x-bind:class="{'dark': darkMode === 'dark' || prefersDarkMode}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <?php wp_head(); ?>
+  <script defer data-domain="triennale.fr" src="https://plausible.io/js/script.js"></script>
+  <style>
+  [x-cloak] { 
+      visibility: hidden !important;
+   }
+</style>
 </head>
 
 <body x-cloak <?php body_class('transition-all duration-400 bg-white dark:bg-black text-black dark:text-white'); ?>>

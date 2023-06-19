@@ -9,12 +9,6 @@ Alpine.plugin(collapse)
 window.getCookie = getCookie
 window.setCookie = setCookie
 
-if (localStorage.darkMode === 'dark' || ((localStorage.darkMode  === 'system') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-  document.documentElement.classList.add('dark')
-} else {
-  document.documentElement.classList.remove('dark')
-}
-
 /**
  * Application entrypoint
  */

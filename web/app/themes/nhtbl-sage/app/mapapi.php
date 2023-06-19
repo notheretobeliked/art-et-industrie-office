@@ -139,5 +139,6 @@ add_action('rest_api_init', function () {
   register_rest_route('triennale/v1', '/lieux/(?P<lieu>[\w-]+)', array(
     'methods' => 'GET',
     'callback' => 'returnMapMarkers',
+    'permission_callback' => '__return_true',
   ));
 });

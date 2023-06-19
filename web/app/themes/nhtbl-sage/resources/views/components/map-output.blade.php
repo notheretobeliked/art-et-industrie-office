@@ -16,7 +16,7 @@
       </div>
 
       <a :href="placedata.permalink"
-        class="text-center inline-flex p-4 border border-black font-ui uppercase tracking-wider hover:bg-black hover:bg-opacity-10">Evènements
+        class="text-center inline p-4 border border-black font-ui uppercase tracking-wider hover:bg-black hover:bg-opacity-10">Evènements
         et plus d'informations</a>
       <figure>
         <picture class="block object-cover" x-data="{

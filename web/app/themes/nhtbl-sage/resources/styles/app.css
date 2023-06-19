@@ -4,6 +4,7 @@
 
 @import 'fonts.css';
 @import 'menu.css';
+@import 'carte.css';
 
 @layer utilities {
   .tracking-superwide {
@@ -63,7 +64,12 @@
 
   p,
   li {
-    @apply font-serif text-base mb-4;
+    @apply font-serif text-base;
+  }
+
+
+  p {
+    @apply  mb-4;
   }
 
   p.has-lg-font-size {
