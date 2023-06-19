@@ -3,6 +3,7 @@
 namespace App\View\Composers;
 
 use Roots\Acorn\View\Composer;
+use DateTime;
 
 class Relationships extends Composer
 {
@@ -15,7 +16,7 @@ class Relationships extends Composer
     'partials.content-single-artistes',
     'partials.content-single-lieu',
     'tribe.events.*',
-    
+
   ];
 
   /**
@@ -27,15 +28,16 @@ class Relationships extends Composer
   {
     return [
       'galerie' => $this->galerieoutput(),
-      'artiste_listofevents' => $this->getEvents('event_artiste'),
+      'artiste_listofevents' => $this->getEvents('event_artiste')["results"],
+      'artiste_eventsfilter' => $this->getEvents('event_artiste')["categories"],
       'artiste_listoflieux' => $this->getLieux('artiste_lieu'),
-      'lieu_listofevent' => $this->getEvents('lieu_event'),
+      'lieu_listofevent' => $this->getEvents('lieu_event')["results"],
+      'lieu_eventsfilter' => $this->getEvents('lieu_event')["categories"],
       'lieu_listofartistes' => $this->getArtistes('artiste_lieu'),
       'event_location' => $this->getLieux('lieu_event', false),
       'date_activite' => get_field('dates'),
       'localite' => get_field('localite'),
       'artiste_edition' => get_field('artiste_edition'),
-
       'edition_lieu' => get_field('edition_lieu'),
     ];
   }
@@ -58,6 +60,8 @@ class Relationships extends Composer
       $items = tribe_get_events($args);
 
       $return = [];
+      $allCategories = [];
+
       foreach ($items as $item) {
         if (get_the_terms($item->ID, 'post_tag')) {
           $tags = [];
@@ -109,11 +113,40 @@ class Relationships extends Composer
             'caption' => wp_get_attachment_caption($image) ? '<figcaption>' . wp_get_attachment_caption($image) . '</figcaption>' : '',
           );
         }
+        $allCategories = array_merge($allCategories, array_map(function ($category) {
+          return $category['name'];
+        }, $categories));
+        $filtertags = [];
+
+        // Populate $filtertags with list of categories.
+        $filtertags = array_map(function ($category) {
+          return $category['name'];
+        }, $categories);
+
+        // Check if the event is taking place today, this month or in the future
+
+        $start_date_str = tribe_get_start_date($item->ID, false, 'Y-m-d');
+        $start_date_date = DateTime::createFromFormat('Y-m-d', $start_date_str);
+        $today = new DateTime();
+
+        if ($start_date_date->format('Y-m-d') >= $today->format('Y-m-d')) {
+          $filtertags[] = 'future';
+        }
+
+        if ($start_date_date->format('Y-m-d') == $today->format('Y-m-d')) {
+          $filtertags[] = 'today';
+        }
+
+        if ($start_date_date->format('Y-m') == $today->format('Y-m') && $start_date_date->format('Y-m-d') >= $today->format('Y-m-d')) {
+          $filtertags[] = 'this-month';
+        }
+
 
         $return[] = [
           'lieu' => $lieu,
           'title' => get_the_title($item->ID),
           'permalink' => get_permalink($item->ID),
+          'filtertags' => $filtertags,
           'thumbnail' => $image,
           'date' => $date,
           'time' => tribe_get_start_date($item->ID, false, 'H:i'),
@@ -123,9 +156,11 @@ class Relationships extends Composer
           'categories' => $categories,
           'tags' => $tags,
         ];
-      }
 
-      return $return;
+      }
+      $allCategories = array_unique($allCategories);
+
+      return ['results' => $return, 'categories' => $allCategories];
     }
   }
 
@@ -186,20 +221,20 @@ class Relationships extends Composer
       if ($many) {
         $output[] = [
           'url' => \get_permalink($content),
-          'slug' => basename( \get_permalink($content)),
+          'slug' => basename(\get_permalink($content)),
           'title' => \get_the_title($content),
           'introtext' => \get_the_excerpt($content),
           'image' => $image,
-          'address' =>get_field('address', $content)
+          'address' => get_field('address', $content)
         ];
       } else {
         $output = [
           'url' => \get_permalink($content),
-          'slug' => basename( \get_permalink($content)),
+          'slug' => basename(\get_permalink($content)),
           'title' => \get_the_title($content),
           'introtext' => \get_the_excerpt($content),
           'image' => $image,
-          'address' =>get_field('address', $content)
+          'address' => get_field('address', $content)
         ];
       }
     }

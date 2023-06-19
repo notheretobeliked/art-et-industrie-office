@@ -12,7 +12,7 @@
 
 
   @if ($artiste_listofevents)
-    <div class="alignwide">
+    <div class="alignwide"  x-data="{ filter: 'all', dateFilter: 'future', showFilter: false }">
     <h2 class="text-left border-b border-black dark:border-white text-lg md:text-xl lg:text-2xl uppercase mb-4">{{ __('Evènements associés') }}</h2>
     @foreach ($artiste_listofevents as $event)
       <x-events-item-output :event="$event" />
