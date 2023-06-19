@@ -4,6 +4,7 @@ namespace App\Blocks;
 
 use Log1x\AcfComposer\Block;
 use StoutLogic\AcfBuilder\FieldsBuilder;
+use DateTime;
 
 class Evenements extends Block
 {
@@ -95,7 +96,7 @@ class Evenements extends Block
         'align_content' => false,
         'full_height' => false,
         'anchor' => false,
-        'mode' => false,
+        'mode' => true,
         'multiple' => true,
         'jsx' => true,
     ];
@@ -128,7 +129,9 @@ class Evenements extends Block
         return [
             'title' => get_field('has_title') ? get_field('title') : '',
             'intro' => get_field('has_intro') ? get_field('texte_intro') : '',
-            'events' => $this->getEvents(),
+            'has_filter' => get_field('has_filter'),
+            'events' => $this->getEvents()["results"],
+            'allcategories' => $this->getEvents()["categories"],
         ];
     }
 
@@ -142,89 +145,95 @@ class Evenements extends Block
         $evenements = new FieldsBuilder('evenements');
 
         $evenements
-        ->addTrueFalse('has_title', [
-            'label' => 'Titre',
-            'instructions' => '',
-            'default_value' => 0,
-            'ui' => 1,
-        ])
-        ->addText('title', [
-            'label' => 'Titre',
-            'instructions' => '',
-            'allow_null' => 1,
-        ])
-        ->conditional('has_title', '==', '1')
-        ->addTrueFalse('has_intro', [
-            'label' => 'Texte d\'intro',
-            'instructions' => '',
-            'default_value' => 0,
-            'ui' => 1,
-        ])
-        ->addWysiwyg('texte_intro', [
-            'label' => 'Texte d\'intro',
-            'instructions' => 'Laisser vide pour ne pas avoir de texte d\'intro',
-            'required' => 0,
-            'conditional_logic' => [],
-            'wrapper' => [
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ],
-            'default_value' => '',
-            'tabs' => 'all',
-            'toolbar' => 'full',
-            'media_upload' => 0,
-            'delay' => 0,
-        ])
-        ->conditional('has_intro', '==', '1')
+            ->addTrueFalse('has_filter', [
+                'label' => 'Afficher filtrage',
+                'instructions' => '',
+                'default_value' => 0,
+                'ui' => 1,
+            ])
+            ->addTrueFalse('has_title', [
+                'label' => 'Titre',
+                'instructions' => '',
+                'default_value' => 0,
+                'ui' => 1,
+            ])
+            ->addText('title', [
+                'label' => 'Titre',
+                'instructions' => '',
+                'allow_null' => 1,
+            ])
+            ->conditional('has_title', '==', '1')
+            ->addTrueFalse('has_intro', [
+                'label' => 'Texte d\'intro',
+                'instructions' => '',
+                'default_value' => 0,
+                'ui' => 1,
+            ])
+            ->addWysiwyg('texte_intro', [
+                'label' => 'Texte d\'intro',
+                'instructions' => 'Laisser vide pour ne pas avoir de texte d\'intro',
+                'required' => 0,
+                'conditional_logic' => [],
+                'wrapper' => [
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ],
+                'default_value' => '',
+                'tabs' => 'all',
+                'toolbar' => 'full',
+                'media_upload' => 0,
+                'delay' => 0,
+            ])
+            ->conditional('has_intro', '==', '1')
 
-        ->addSelect('type', [
-            'label' => 'Choix par',
-            'instructions' => '',
-            'required' => 0,
-            'conditional_logic' => [],
-            'wrapper' => [
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ],
-            'choices' => ['manual' => 'Choix manuel', 'latest' => 'Toues les évenements'],
-            'default_value' => [],
-            'allow_null' => 0,
-            'multiple' => 0,
-            'ui' => 0,
-            'ajax' => 0,
-            'return_format' => 'value',
-            'placeholder' => '',
-        ])
-        ->addRelationship('content', [
-            'post_type' => ['tribe_events'],
-            'filters' => [
-                0 => 'search',
-                2 => 'taxonomy',
-            ],
-            'return_format' => 'value',        
-        ])
-        ->conditional('type', '==', 'manual')
-        ->addNumber('nombre', [
-            'label' => 'Nombre d\'évenements',
-            'instructions' => 'Mettre \'-1\' pour tous les évenements',
-            'required' => 1,
-            'wrapper' => [
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ],
-            'default_value' => '-1',
-            'placeholder' => '',
-            'prepend' => '',
-            'append' => '',
-            'min' => '',
-            'max' => '',
-            'step' => '',
-      ])
-      ->conditional('type', '!=', 'manual');
-    
+            ->addSelect('type', [
+                'label' => 'Choix par',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => [],
+                'wrapper' => [
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ],
+                'choices' => ['manual' => 'Choix manuel', 'latest' => 'Toues les évenements'],
+                'default_value' => [],
+                'allow_null' => 0,
+                'multiple' => 0,
+                'ui' => 0,
+                'ajax' => 0,
+                'return_format' => 'value',
+                'placeholder' => '',
+            ])
+            ->addRelationship('content', [
+                'post_type' => ['tribe_events'],
+                'filters' => [
+                    0 => 'search',
+                    2 => 'taxonomy',
+                ],
+                'return_format' => 'value',
+            ])
+            ->conditional('type', '==', 'manual')
+            ->addNumber('nombre', [
+                'label' => 'Nombre d\'évenements',
+                'instructions' => 'Mettre \'-1\' pour tous les évenements',
+                'required' => 1,
+                'wrapper' => [
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ],
+                'default_value' => '-1',
+                'placeholder' => '',
+                'prepend' => '',
+                'append' => '',
+                'min' => '',
+                'max' => '',
+                'step' => '',
+            ])
+            ->conditional('type', '!=', 'manual');
+
 
         return $evenements->build();
     }
@@ -252,6 +261,8 @@ class Evenements extends Block
         }
 
         $return = [];
+        $allCategories = [];
+
         foreach ($items as $item) {
             $tags = [];
             if (get_the_terms($item->ID, 'post_tag')) {
@@ -271,6 +282,10 @@ class Evenements extends Block
                     ];
                 }
             }
+
+            $allCategories = array_merge($allCategories, array_map(function ($category) {
+                return $category['name'];
+            }, $categories));
 
             $lieu = get_field('lieu_event', $item->ID);
             $lieu ? $lieu = [
@@ -306,11 +321,38 @@ class Evenements extends Block
                 );
             }
 
+            $filtertags = [];
+
+            // Populate $filtertags with list of categories.
+            $filtertags = array_map(function ($category) {
+                return $category['name'];
+            }, $categories);
+
+            // Check if the event is taking place today, this month or in the future
+
+            $start_date_str = tribe_get_start_date($item->ID, false, 'Y-m-d');
+            $start_date_date = DateTime::createFromFormat('Y-m-d', $start_date_str);
+            $today = new DateTime();
+
+            if ($start_date_date->format('Y-m-d') >= $today->format('Y-m-d')) {
+                $filtertags[] = 'future';
+            }
+
+            if ($start_date_date->format('Y-m-d') == $today->format('Y-m-d')) {
+                $filtertags[] = 'today';
+            }
+
+            if ($start_date_date->format('Y-m') == $today->format('Y-m') && $start_date_date->format('Y-m-d') >= $today->format('Y-m-d')) {
+                $filtertags[] = 'this-month';
+            }
+
+
             $return[] = [
                 'lieu' => $lieu,
                 'title' => get_the_title($item->ID),
                 'permalink' => get_permalink($item->ID),
                 'thumbnail' => $image,
+                'filtertags' => $filtertags,
                 'date' => $start_date,
                 'time' => tribe_event_is_all_day($item->ID) ? null : tribe_get_start_date($item->ID, false, 'H:i'),
                 'start_date' => tribe_get_start_date($item->ID, false, 'j/n/Y'),
@@ -322,7 +364,10 @@ class Evenements extends Block
             ];
         }
 
-        return $return;
+        $allCategories = array_unique($allCategories);
+
+
+        return ['results' => $return, 'categories' => $allCategories];
     }
 
     /**

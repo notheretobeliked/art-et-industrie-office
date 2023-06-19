@@ -1,12 +1,7 @@
-<article 
-  x-data="eventList" 
-  x-on:mouseenter="showDetail = true"
-  x-on:mouseleave="showDetail = false"
-  x-bind:data-datestart="{{ json_encode($event['start_date']) }}"
-  x-bind:data-dateend="{{ json_encode($event['end_date']) }}"
-  
-  x-transition
-  class="border-b border-black dark:border-white py-2 grid md:grid-cols-event gap-2 hover:bg-black dark:hover:bg-white hover:bg-opacity-10 dark:hover:bg-opacity-10">
+<article x-data="{ showDetail: false }" data-tags="{{ implode(' ', $event['filtertags']) }}" x-on:mouseenter="showDetail = true"
+  x-on:mouseleave="showDetail = false" x-transition
+  class="border-b border-black dark:border-white py-2 grid md:grid-cols-event gap-2 hover:bg-black dark:hover:bg-white hover:bg-opacity-10 dark:hover:bg-opacity-10"
+  x-collapse.duration.100ms x-show="(filter === 'all' || '{{ implode(' ', $event['filtertags']) }}'.includes(filter)) && (dateFilter === 'all' || '{{ implode(' ', $event['filtertags']) }}'.includes(dateFilter))">
 
   @if (!is_admin())
     <a href="{{ $event['permalink'] }}" class="contents">
@@ -21,7 +16,8 @@
       @endif
     </p>
     @if ($event['time'])
-      <p class="text-sm m-0 w-full text-right md:text-left">{{ $event['time'] }} – {{ $event['end_time'] }} </p>
+      <p class="text-sm m-0 w-full text-right md:text-left">{{ $event['time'] }} – {{ $event['end_time'] }}
+      </p>
     @endif
   </div>
   <div>
