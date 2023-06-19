@@ -257,6 +257,8 @@ class Evenements extends Block
             }
         }
 
+        $items_past = [];
+
         if (get_field('type') == 'manual') {
             $items = tribe_get_events([
                 'posts_per_page' => -1,
@@ -276,7 +278,7 @@ class Evenements extends Block
                 'eventDisplay' => 'custom',        
             ]);
         }
-
+        $items_past = [];
         $return = [];
         $allCategories = [];
 
