@@ -245,23 +245,42 @@ class Evenements extends Block
      */
     public function getEvents()
     {
+
+        $get_past_events = tribe_get_events( [
+            'end_date' => 'now',
+            'posts_per_page' => -1,
+        ], false );
+    
+        if ( $get_past_events ) {
+            foreach ( $get_past_events as $past_event ) {
+                $past_events[] = $past_event->ID;
+            }
+        }
+
         if (get_field('type') == 'manual') {
             $items = tribe_get_events([
                 'posts_per_page' => -1,
-                'start_date' => date('Y-m-d H:i:s'),
+                'start_date' => '2023-01-01',
                 'eventDisplay' => 'list',
                 'post__in' => get_field('content')
             ]);
         } else {
             $items = tribe_get_events([
                 'posts_per_page' => get_field('nombre'),
-                'start_date' => date('Y-m-d H:i:s'),
-                'eventDisplay' => 'list',
+                'eventDisplay' => 'custom',        
+            ]);
+            $items_past = tribe_get_events([
+                'posts_per_page' => get_field('nombre'),
+                'start_date' => '2014-10-01 00:01',
+                'post__in' => $past_events ?: [ 0 ],
+                'eventDisplay' => 'custom',        
             ]);
         }
 
         $return = [];
         $allCategories = [];
+
+        $items = array_merge($items_past, $items);
 
         foreach ($items as $item) {
             $tags = [];
@@ -329,10 +348,15 @@ class Evenements extends Block
             }, $categories);
 
             // Check if the event is taking place today, this month or in the future
-
+            $end_date_str = tribe_get_end_date($item->ID, false, 'Y-m-d');
+            $end_date_date = DateTime::createFromFormat('Y-m-d', $end_date_str);
             $start_date_str = tribe_get_start_date($item->ID, false, 'Y-m-d');
             $start_date_date = DateTime::createFromFormat('Y-m-d', $start_date_str);
             $today = new DateTime();
+
+            if ($end_date_date->format('Y-m-d') <= $today->format('Y-m-d')) {
+                $filtertags[] = 'past';
+            }
 
             if ($start_date_date->format('Y-m-d') >= $today->format('Y-m-d')) {
                 $filtertags[] = 'future';

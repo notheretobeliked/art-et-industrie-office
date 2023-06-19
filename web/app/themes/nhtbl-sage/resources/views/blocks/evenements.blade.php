@@ -49,6 +49,11 @@
           class="inline-block py-1 px-3 md:py-2 md:px-6 rounded-2 font-serif  hover:bg-gray-500 border"
           :class="dateFilter === 'this-month' ? 'dark:bg-white dark:text-black bg-black text-white dark:hover:bg-gray-500' :
               'border-black dark:border-white dark:bg-black dark:text-white bg-white text-black'">{{ __('Ce mois', 'sage') }}</button>
+        <button x-on:click="dateFilter = 'past'"
+          class="inline-block py-1 px-3 md:py-2 md:px-6 rounded-2 font-serif  hover:bg-gray-500 border"
+          :class="dateFilter === 'past' ? 'dark:bg-white dark:text-black bg-black text-white dark:hover:bg-gray-500' :
+              'border-black dark:border-white dark:bg-black dark:text-white bg-white text-black'">{{ __('Passé', 'sage') }}</button>
+
       </div>
 
     </div>
