@@ -28,8 +28,8 @@ class Relationships extends Composer
   {
     return [
       'galerie' => $this->galerieoutput(),
-      'artiste_listofevents' => $this->getEvents('event_artiste')["results"],
-      'artiste_eventsfilter' => $this->getEvents('event_artiste')["categories"],
+      'artiste_listofevents' => is_array($this->getEvents('event_artiste')) ? $this->getEvents('event_artiste')["results"] : null,
+      'artiste_eventsfilter' => is_array($this->getEvents('event_artiste')) ? $this->getEvents('event_artiste')["categories"] : null,
       'artiste_listoflieux' => $this->getLieux('artiste_lieu'),
       'lieu_listofevent' => $this->getEvents('lieu_event')["results"],
       'lieu_eventsfilter' => $this->getEvents('lieu_event')["categories"],
@@ -53,8 +53,8 @@ class Relationships extends Composer
     if (get_field($field_name)) {
       $args = array(
         'posts_per_page' => -1,
-        'start_date' => date('Y-m-d H:i:s'),
         'eventDisplay' => 'list',
+        'ends_after' => 'now',
         'post__in' => get_field($field_name)
       );
       $items = tribe_get_events($args);
@@ -125,7 +125,7 @@ class Relationships extends Composer
 
         // Check if the event is taking place today, this month or in the future
 
-        $start_date_str = tribe_get_start_date($item->ID, false, 'Y-m-d');
+        $start_date_str = tribe_get_end_date($item->ID, false, 'Y-m-d');
         $start_date_date = DateTime::createFromFormat('Y-m-d', $start_date_str);
         $today = new DateTime();
 
@@ -205,11 +205,19 @@ class Relationships extends Composer
         $subdir = get_post_meta($image, 'subdir', true);
         $other_formats = get_post_meta($image, 'image_variants', true);
         $alt = get_post_meta($image, '_wp_attachment_image_alt', TRUE);
+        $imageMeta = wp_get_attachment_metadata($image);
+        if (is_array($imageMeta)) {
+          $width = $imageMeta["width"];
+          $height = $imageMeta["height"];
+        } else {
+          $width = 160;
+          $height = 90;
+        }
         $image = array(
           'id' => $image,
           'src' => wp_get_attachment_image_src($image, 'medium_large'),
-          'width' => wp_get_attachment_metadata($image)['width'],
-          'height' => wp_get_attachment_metadata($image)['height'],
+          'width' => $width,
+          'height' => $height,
           'srcset' => wp_get_attachment_image_srcset($image, 'medium_large'),
           'image' => wp_get_attachment_image($image, 'medium_large'),
           'alt' => $alt,

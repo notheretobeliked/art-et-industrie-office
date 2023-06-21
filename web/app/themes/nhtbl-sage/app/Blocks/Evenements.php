@@ -245,20 +245,8 @@ class Evenements extends Block
      */
     public function getEvents()
     {
-
-        $get_past_events = tribe_get_events( [
-            'end_date' => 'now',
-            'posts_per_page' => -1,
-        ], false );
-    
-        if ( $get_past_events ) {
-            foreach ( $get_past_events as $past_event ) {
-                $past_events[] = $past_event->ID;
-            }
-        }
-
         $items_past = [];
-
+        $items = [];
         if (get_field('type') == 'manual') {
             $items = tribe_get_events([
                 'posts_per_page' => -1,
@@ -269,16 +257,15 @@ class Evenements extends Block
         } else {
             $items = tribe_get_events([
                 'posts_per_page' => get_field('nombre'),
-                'eventDisplay' => 'custom',        
+                'eventDisplay' => 'custom',
+                'ends_after' => 'now',
             ]);
             $items_past = tribe_get_events([
                 'posts_per_page' => get_field('nombre'),
-                'start_date' => '2014-10-01 00:01',
-                'post__in' => $past_events ?: [ 0 ],
-                'eventDisplay' => 'custom',        
+                'ends_before' => 'now',
+                'posts_per_page' => -1,
             ]);
         }
-        $items_past = [];
         $return = [];
         $allCategories = [];
 
@@ -317,9 +304,9 @@ class Evenements extends Block
             $start_date = tribe_get_start_date($item->ID, false, 'j/n/Y');
             if (tribe_get_start_date($item->ID, false, 'j F Y') != tribe_get_end_date($item->ID, false, 'j F Y')) {
                 $end_date = tribe_get_end_date($item->ID, false, 'j/n/Y');
-                $startMonth = (tribe_get_start_date($item->ID, false, '/n/'));
+                $startMonth = (tribe_get_start_date($item->ID, false, '/n'));
                 if ($startMonth === tribe_get_end_date($item->ID, false, '/n/')) $startMonth = "";
-                if (tribe_get_start_date($item->ID, false, 'Y') === tribe_get_end_date($item->ID, false, 'Y')) $start_date = (tribe_get_start_date($item->ID, false, 'j') . " " . $startMonth);
+                if (tribe_get_start_date($item->ID, false, 'Y') === tribe_get_end_date($item->ID, false, 'Y')) $start_date = (tribe_get_start_date($item->ID, false, 'j') . "" . $startMonth);
             } else $end_date = null;
 
             $image = \get_post_thumbnail_id($item->ID);
@@ -356,19 +343,23 @@ class Evenements extends Block
             $start_date_date = DateTime::createFromFormat('Y-m-d', $start_date_str);
             $today = new DateTime();
 
-            if ($end_date_date->format('Y-m-d') <= $today->format('Y-m-d')) {
+            error_log('start date:' . $start_date_date->format('Y-m'));
+            error_log('end date:' . $end_date_date->format('Y-m'));
+            error_log('today:' . $today->format('Y-m'));
+
+            if ($end_date_date < $today) {
                 $filtertags[] = 'past';
             }
 
-            if ($start_date_date->format('Y-m-d') >= $today->format('Y-m-d')) {
+            if ($end_date_date > $today) {
                 $filtertags[] = 'future';
             }
 
-            if ($start_date_date->format('Y-m-d') == $today->format('Y-m-d')) {
+            if ($end_date_date == $today) {
                 $filtertags[] = 'today';
             }
 
-            if ($start_date_date->format('Y-m') == $today->format('Y-m') && $start_date_date->format('Y-m-d') >= $today->format('Y-m-d')) {
+            if ($end_date_date->format('Y-m') >= $today->format('Y-m') && $start_date_date <= $today) {
                 $filtertags[] = 'this-month';
             }
 
@@ -382,7 +373,7 @@ class Evenements extends Block
                 'date' => $start_date,
                 'time' => tribe_event_is_all_day($item->ID) ? null : tribe_get_start_date($item->ID, false, 'H:i'),
                 'start_date' => tribe_get_start_date($item->ID, false, 'j/n/Y'),
-                'end_date' => $end_date ? $end_date : tribe_get_start_date($item->ID, false, 'j/n/Y'),
+                'end_date' => $end_date,
                 'end_time' => tribe_event_is_all_day($item->ID) ? null : tribe_get_end_date($item->ID, false, 'H:i'),
                 'excerpt' => get_the_excerpt($item->ID),
                 'categories' => $categories,
