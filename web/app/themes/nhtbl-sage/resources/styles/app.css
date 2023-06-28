@@ -73,15 +73,15 @@
   }
 
   p.has-lg-font-size {
-    @apply !text-lg md:!text-xl lg:!text-2xl;
+    @apply !text-lg md:!text-xl lg:!text-2xl leading-[1.2];
   }
 
   h2 {
-    @apply pb-2 font-display uppercase text-lg md:text-xl lg:text-2xl tracking-widest my-0 border-b border-black dark:border-white;
+    @apply pb-2 font-display uppercase text-lg md:text-xl lg:text-2xl tracking-widest my-0 border-b border-black dark:border-white leading-[1.25];
   }
 
   h2.wp-block-heading {
-    @apply border-0;
+    @apply border-0 mt-8 lg:mt-12 mb-5 lg:mb-8;
   }
 
   h3 {
@@ -102,7 +102,7 @@
   .main > .wp-block-heading,
   .the-content > p,
   .the-content > .wp-block-heading {
-    @apply mb-4 px-2;
+    @apply mb-4 px-2 leading-[1.45];
   }
 
   .alignwide {

@@ -1,4 +1,4 @@
-<div class="{{ $block->classes }}">
+<div class="mt-8 lg:mt-12 {{ $block->classes }}">
   @if ($content)
     @if ($title)
       <h2 class="text-left border-b border-black dark:border-white hover:text-stroke-0 text-lg md:text-xl lg:text-2xl uppercase mb-4">{{ $title }}</h2>

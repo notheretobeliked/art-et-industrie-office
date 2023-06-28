@@ -32,9 +32,9 @@ module.exports = {
     },
     fontSize: {
       sm: [
-        '1rem',
+        '0.85rem',
         {
-          lineHeight: '1.2rem',
+          lineHeight: '1.1rem',
         },
       ],
       base: [

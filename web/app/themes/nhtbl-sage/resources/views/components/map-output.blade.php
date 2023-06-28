@@ -33,7 +33,7 @@
             :src="placedata.image.src[0]" :alt="placedata.image.alt" />
         </picture>
       </figure>
-      <div x-html="placedata.acces" class="pb-3"></div>
+      <div x-html="placedata.acces" class="pb-3 font-serif text-base"></div>
 
 
     </div>

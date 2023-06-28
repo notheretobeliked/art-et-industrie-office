@@ -22,12 +22,13 @@ class App extends Composer
      */
     public function with()
     {
+        $languages = function_exists('pll_the_languages') ? pll_the_languages( array( 'raw' => 1 ) ) : null;
         return [
             'siteName' => $this->siteName(),
-            'qualitySwitch' => $_COOKIE['qualitySwitch'],
+            'qualitySwitch' => $_COOKIE['qualitySwitch'] ? $_COOKIE['qualitySwitch'] : 'webp-low',
             'qualitySwitchData' => get_field('energy_selector', 'option'),
             'languageSwitchActive' => get_field('language_selector_active', 'option'),
-            'languages' => pll_the_languages( array( 'raw' => 1 ) )
+            'languages' => $languages,
         ];
     }
 

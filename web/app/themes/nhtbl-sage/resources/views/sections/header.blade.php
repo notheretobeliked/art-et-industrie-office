@@ -1,6 +1,6 @@
 <a class="brand" href="{{ home_url('/') }}">
   <h1
-    class="px-2 grid grid-cols-logo font-ui text-xs text-fill-transparent text-stroke-05 md:text-stroke  text-stroke-black tracking-wider lg:tracking-widest uppercase md:fluid-xl hover:text-fill-black hover:text-stroke-0 dark:hover:text-fill-white">
+    class="mt-1 px-2 grid grid-cols-logo font-ui text-xs text-fill-transparent text-stroke-05 md:text-stroke  text-stroke-black !tracking-wider uppercase md:fluid-xl hover:text-fill-black hover:text-stroke-0 dark:hover:text-fill-white leading-[1.1]">
     <span class="block">Triennale Art<br>Industrie</span>
     <span class="block text-center">&</span>
     <span class="block text-right">Dunkerque<br>Hauts–de–France</span>
