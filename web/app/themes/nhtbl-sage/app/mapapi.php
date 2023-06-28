@@ -55,6 +55,14 @@ function returnMapMarkers($data)
         'longitude' => get_field('longitude', $post->ID),
         'latitude' => get_field('latitude', $post->ID),
       );
+      is_array(get_field('type', $post->ID)) ?
+        $category = [
+          'slug' => get_field('type', $post->ID)["value"] ? get_field('type', $post->ID)["value"] :  'wee',
+          'name' => get_field('type', $post->ID)["label"] ? get_field('type', $post->ID)["value"] :  'wee',
+        ] : $category = [
+          'slug' => get_field('type', $post->ID) ? get_field('type', $post->ID) :  'wee',
+          'name' => get_field('type', $post->ID) ? get_field('type', $post->ID) :  'wee',
+        ];
 
       $lieux[] = array(
         'type' => 'Feature',
@@ -62,10 +70,7 @@ function returnMapMarkers($data)
           'slug' => $post->post_name,
           'title' => $post->post_title,
           'description' => get_the_excerpt($post),
-          'category' => array(
-            'slug' => get_field('type', $post->ID)["value"] ? get_field('type', $post->ID)["value"] :  'wee',
-            'name' => get_field('type', $post->ID)["label"] ? get_field('type', $post->ID)["value"] :  'wee',
-          )
+          'category' => $category,
         ),
         'geometry' => array(
           'coordinates' => array_values($coordinates),
@@ -89,22 +94,30 @@ function returnMapMarkers($data)
       $image = \get_post_thumbnail_id($posts[0]->ID) ? \get_post_thumbnail_id($posts[0]->ID) : null;
       // get image in size medium_large from $image['id']
       if ($image) {
-          $subdir = get_post_meta($image, 'subdir', true);
-          $other_formats = get_post_meta($image, 'image_variants', true);
-          $alt = get_post_meta($image, '_wp_attachment_image_alt', TRUE);
-          $image = array(
-              'id' => $image,
-              'src' => wp_get_attachment_image_src($image, 'medium_large'),
-              'width' => wp_get_attachment_metadata($image)['width'],
-              'height' => wp_get_attachment_metadata($image)['height'],
-              'srcset' => wp_get_attachment_image_srcset($image, 'medium_large'),
-              'image' => wp_get_attachment_image($image, 'medium_large'),
-              'alt' => $alt,
-              'other_formats' => $other_formats,
-              'subdir' => $subdir,
-              'caption' => wp_get_attachment_caption($image) ? '<figcaption>' . wp_get_attachment_caption($image) . '</figcaption>' : '',
-          );
+        $subdir = get_post_meta($image, 'subdir', true);
+        $other_formats = get_post_meta($image, 'image_variants', true);
+        $alt = get_post_meta($image, '_wp_attachment_image_alt', TRUE);
+        $image = array(
+          'id' => $image,
+          'src' => wp_get_attachment_image_src($image, 'medium_large'),
+          'width' => wp_get_attachment_metadata($image)['width'],
+          'height' => wp_get_attachment_metadata($image)['height'],
+          'srcset' => wp_get_attachment_image_srcset($image, 'medium_large'),
+          'image' => wp_get_attachment_image($image, 'medium_large'),
+          'alt' => $alt,
+          'other_formats' => $other_formats,
+          'subdir' => $subdir,
+          'caption' => wp_get_attachment_caption($image) ? '<figcaption>' . wp_get_attachment_caption($image) . '</figcaption>' : '',
+        );
       }
+      is_array(get_field('type', $posts[0]->ID)) ?
+        $category = [
+          'slug' => get_field('type', $posts[0]->ID)["value"] ? get_field('type', $posts[0]->ID)["value"] :  'wee',
+          'name' => get_field('type', $posts[0]->ID)["label"] ? get_field('type', $posts[0]->ID)["value"] :  'wee',
+        ] : $category = [
+          'slug' => get_field('type', $posts[0]->ID) ? get_field('type', $posts[0]->ID) :  'wee',
+          'name' => get_field('type', $posts[0]->ID) ? get_field('type', $posts[0]->ID) :  'wee',
+        ];
       $lieux[] = array(
         'type' => 'Feature',
         'properties' => array(
@@ -114,10 +127,7 @@ function returnMapMarkers($data)
           'permalink' => get_permalink($posts[0]->ID),
           'title' => $posts[0]->post_title,
           'description' => get_the_excerpt($posts[0]),
-          'category' => array(
-            'slug' => get_field('type', $posts[0]->ID)["value"],
-            'name' => get_field('type', $posts[0]->ID)["label"]
-          )
+          'category' => $category,
         ),
         'geometry' => array(
           'coordinates' => array_values($coordinates),

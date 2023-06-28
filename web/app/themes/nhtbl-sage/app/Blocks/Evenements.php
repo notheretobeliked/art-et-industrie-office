@@ -343,10 +343,6 @@ class Evenements extends Block
             $start_date_date = DateTime::createFromFormat('Y-m-d', $start_date_str);
             $today = new DateTime();
 
-            error_log('start date:' . $start_date_date->format('Y-m'));
-            error_log('end date:' . $end_date_date->format('Y-m'));
-            error_log('today:' . $today->format('Y-m'));
-
             if ($end_date_date < $today) {
                 $filtertags[] = 'past';
             }
