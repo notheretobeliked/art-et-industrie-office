@@ -9,13 +9,14 @@
 function returnMapMarkers($data)
 {
   $lieu = $data['lieu'];
+  $lang = $data['lang'] ?? 'fr';
   $lieux = array();
 
   if ($lieu === 'all') {
     $posts = get_posts(array(
       'post_type' => 'lieu',
       'status' => 'publish',
-      'lang' => 'fr',
+      'lang' => $lang,
       'numberposts' => -1,
     ));
 
@@ -48,7 +49,7 @@ function returnMapMarkers($data)
     $posts = get_posts(array(
       'post_type' => 'lieu',
       'status' => 'publish',
-      'lang' => 'fr',
+      'lang' => $lang,
       'meta_key'      => 'type',
       'meta_value'    => $lieu,
       'numberposts' => -1,
@@ -85,17 +86,17 @@ function returnMapMarkers($data)
       );
     }
   } else {
+    error_log($lieu);
     $posts = get_posts(array(
       'post_type' => 'lieu',
       'status' => 'publish',
       'name' => $lieu,
-      'lang' => 'fr',
+      'lang' => $lang,
       'numberposts' => 1,
     ));
-
-    $post = $posts[1];
-    error_log(pll_get_post($post->ID, 'fr'));
-    error_log(print_r($post, true));
+    $post = $posts[0];
+    $correctPostId = pll_get_post($post->ID, $lang);
+    $post = get_post($correctPostId);
     if (!empty($posts)) {
       $coordinates = array(
         'longitude' => get_field('longitude', $post->ID),
@@ -133,10 +134,10 @@ function returnMapMarkers($data)
         'properties' => array(
           'slug' => $post->post_name,
           'image' => $image,
-          'acces' => get_field('address', $post->ID),
+          'acces' => wpautop(get_field('address', $post->ID)),
           'permalink' => get_permalink($post->ID),
           'title' => $post->post_title,
-          'description' => get_the_excerpt($post),
+          'description' => wpautop(get_the_excerpt($post->ID)),
           'category' => $category,
           'language' => pll_get_post_language( $post->ID ),
           'id' => $post->ID,
@@ -158,6 +159,12 @@ function returnMapMarkers($data)
 }
 
 add_action('rest_api_init', function () {
+  register_rest_route('triennale/v1', '/lieux/(?P<lieu>[\w-]+)/(?P<lang>[\w-]+)', array(
+    'methods' => 'GET',
+    'callback' => 'returnMapMarkers',
+    'permission_callback' => '__return_true',
+  ));
+
   register_rest_route('triennale/v1', '/lieux/(?P<lieu>[\w-]+)', array(
     'methods' => 'GET',
     'callback' => 'returnMapMarkers',

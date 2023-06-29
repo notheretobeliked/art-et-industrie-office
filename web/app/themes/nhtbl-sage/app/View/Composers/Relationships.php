@@ -233,7 +233,7 @@ class Relationships extends Composer
           'title' => \get_the_title($content),
           'introtext' => \get_the_excerpt($content),
           'image' => $image,
-          'address' => get_field('address', $content)
+          'address' => wpautop(get_field('address', $content))
         ];
       } else {
         $output = [
@@ -242,7 +242,7 @@ class Relationships extends Composer
           'title' => \get_the_title($content),
           'introtext' => \get_the_excerpt($content),
           'image' => $image,
-          'address' => get_field('address', $content)
+          'address' => wpautop(get_field('address', $content))
         ];
       }
     }

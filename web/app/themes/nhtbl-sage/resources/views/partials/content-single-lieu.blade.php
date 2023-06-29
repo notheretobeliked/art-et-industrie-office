@@ -26,6 +26,7 @@
     </div>
   </div>  
 
+
   @if ($lieu_listofevent)
   <div class="alignwide"  x-data="{ filter: 'all', dateFilter: 'future', showFilter: false }">
   <div class="flex flex-row justify-between items-center border-b border-black dark:border-white mb-4">
