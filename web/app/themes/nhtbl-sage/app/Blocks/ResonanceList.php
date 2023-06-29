@@ -166,14 +166,20 @@ class ResonanceList extends Block
                 );
             }
 
+            is_array(get_field('type', $post->ID)) ?
+            $category = [
+              'slug' => get_field('type', $post->ID)["value"] ? get_field('type', $post->ID)["value"] :  'wee',
+              'name' => get_field('type', $post->ID)["label"] ? get_field('type', $post->ID)["value"] :  'wee',
+            ] : $category = [
+              'slug' => get_field('type', $post->ID) ? get_field('type', $post->ID) :  'wee',
+              'name' => get_field('type', $post->ID) ? get_field('type', $post->ID) :  'wee',
+            ];
+
             $lieux[] = array(
                 'title' => $post->post_title,
                 'description' => get_the_excerpt($post),
                 'permalink' => get_permalink($post->ID),
-                'category' => array(
-                    'slug' => get_field('type', $post->ID)["value"] ? get_field('type', $post->ID)["value"] :  'wee',
-                    'name' => get_field('type', $post->ID)["label"] ? get_field('type', $post->ID)["value"] :  'wee',
-                ),
+                'category' => $category,
                 'geometry' => array(
                     'coordinates' => array_values($coordinates),
                     'type' => 'Point',
