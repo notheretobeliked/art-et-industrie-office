@@ -15,6 +15,7 @@ function returnMapMarkers($data)
     $posts = get_posts(array(
       'post_type' => 'lieu',
       'status' => 'publish',
+      'lang' => 'fr',
       'numberposts' => -1,
     ));
 
@@ -33,7 +34,9 @@ function returnMapMarkers($data)
           'category' => array(
             'slug' => get_field('type', $post->ID)["value"] ? get_field('type', $post->ID)["value"] :  'wee',
             'name' => get_field('type', $post->ID)["label"] ? get_field('type', $post->ID)["value"] :  'wee',
-          )
+          ),
+          'id' => $post->ID,
+          'language' => pll_get_post_language( $post->ID ),
         ),
         'geometry' => array(
           'coordinates' => array_values($coordinates),
@@ -45,6 +48,7 @@ function returnMapMarkers($data)
     $posts = get_posts(array(
       'post_type' => 'lieu',
       'status' => 'publish',
+      'lang' => 'fr',
       'meta_key'      => 'type',
       'meta_value'    => $lieu,
       'numberposts' => -1,
@@ -71,6 +75,8 @@ function returnMapMarkers($data)
           'title' => $post->post_title,
           'description' => get_the_excerpt($post),
           'category' => $category,
+          'language' => pll_get_post_language( $post->ID ),
+          'id' => $post->ID,
         ),
         'geometry' => array(
           'coordinates' => array_values($coordinates),
@@ -83,15 +89,19 @@ function returnMapMarkers($data)
       'post_type' => 'lieu',
       'status' => 'publish',
       'name' => $lieu,
+      'lang' => 'fr',
       'numberposts' => 1,
     ));
 
+    $post = $posts[1];
+    error_log(pll_get_post($post->ID, 'fr'));
+    error_log(print_r($post, true));
     if (!empty($posts)) {
       $coordinates = array(
-        'longitude' => get_field('longitude', $posts[0]->ID),
-        'latitude' => get_field('latitude', $posts[0]->ID),
+        'longitude' => get_field('longitude', $post->ID),
+        'latitude' => get_field('latitude', $post->ID),
       );
-      $image = \get_post_thumbnail_id($posts[0]->ID) ? \get_post_thumbnail_id($posts[0]->ID) : null;
+      $image = \get_post_thumbnail_id($post->ID) ? \get_post_thumbnail_id($post->ID) : null;
       // get image in size medium_large from $image['id']
       if ($image) {
         $subdir = get_post_meta($image, 'subdir', true);
@@ -110,24 +120,26 @@ function returnMapMarkers($data)
           'caption' => wp_get_attachment_caption($image) ? '<figcaption>' . wp_get_attachment_caption($image) . '</figcaption>' : '',
         );
       }
-      is_array(get_field('type', $posts[0]->ID)) ?
+      is_array(get_field('type', $post->ID)) ?
         $category = [
-          'slug' => get_field('type', $posts[0]->ID)["value"] ? get_field('type', $posts[0]->ID)["value"] :  'wee',
-          'name' => get_field('type', $posts[0]->ID)["label"] ? get_field('type', $posts[0]->ID)["value"] :  'wee',
+          'slug' => get_field('type', $post->ID)["value"] ? get_field('type', $post->ID)["value"] :  'wee',
+          'name' => get_field('type', $post->ID)["label"] ? get_field('type', $post->ID)["value"] :  'wee',
         ] : $category = [
-          'slug' => get_field('type', $posts[0]->ID) ? get_field('type', $posts[0]->ID) :  'wee',
-          'name' => get_field('type', $posts[0]->ID) ? get_field('type', $posts[0]->ID) :  'wee',
+          'slug' => get_field('type', $post->ID) ? get_field('type', $post->ID) :  'wee',
+          'name' => get_field('type', $post->ID) ? get_field('type', $post->ID) :  'wee',
         ];
       $lieux[] = array(
         'type' => 'Feature',
         'properties' => array(
-          'slug' => $posts[0]->post_name,
+          'slug' => $post->post_name,
           'image' => $image,
-          'acces' => get_field('address', $posts[0]->ID),
-          'permalink' => get_permalink($posts[0]->ID),
-          'title' => $posts[0]->post_title,
-          'description' => get_the_excerpt($posts[0]),
+          'acces' => get_field('address', $post->ID),
+          'permalink' => get_permalink($post->ID),
+          'title' => $post->post_title,
+          'description' => get_the_excerpt($post),
           'category' => $category,
+          'language' => pll_get_post_language( $post->ID ),
+          'id' => $post->ID,
         ),
         'geometry' => array(
           'coordinates' => array_values($coordinates),
