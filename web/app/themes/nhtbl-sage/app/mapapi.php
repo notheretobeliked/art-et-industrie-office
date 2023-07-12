@@ -12,46 +12,13 @@ function returnMapMarkers($data)
   $lang = $data['lang'] ?? 'fr';
   $lieux = array();
 
+  error_log('language: ' . $lang);
+
   if ($lieu === 'all') {
     $posts = get_posts(array(
       'post_type' => 'lieu',
       'status' => 'publish',
       'lang' => $lang,
-      'numberposts' => -1,
-    ));
-
-    foreach ($posts as $post) {
-      $coordinates = array(
-        'longitude' => get_field('longitude', $post->ID),
-        'latitude' => get_field('latitude', $post->ID),
-      );
-
-      $lieux[] = array(
-        'type' => 'Feature',
-        'properties' => array(
-          'title' => $post->post_title,
-          'slug' => $post->post_name,
-          'description' => get_the_excerpt($post),
-          'category' => array(
-            'slug' => get_field('type', $post->ID)["value"] ? get_field('type', $post->ID)["value"] :  'wee',
-            'name' => get_field('type', $post->ID)["label"] ? get_field('type', $post->ID)["value"] :  'wee',
-          ),
-          'id' => $post->ID,
-          'language' => pll_get_post_language( $post->ID ),
-        ),
-        'geometry' => array(
-          'coordinates' => array_values($coordinates),
-          'type' => 'Point',
-        ),
-      );
-    }
-  } elseif ($lieu === 'resonance' || $lieu === 'triennale'  || $lieu === 'oeuvre-public') {
-    $posts = get_posts(array(
-      'post_type' => 'lieu',
-      'status' => 'publish',
-      'lang' => $lang,
-      'meta_key'      => 'type',
-      'meta_value'    => $lieu,
       'numberposts' => -1,
     ));
 
@@ -72,7 +39,51 @@ function returnMapMarkers($data)
       $lieux[] = array(
         'type' => 'Feature',
         'properties' => array(
+          'title' => $post->post_title,
           'slug' => $post->post_name,
+          'description' => get_the_excerpt($post),
+          'category' => $category,
+          'id' => $post->ID,
+          'language' => pll_get_post_language( $post->ID ),
+        ),
+        'geometry' => array(
+          'coordinates' => array_values($coordinates),
+          'type' => 'Point',
+        ),
+      );
+    }
+  } elseif ($lieu === 'resonance' || $lieu === 'triennale'  || $lieu === 'oeuvre-public') {
+    $posts = get_posts(array(
+      'post_type' => 'lieu',
+      'status' => 'publish',
+      'lang' => 'en',
+      'meta_key'      => 'type',
+      'meta_value'    => $lieu,
+      'numberposts' => -1,
+    ));
+
+
+    foreach ($posts as $post) {
+      $correctID = pll_get_post($post->ID, $lang);
+      $post = get_post($correctID);
+      $coordinates = array(
+        'longitude' => get_field('longitude', $post->ID),
+        'latitude' => get_field('latitude', $post->ID),
+      );
+      is_array(get_field('type', $post->ID)) ?
+        $category = [
+          'slug' => get_field('type', $post->ID)["value"] ? get_field('type', $post->ID)["value"] :  'wee',
+          'name' => get_field('type', $post->ID)["label"] ? get_field('type', $post->ID)["value"] :  'wee',
+        ] : $category = [
+          'slug' => get_field('type', $post->ID) ? get_field('type', $post->ID) :  'wee',
+          'name' => get_field('type', $post->ID) ? get_field('type', $post->ID) :  'wee',
+        ];
+
+      $lieux[] = array(
+        'type' => 'Feature',
+        'properties' => array(
+          'slug' => $post->post_name,
+          'language' => pll_get_post_language( $post->ID ),
           'title' => $post->post_title,
           'description' => get_the_excerpt($post),
           'category' => $category,
@@ -135,7 +146,7 @@ function returnMapMarkers($data)
           'slug' => $post->post_name,
           'image' => $image,
           'acces' => wpautop(get_field('address', $post->ID)),
-          'permalink' => get_permalink($post->ID),
+          'permalink' => get_permalink($correctPostId),
           'title' => $post->post_title,
           'description' => wpautop(get_the_excerpt($post->ID)),
           'category' => $category,
