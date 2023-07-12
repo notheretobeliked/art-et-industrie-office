@@ -203,7 +203,12 @@ class ListeDesLiens extends Block
         $contents = get_field('content');
         $showIntro = get_field('show_intro');
         $output = array();
+        $language = pll_current_language();
+        
         foreach ($contents as $content) {
+            $content = pll_get_post($content, $language);
+            $post_language = pll_get_post_language( $content );
+
             $image = \get_post_thumbnail_id($content);
             // get image in size medium_large from $image['id']
             if ($image) {
@@ -225,6 +230,7 @@ class ListeDesLiens extends Block
             }
             $output[] = [
                 'url' => \get_permalink($content),
+                'language' => $post_language,
                 'title' => \get_the_title($content),
                 'introtext' => $showIntro ? \get_the_excerpt($content) : '',
                 'image' => $image,

@@ -16,9 +16,9 @@
                 "class": "",
                 "id": ""
             },
-            "show_in_graphql": 1,
             "return_format": "array",
             "library": "all",
+            "translations": "sync",
             "min": "",
             "max": "",
             "min_width": "",
@@ -29,7 +29,10 @@
             "max_size": "",
             "mime_types": "",
             "insert": "append",
-            "preview_size": "medium"
+            "preview_size": "medium",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "galerie"
         },
         {
             "key": "field_6435ea50fd901",
@@ -45,12 +48,15 @@
                 "class": "",
                 "id": ""
             },
-            "show_in_graphql": 1,
             "default_value": "",
+            "translations": "sync",
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": ""
+            "append": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "dates"
         },
         {
             "key": "field_6435ea7bfd902",
@@ -66,12 +72,15 @@
                 "class": "",
                 "id": ""
             },
-            "show_in_graphql": 1,
             "default_value": "",
+            "translations": "sync",
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": ""
+            "append": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "localite"
         },
         {
             "key": "field_6435eaa2fd903",
@@ -87,12 +96,15 @@
                 "class": "",
                 "id": ""
             },
-            "show_in_graphql": 1,
             "default_value": "",
+            "translations": "sync",
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": ""
+            "append": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "nomDeFamille"
         },
         {
             "key": "field_6435ead0fd904",
@@ -108,12 +120,15 @@
                 "class": "",
                 "id": ""
             },
-            "show_in_graphql": 1,
             "default_value": "",
+            "translations": "sync",
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": ""
+            "append": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "prenom"
         },
         {
             "key": "field_6435eae8fd905",
@@ -140,7 +155,7 @@
                 "search"
             ],
             "return_format": "id",
-            "translations": "copy_once",
+            "translations": "sync",
             "min": "",
             "max": "",
             "elements": "",
@@ -171,7 +186,7 @@
             "taxonomy": "",
             "filters": "",
             "return_format": "id",
-            "translations": "copy_once",
+            "translations": "sync",
             "min": "",
             "max": "",
             "elements": "",
@@ -204,7 +219,7 @@
                 "search"
             ],
             "return_format": "id",
-            "translations": "copy_once",
+            "translations": "sync",
             "min": "",
             "max": "",
             "elements": "",
@@ -235,5 +250,5 @@
     "graphql_field_name": "champsPourArtistes",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1685114344
+    "modified": 1688322226
 }

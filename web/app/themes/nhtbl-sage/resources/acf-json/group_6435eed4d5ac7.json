@@ -16,9 +16,9 @@
                 "class": "",
                 "id": ""
             },
-            "show_in_graphql": 1,
             "return_format": "array",
             "library": "all",
+            "translations": "sync",
             "min": "",
             "max": "",
             "min_width": "",
@@ -29,7 +29,10 @@
             "max_size": "",
             "mime_types": "",
             "insert": "append",
-            "preview_size": "medium"
+            "preview_size": "medium",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "galiere"
         },
         {
             "key": "field_6435eef73c151",
@@ -55,8 +58,8 @@
             "filters": [
                 "search"
             ],
-            "return_format": "id",
-            "translations": "copy_once",
+            "return_format": "object",
+            "translations": "sync",
             "min": "",
             "max": "",
             "elements": "",
@@ -78,7 +81,6 @@
                 "class": "",
                 "id": ""
             },
-            "show_in_graphql": 1,
             "post_type": [
                 "artistes"
             ],
@@ -90,9 +92,13 @@
                 "search"
             ],
             "return_format": "object",
+            "translations": "sync",
             "min": "",
             "max": "",
-            "elements": ""
+            "elements": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "artisteEdition"
         },
         {
             "key": "field_6435ef483c153",
@@ -108,7 +114,6 @@
                 "class": "",
                 "id": ""
             },
-            "show_in_graphql": 1,
             "post_type": [
                 "lieu"
             ],
@@ -120,9 +125,13 @@
                 "search"
             ],
             "return_format": "object",
+            "translations": "sync",
             "min": "",
             "max": "",
-            "elements": ""
+            "elements": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "editionLieu"
         }
     ],
     "location": [
@@ -147,5 +156,5 @@
     "graphql_field_name": "champPourEdition",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1685114243
+    "modified": 1688322139
 }

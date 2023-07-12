@@ -16,9 +16,9 @@
                 "class": "",
                 "id": ""
             },
-            "show_in_graphql": 1,
             "return_format": "array",
             "library": "all",
+            "translations": "sync",
             "min": "",
             "max": "",
             "min_width": "",
@@ -29,7 +29,10 @@
             "max_size": "",
             "mime_types": "",
             "insert": "append",
-            "preview_size": "medium"
+            "preview_size": "medium",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "galerie"
         },
         {
             "key": "field_6435ebfe2a3e8",
@@ -45,12 +48,15 @@
                 "class": "",
                 "id": ""
             },
-            "show_in_graphql": 1,
             "default_value": "",
+            "translations": "sync",
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": ""
+            "append": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "longitude"
         },
         {
             "key": "field_6435ec392a3e9",
@@ -66,12 +72,15 @@
                 "class": "",
                 "id": ""
             },
-            "show_in_graphql": 1,
             "default_value": "",
+            "translations": "sync",
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": ""
+            "append": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "latitude"
         },
         {
             "key": "field_6435ec492a3ea",
@@ -149,7 +158,7 @@
                 "search"
             ],
             "return_format": "id",
-            "translations": "copy_once",
+            "translations": "sync",
             "min": "",
             "max": "",
             "elements": "",
@@ -182,7 +191,7 @@
                 "search"
             ],
             "return_format": "id",
-            "translations": "copy_once",
+            "translations": "sync",
             "min": "",
             "max": "",
             "elements": "",
@@ -215,7 +224,7 @@
                 "search"
             ],
             "return_format": "id",
-            "translations": "copy_once",
+            "translations": "sync",
             "min": "",
             "max": "",
             "elements": "",
@@ -246,5 +255,5 @@
     "graphql_field_name": "champsPourEdition",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1687992117
+    "modified": 1688322106
 }

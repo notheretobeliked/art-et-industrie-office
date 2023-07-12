@@ -113,6 +113,7 @@ class Relationships extends Composer
             'caption' => wp_get_attachment_caption($image) ? '<figcaption>' . wp_get_attachment_caption($image) . '</figcaption>' : '',
           );
         }
+        $allCategories = [];
         $allCategories = array_merge($allCategories, array_map(function ($category) {
           return $category['name'];
         }, $categories));

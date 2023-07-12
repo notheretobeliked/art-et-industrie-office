@@ -130,6 +130,14 @@ add_action('after_setup_theme', function () {
      * @link https://developer.wordpress.org/reference/functions/add_theme_support/#customize-selective-refresh-widgets
      */
     add_theme_support('customize-selective-refresh-widgets');
+
+    /**
+     * Register Polylang strings (I really really really hate Polylang)
+     * @link https://polylang.wordpress.com/documentation/documentation-for-developers/functions-reference/
+     */
+
+     pll_register_string( 'eventsbutton', 'Evènements et plus d\'informations' );
+
 }, 20);
 
 /**
