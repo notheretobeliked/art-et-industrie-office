@@ -113,7 +113,7 @@ class Relationships extends Composer
             'caption' => wp_get_attachment_caption($image) ? '<figcaption>' . wp_get_attachment_caption($image) . '</figcaption>' : '',
           );
         }
-        $allCategories = [];
+         
         $allCategories = array_merge($allCategories, array_map(function ($category) {
           return $category['name'];
         }, $categories));
@@ -254,23 +254,25 @@ class Relationships extends Composer
   public function galerieoutput()
   {
     $images = get_field('galerie');
+    error_log(print_r($images, true));
     if (!$images) return;
     $output = array();
     foreach ($images as $image) {
+      $id = is_array($image) ? $image['id'] : $image;
       // get image in size medium_large from $image['id']
-      $subdir = get_post_meta($image['id'], 'subdir', true);
-      $other_formats = get_post_meta($image['id'], 'image_variants', true);
+      $subdir = get_post_meta($id, 'subdir', true);
+      $other_formats = get_post_meta($id, 'image_variants', true);
       $output[] = array(
-        'id' => $image['id'],
-        'width' => wp_get_attachment_metadata($image['id'])['width'],
-        'height' => wp_get_attachment_metadata($image['id'])['height'],
-        'src' => wp_get_attachment_image_src($image['id'], 'medium_large'),
-        'srcset' => wp_get_attachment_image_srcset($image['id'], 'medium_large'),
-        'image' => wp_get_attachment_image($image['id'], 'medium_large'),
-        'alt' => $image['alt'],
+        'id' => $id,
+        'width' => wp_get_attachment_metadata($id)['width'],
+        'height' => wp_get_attachment_metadata($id)['height'],
+        'src' => wp_get_attachment_image_src($id, 'medium_large'),
+        'srcset' => wp_get_attachment_image_srcset($id, 'medium_large'),
+        'image' => wp_get_attachment_image($id, 'medium_large'),
+        'alt' => get_post_meta($id, '_wp_attachment_image_alt', TRUE),
         'other_formats' => $other_formats,
         'subdir' => $subdir,
-        'caption' => wp_get_attachment_caption($image['id']) ? '<figcaption>' . wp_get_attachment_caption($image['id']) . '</figcaption>' : '',
+        'caption' => wp_get_attachment_caption($id) ? '<figcaption>' . wp_get_attachment_caption($image['id']) . '</figcaption>' : '',
       );
     }
     return $output;
