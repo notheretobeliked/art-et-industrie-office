@@ -16,8 +16,7 @@
       </div>
 
       <a :href="placedata.permalink"
-        class="text-center inline p-4 border border-black font-ui uppercase tracking-wider hover:bg-black hover:bg-opacity-10">Evènements
-        et plus d'informations</a>
+        class="text-center inline p-4 border border-black font-ui uppercase tracking-wider hover:bg-black hover:bg-opacity-10">{{ pll__('Evènements et plus d\'informations') }}</a>
       <figure>
         <picture class="block object-cover" x-data="{
             qualitySwitch: $store.utils.getCookie('qualitySwitch') || 'webp-low',
@@ -51,7 +50,7 @@
       style: 'mapbox://styles/erikhartin/cli27x8hu02he01pnhn0v9171',
       center: [2.3755593500912586, 51.04759496120762], // Set the initial map center
       zoom: 10, // Set the initial zoom level
-      language: 'fr' // Set the language to French
+      language: '{{ $lang }}' // Set the language to whatever language we're in
     });
 
     const dispatchDetails = (slug) => {
@@ -65,7 +64,8 @@
 
     map.on('load', function() {
       // Fetch the markers data from the API route
-      fetch('/wp-json/triennale/v1/lieux/{{ $slug }}')
+      console.log('/wp-json/triennale/v1/lieux/{{ $slug }}/{{ $lang }}')
+      fetch('/wp-json/triennale/v1/lieux/{{ $slug }}/{{ $lang }}')
         .then(response => response.json())
         .then(data => {
           // Create separate layers for each category

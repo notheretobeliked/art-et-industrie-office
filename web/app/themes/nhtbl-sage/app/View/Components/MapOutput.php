@@ -16,12 +16,14 @@ class MapOutput extends Component
     public $uniqueMapId;
     public $slug = 'all';
     public $size = 'large';
+    public $lang = 'fr';
 
     public function __construct($slug = 'all', $size = 'large')
     {
         $this->uniqueMapId = uniqid('map-');
         $this->slug = $slug;
         $this->size = $size;
+        $this->lang = $this->getCurrentLanguage();
     }
 
     public function mapboxApiToken(): string
@@ -29,6 +31,10 @@ class MapOutput extends Component
         return env('MABPOX_API_TOKEN');
     }
 
+    public function getCurrentLanguage(): string
+    {
+        return pll_current_language();
+    }
     /**
      * Get the view / contents that represent the component.
      *
