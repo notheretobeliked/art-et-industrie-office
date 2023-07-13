@@ -299,7 +299,10 @@ class Evenements extends Block
             $lieu ? $lieu = [
                 'title' => get_the_title($lieu[0]),
                 'permalink' => get_permalink($lieu[0]),
-            ] : $lieu = null;
+            ] : $lieu = [
+                'title' => null,
+                'permalink' => null,
+            ];
 
             $start_date = tribe_get_start_date($item->ID, false, 'j/n/Y');
             if (tribe_get_start_date($item->ID, false, 'j F Y') != tribe_get_end_date($item->ID, false, 'j F Y')) {
@@ -314,12 +317,21 @@ class Evenements extends Block
             if ($image) {
                 $subdir = get_post_meta($image, 'subdir', true);
                 $other_formats = get_post_meta($image, 'image_variants', true);
+                
                 $alt = get_post_meta($image, '_wp_attachment_image_alt', TRUE);
+                $imageMeta = wp_get_attachment_metadata($image);
+                if (is_array($imageMeta)) {
+                  $width = isset($imageMeta["width"]) ? $imageMeta["width"] : 160;
+                  $height = isset($imageMeta["height"]) ? $imageMeta["height"] : 90;
+                } else {
+                  $width = 160;
+                  $height = 90;
+                }                
                 $image = array(
                     'id' => $image,
                     'src' => wp_get_attachment_image_src($image, 'medium_large'),
-                    'width' => wp_get_attachment_metadata($image)['width'],
-                    'height' => wp_get_attachment_metadata($image)['height'],
+                    'width' => $width,
+                    'height' => $height,
                     'srcset' => wp_get_attachment_image_srcset($image, 'medium_large'),
                     'image' => wp_get_attachment_image($image, 'medium_large'),
                     'alt' => $alt,

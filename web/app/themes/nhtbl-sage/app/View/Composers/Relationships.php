@@ -48,123 +48,119 @@ class Relationships extends Composer
    * @return array
    */
 
-  public function getEvents($field_name)
-  {
-    error_log(print_r(get_field($field_name), true));
-    if (get_field($field_name)) {
-      $args = array(
-        'posts_per_page' => -1,
-        'eventDisplay' => 'list',
-        'ends_after' => 'now',
-        'post__in' => get_field($field_name)
-      );
-      $items = tribe_get_events($args);
-
-      $return = [];
-      $allCategories = [];
-
-      foreach ($items as $item) {
-        $tags = [];
-        if (get_the_terms($item->ID, 'post_tag')) {
-          foreach (get_the_terms($item->ID, 'tribe_events_cat') as $cat) {
-            $categories[] = [
-              'name' => $cat->name,
-              'slug' => $cat->slug,
-            ];
-          }
-        }
-        if (get_the_terms($item->ID, 'tribe_events_cat')) {
-          $categories = [];
-          foreach (get_the_terms($item->ID, 'tribe_events_cat') as $cat) {
-            $categories[] = [
-              'name' => $cat->name,
-              'slug' => $cat->slug,
-            ];
-          }
-        }
-
-        $lieu = get_field('lieu_event', $item->ID);
-        $lieu ? $lieu = [
-          'title' => get_the_title($lieu[0]),
-          'permalink' => get_permalink($lieu[0]),
-        ] : $lieu = null;
-
-        $date = tribe_get_start_date($item->ID, false, 'd F Y');
-        if (tribe_get_start_date($item->ID, false, 'd F Y') != tribe_get_end_date($item->ID, false, 'd F Y')) {
-          $end_date = tribe_get_end_date($item->ID, false, 'd F Y');
-          if (tribe_get_start_date($item->ID, false, 'Y') === tribe_get_end_date($item->ID, false, 'Y')) $date = (tribe_get_start_date($item->ID, false, 'd F'));
-        } else $end_date = null;
-
-        $image = \get_post_thumbnail_id($item->ID);
-
-        if ($image) {
-          $subdir = get_post_meta($image, 'subdir', true);
-          $other_formats = get_post_meta($image, 'image_variants', true);
-          $alt = get_post_meta($image, '_wp_attachment_image_alt', TRUE);
-          $image = array(
-            'id' => $image,
-            'src' => wp_get_attachment_image_src($image, 'medium_large'),
-            'width' => wp_get_attachment_metadata($image)['width'],
-            'height' => wp_get_attachment_metadata($image)['height'],
-            'srcset' => wp_get_attachment_image_srcset($image, 'medium_large'),
-            'image' => wp_get_attachment_image($image, 'medium_large'),
-            'alt' => $alt,
-            'other_formats' => $other_formats,
-            'subdir' => $subdir,
-            'caption' => wp_get_attachment_caption($image) ? '<figcaption>' . wp_get_attachment_caption($image) . '</figcaption>' : '',
-          );
-        }
-         
-        $allCategories = array_merge($allCategories, array_map(function ($category) {
-          return $category['name'];
-        }, $categories));
-        $filtertags = [];
-
-        // Populate $filtertags with list of categories.
-        $filtertags = array_map(function ($category) {
-          return $category['name'];
-        }, $categories);
-
-        // Check if the event is taking place today, this month or in the future
-
-        $start_date_str = tribe_get_end_date($item->ID, false, 'Y-m-d');
-        $start_date_date = DateTime::createFromFormat('Y-m-d', $start_date_str);
-        $today = new DateTime();
-
-        if ($start_date_date->format('Y-m-d') >= $today->format('Y-m-d')) {
-          $filtertags[] = 'future';
-        }
-
-        if ($start_date_date->format('Y-m-d') == $today->format('Y-m-d')) {
-          $filtertags[] = 'today';
-        }
-
-        if ($start_date_date->format('Y-m') == $today->format('Y-m') && $start_date_date->format('Y-m-d') >= $today->format('Y-m-d')) {
-          $filtertags[] = 'this-month';
-        }
-
-
-        $return[] = [
-          'lieu' => $lieu,
-          'title' => get_the_title($item->ID),
-          'permalink' => get_permalink($item->ID),
-          'filtertags' => $filtertags,
-          'thumbnail' => $image,
-          'date' => $date,
-          'time' => tribe_get_start_date($item->ID, false, 'H:i'),
-          'end_date' => $end_date,
-          'end_time' => tribe_get_end_date($item->ID, false, 'H:i'),
-          'excerpt' => get_the_excerpt($item->ID),
-          'categories' => $categories,
-          'tags' => $tags,
-        ];
-
-      }
-      $allCategories = array_unique($allCategories);
-
-      return ['results' => $return, 'categories' => $allCategories];
-    }
-  }
+   public function getEvents($field_name)
+   {
+     $field_value = get_field($field_name);
+   
+     if (!empty($field_value)) {
+       $args = array(
+         'posts_per_page' => -1,
+         'eventDisplay' => 'list',
+         'ends_after' => 'now',
+         'post__in' => $field_value
+       );
+       $items = tribe_get_events($args);
+   
+       $return = [];
+       $allCategories = [];
+   
+       foreach ($items as $item) {
+         $tags = [];
+         $categories = [];
+   
+         if (get_the_terms($item->ID, 'tribe_events_cat')) {
+           foreach (get_the_terms($item->ID, 'tribe_events_cat') as $cat) {
+             $categories[] = [
+               'name' => $cat->name,
+               'slug' => $cat->slug,
+             ];
+           }
+         }
+   
+         $lieu = get_field('lieu_event', $item->ID);
+         $lieu ? $lieu = [
+           'title' => get_the_title($lieu[0]),
+           'permalink' => get_permalink($lieu[0]),
+         ] : $lieu = null;
+   
+         $date = tribe_get_start_date($item->ID, false, 'd F Y');
+         if (tribe_get_start_date($item->ID, false, 'd F Y') != tribe_get_end_date($item->ID, false, 'd F Y')) {
+           $end_date = tribe_get_end_date($item->ID, false, 'd F Y');
+           if (tribe_get_start_date($item->ID, false, 'Y') === tribe_get_end_date($item->ID, false, 'Y')) $date = (tribe_get_start_date($item->ID, false, 'd F'));
+         } else $end_date = null;
+   
+         $image = \get_post_thumbnail_id($item->ID);
+   
+         if ($image) {
+           $subdir = get_post_meta($image, 'subdir', true);
+           $other_formats = get_post_meta($image, 'image_variants', true);
+           $alt = get_post_meta($image, '_wp_attachment_image_alt', true);
+           $image = array(
+             'id' => $image,
+             'src' => wp_get_attachment_image_src($image, 'medium_large'),
+             'width' => wp_get_attachment_metadata($image)['width'],
+             'height' => wp_get_attachment_metadata($image)['height'],
+             'srcset' => wp_get_attachment_image_srcset($image, 'medium_large'),
+             'image' => wp_get_attachment_image($image, 'medium_large'),
+             'alt' => $alt,
+             'other_formats' => $other_formats,
+             'subdir' => $subdir,
+             'caption' => wp_get_attachment_caption($image) ? '<figcaption>' . wp_get_attachment_caption($image) . '</figcaption>' : '',
+           );
+         }
+   
+         $allCategories = array_merge($allCategories, array_map(function ($category) {
+           return $category['name'];
+         }, $categories));
+         $filtertags = [];
+   
+         // Populate $filtertags with list of categories.
+         $filtertags = array_map(function ($category) {
+           return $category['name'];
+         }, $categories);
+   
+         // Check if the event is taking place today, this month or in the future
+         $start_date_str = tribe_get_end_date($item->ID, false, 'Y-m-d');
+         $start_date_date = DateTime::createFromFormat('Y-m-d', $start_date_str);
+         $today = new DateTime();
+   
+         if ($start_date_date >= $today) {
+           $filtertags[] = 'future';
+         }
+   
+         if ($start_date_date == $today) {
+           $filtertags[] = 'today';
+         }
+   
+         if ($start_date_date->format('Y-m') == $today->format('Y-m') && $start_date_date >= $today) {
+           $filtertags[] = 'this-month';
+         }
+   
+         $return[] = [
+           'lieu' => $lieu,
+           'title' => get_the_title($item->ID),
+           'permalink' => get_permalink($item->ID),
+           'filtertags' => $filtertags,
+           'thumbnail' => $image,
+           'date' => $date,
+           'time' => tribe_get_start_date($item->ID, false, 'H:i'),
+           'end_date' => $end_date,
+           'end_time' => tribe_get_end_date($item->ID, false, 'H:i'),
+           'excerpt' => get_the_excerpt($item->ID),
+           'categories' => $categories,
+           'tags' => $tags,
+         ];
+       }
+   
+       $allCategories = array_unique($allCategories);
+   
+       return ['results' => $return, 'categories' => $allCategories];
+     }
+   
+     // Return an empty array if $field_value is empty or false
+     return ['results' => [], 'categories' => []];
+   }
+   
 
 
   public function getArtistes($field_name)

@@ -204,7 +204,7 @@ class ListeDesLiens extends Block
         $showIntro = get_field('show_intro');
         $output = array();
         $language = pll_current_language();
-        
+        if (!$contents) return;        
         foreach ($contents as $content) {
             $content = pll_get_post($content, $language);
             $post_language = pll_get_post_language( $content );

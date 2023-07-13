@@ -144,6 +144,7 @@ class Galerie extends Block
     public function output()
     {
         $images = get_field('galerie');
+        if (!$images) return;
         $output = array();
         foreach ($images as $image) {
             // get image in size medium_large from $image['id']
