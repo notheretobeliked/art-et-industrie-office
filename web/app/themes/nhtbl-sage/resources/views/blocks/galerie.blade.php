@@ -1,7 +1,14 @@
-<div class="{{ $block->classes }} !px-0">
+<div class="galleryWrapper {{ $block->classes }} !px-0">
 
   @if ($galerie)
     <x-galerie-output :images="$galerie" />
+
+    <div class="mt-4 w-full hidden md:flex flex-row gap-4 justify-end pr-6">
+      <button
+        class="prevBtn text-5xl font-display text-stroke text-stroke-black dark:text-stroke-white text-fill-transparent hover:text-fill-black dark:hover:text-fill-white">←</button>
+      <button
+        class="nextBtn text-5xl font-display text-stroke text-stroke-black dark:text-stroke-white text-fill-transparent hover:text-fill-black dark:hover:text-fill-white">→</button>
+    </div>
   @elseif ($block->preview)
     <div class="w-full flex flex-col items-center justify-center">
 
