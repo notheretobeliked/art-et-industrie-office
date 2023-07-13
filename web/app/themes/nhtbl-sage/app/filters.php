@@ -191,11 +191,6 @@ add_filter('acf/settings/save_json', function ($path) {
 });
 
 
-add_action('admin_head', function () {
-    echo '<style>#event_tribe_organizer, #event_url, #event_tribe_venue, #event_cost {display: none;}</style>';
-});
-
-
 // add first image from gallery field to thumbnail
 add_filter('acf/save_post', function ($post_id) {
     $gallery = get_field('galerie', $post_id, false);
@@ -218,7 +213,6 @@ add_filter('tribe_events_editor_default_template', function ($template) {
 
 
 // only allow default blocks
-
 add_filter('allowed_block_types_all', function ($allowed_blocks, $editor_context) {
     $allowed_blocks = array(
         'core/paragraph',
@@ -266,34 +260,6 @@ add_filter('register_post_type_args', function ($args, $post_type) {
 }, 10, 2);
 
 add_filter( 'big_image_size_threshold', '__return_false' );
-
-add_filter('register_post_type_args', function ($args, $post_type) {
-    // Let's make sure that we're customizing the post type we really need
-    if ($post_type !== 'lieu') {
-        return $args;
-    }
-
-    // Now, we have access to the $args variable
-    // If you want to modify just one label, you can do something like this
-    $args['show_in_graphql'] = true;
-    $args['graphql_single_name'] = 'Lieu';
-    $args['graphql_plural_name'] = 'Lieux';
-    $args['publicly_queryable'] = true;
-
-    return $args;
-}, 10, 2);
-
-add_filter('register_taxonomy_args', function ($args, $taxonomy) {
-
-    if ('lieu_type' === $taxonomy) {
-        $args['show_in_graphql'] = true;
-        $args['graphql_single_name'] = 'LieuType';
-        $args['graphql_plural_name'] = 'LieuTypes';
-    }
-
-    return $args;
-}, 10, 2);
-
 
 /* 
  * Set relationship fields as biderectional
@@ -402,191 +368,3 @@ add_filter('acf/update_value/name=artiste_edition', 'App\bidirectional_acf_updat
 add_filter('acf/update_value/name=artiste_lieu', 'App\bidirectional_acf_update_value', 10, 3);
 add_filter('acf/update_value/name=edition_lieu', 'App\bidirectional_acf_update_value', 10, 3);
 
-
-
-
-add_action('graphql_register_types', function () {
-    register_graphql_field('Block', 'attachedPages', [
-        'type' => ['list_of' => 'ACFListeDesLiensPage'],
-        'resolve' => function ($block, $args, $context, $info) {
-            if ($block['name'] === 'acf/liste-des-liens') {
-                $content = $block['attributes']['data']['content'];
-                return array_map(function ($pageId) use ($context, $info) {
-                    $link = get_the_permalink($pageId);
-                    $title = get_the_title($pageId);
-                    $image = get_post_thumbnail_id($pageId);
-
-                    if ($image) {
-                        $image = \WPGraphQL\Data\DataSource::resolve_post_object(
-                            $image,
-                            $context,
-                            $info,
-                            'ATTACHMENT'
-                        );
-                    }
-                    return compact('link', 'image', 'title');
-                }, $content);
-            }
-
-            return null;
-        },
-    ]);
-
-    register_graphql_field('Block', 'attachedImages', [
-        'type' => ['list_of' => 'AcfGalerieBlockImages'],
-        'resolve' => function ($block, $args, $context, $info) {
-            if ($block['name'] === 'acf/galerie') {
-                $content = $block['attributes']['data']['galerie'];
-
-                return array_map(function ($content) use ($context, $info) {
-                    $image = $content;
-                    $image = \WPGraphQL\Data\DataSource::resolve_post_object(
-                        $content,
-                        $context,
-                        $info,
-                        'ATTACHMENT'
-                    );
-                    return compact('image');
-                }, $content);
-            }
-            return null;
-        },
-    ]);
-});
-
-add_action('graphql_register_types', function () {
-    register_graphql_object_type('ACFListeDesLiensPage', [
-        'fields' => [
-            'link' => ['type' => 'String'],
-            'title' => ['type' => 'String'],
-            'image' => [
-                'type' => 'mediaItem'
-              ],
-              
-        ],
-    ]);
-    register_graphql_object_type('AcfGalerieBlockImages', [
-        'fields' => [
-            'image' => [
-                'type' => 'mediaItem'
-              ],
-              
-        ],
-    ]);
-});
-
-
-/*
- * Add new fields to mediaItem type to accomodate for different image compression levels
- * 
- * 
-*/
-
-add_action('graphql_register_types', function () {
-    // Add new fields to mediaItem type
-    register_graphql_fields('mediaSize', array(
-        'sourceUrlLow' => array(
-            'type' => 'String',
-            'resolve' => function ($image) {
-                $src_url = null;
-
-                if ( ! empty( $image['ID'] ) ) {
-                    $src = wp_get_attachment_image_src( absint( $image['ID'] ), $image['name'] );
-                    if ( ! empty( $src ) ) {
-                        $src_url = $src[0];
-                    }
-                } elseif ( ! empty( $image['file'] ) ) {
-                    $src_url = $image['file'];
-                }
-
-                return $src_url . '-low.webp';
-             }
-        ),
-
-        'sourceUrlBW' => array(
-            'type' => 'String',
-            'resolve' => function ($image) {
-                $src_url = null;
-
-                if ( ! empty( $image['ID'] ) ) {
-                    $src = wp_get_attachment_image_src( absint( $image['ID'] ), $image['name'] );
-                    if ( ! empty( $src ) ) {
-                        $src_url = $src[0];
-                    }
-                } elseif ( ! empty( $image['file'] ) ) {
-                    $src_url = $image['file'];
-                }
-
-                return $src_url . '-bw.webp';
-             }
-        ),
-
-    ));
-});
-
-
-/* add a new 'clean_data' field to the REST API
-*/
-// add_action(
-//     'rest_api_init',
-//     function () {
-
-//         if (!function_exists('use_block_editor_for_post_type')) {
-//             require ABSPATH . 'wp-admin/includes/post.php';
-//         }
-
-//         // Surface all Gutenberg blocks in the WordPress REST API
-//         $post_types = get_post_types_by_support(['editor']);
-//         foreach ($post_types as $post_type) {
-//             if (use_block_editor_for_post_type($post_type)) {
-//                 register_rest_field(
-//                     $post_type,
-//                     'clean_data',
-//                     [
-//                         'get_callback' => function (array $post) {
-//                             $blocks = parse_blocks($post['content']['raw']);
-//                             $newblocks = $blocks;
-//                             foreach ($newblocks as &$block) {
-//                                 if ('acf/galerie' === $block['blockName']) {
-//                                     /* 
-//                                     If the block is an acf gallery, add a filed called 'rendered_gallery' which contains the actual
-//                                     image srcset for each image in the gallery
-//                                     */
-//                                     $images = array();
-//                                     foreach ($block['attrs']['data']['galerie'] as $imageId) {
-//                                         // get srcset for $imageId
-//                                         $images[] = wp_get_attachment_image_srcset($imageId, 'medium-large');
-//                                     }
-//                                     error_log(print_r($images, true));
-//                                     $block['attrs']['data']['rendered_gallery'] = $images;
-//                                 }  elseif ('acf/liste-des-liens' === $block['blockName']) {
-//                                     /* 
-//                                     If the block is a list-des-liens block, add a field called 'attached_posts' which contains the metadata
-//                                     for each of the posts in the block
-//                                     */
-//                                     error_log(print_r($block, true));
-//                                     //  echo apply_filters( 'the_content', render_block( $block ) );
-//                                     error_log(print_r($block['attrs']['data']['galerie'], true));
-//                                     $images = array();
-//                                     foreach ($block['attrs']['data']['content'] as $contentId) {
-//                                         // get srcset for $imageId
-//                                         $content[] = [
-//                                             'title' => get_the_title($contentId),
-//                                             'link' => get_the_permalink($contentId),
-//                                             'thumbnail' => wp_get_attachment_image_srcset($contentId, 'medium-large'),
-//                                         ];
-//                                     }
-//                                     error_log(print_r($content, true));
-//                                     $block['attrs']['data']['attached_posts'] = $content;
-//                                 }
-
-//                             }
-
-//                             return $newblocks;
-//                         },
-//                     ]
-//                 );
-//             }
-//         }
-//     }
-// );
