@@ -152,9 +152,9 @@
       </div>
 
       <div class="font-serif text-sm md:text-base">
-        <h3>{{ __('Promenades', 'sage') }}</h3>
+        <h3>{{ pll_e('Promenades') }}</h3>
         <div class="h-2 w-16 bg-blue"></div>
-        Boucle du Grand Large (2 km)<br>
+        {{pll_e('Boucle du Grand Large (2 km)')}}<br>
         <svg class="h-5 inline w-5 pb-1">
           <use xlink:href="#bike" />
         </svg>
@@ -165,7 +165,7 @@
         30 min.
 
         <div class="mt-4 h-2 w-16 bg-green"></div>
-        Petite boucle (4 km)<br>
+        {{pll_e('Petite boucle (4 km)')}}<br>
         <svg class="h-5 inline w-5 pb-1">
           <use xlink:href="#bike" />
         </svg>
@@ -176,7 +176,7 @@
         1h.
 
         <div class="mt-4 h-2 w-16 bg-red"></div>
-        Grande boucle (17 km)<br>
+        {{pll_e('Grande boucle (17 km)')}}<br>
         <svg class="h-5 inline w-5 pb-1">
           <use xlink:href="#bike" />
         </svg>
@@ -197,10 +197,10 @@
         <div class="mt-12 text-sm font-serif">
         <svg class="h-5 inline w-5 pb-1">
           <use xlink:href="#open" />
-        </svg> = Accessible aux horaires d’ouverture<br>
+        </svg> = {{pll_e('Accessible aux horaires d’ouverture')}}<br>
         <svg class="h-5 inline w-5 pb-1">
           <use xlink:href="#night" />
-        </svg> = Visible de nuit
+        </svg> = {{pll_e('Visible de nuit')}}
 
         </div>
       </div>

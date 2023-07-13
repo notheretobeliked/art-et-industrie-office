@@ -4,7 +4,7 @@
     "fields": [
         {
             "key": "field_6480e2a3e27c4",
-            "label": "Selecteur d'energie",
+            "label": "Selecteur d'energie (French)",
             "name": "energy_selector",
             "aria-label": "",
             "type": "group",
@@ -17,9 +17,6 @@
                 "id": ""
             },
             "layout": "block",
-            "show_in_graphql": 1,
-            "graphql_description": "",
-            "graphql_field_name": "energySelector",
             "sub_fields": [
                 {
                     "key": "field_6480e2f4e27c5",
@@ -96,7 +93,88 @@
             ]
         },
         {
-            "key": "field_6482f426bbece",
+            "key": "field_64afbd5c950be",
+            "label": "Selecteur d'energie (English)",
+            "name": "energy_selector_en",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_64afbd5c950bf",
+                    "label": "Libellé du tooltip",
+                    "name": "tooltip",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "Contrôler votre impact énergétique",
+                    "translations": "translate",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": ""
+                },
+                {
+                    "key": "field_64afbd5c950c0",
+                    "label": "Titre du modal",
+                    "name": "modal_title",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "Gestions Énergétiques",
+                    "translations": "translate",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": ""
+                },
+                {
+                    "key": "field_64afbd5c950c1",
+                    "label": "Contenu du modal",
+                    "name": "modal_content",
+                    "aria-label": "",
+                    "type": "wysiwyg",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "translations": "translate",
+                    "tabs": "all",
+                    "toolbar": "full",
+                    "media_upload": 1,
+                    "delay": 0
+                }
+            ]
+        },
+        {
+            "key": "field_6482f5dd07451",
             "label": "Selecteur de langues actif ?",
             "name": "language_selector_active",
             "aria-label": "",
@@ -138,9 +216,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "show_in_graphql": 0,
-    "graphql_field_name": "paramèTresGeneraux",
-    "map_graphql_types_from_location_rules": 0,
-    "graphql_types": "",
-    "modified": 1686303869
+    "modified": 1689238895
 }

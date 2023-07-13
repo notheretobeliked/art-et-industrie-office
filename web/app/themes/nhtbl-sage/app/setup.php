@@ -137,6 +137,26 @@ add_action('after_setup_theme', function () {
      */
 
      pll_register_string( 'eventsbutton', 'Evènements et plus d\'informations' );
+     pll_register_string( 'fromdate', 'du 10 juin 2023' );
+     pll_register_string( 'todate', 'au 14 janvier 2024' );
+     pll_register_string( 'consciences', 'Consciences énergétiques' );
+     pll_register_string( 'energie', 'Energie' );
+     pll_register_string( 'visible', 'Visible de nuit' );
+     pll_register_string( 'accessible', 'Accessible aux horaires d’ouverture' );
+     pll_register_string( 'promenades', 'Promenades' );
+     pll_register_string( 'petitboucle', 'Petite boucle (4 km)' );
+     pll_register_string( 'grandboucle', 'Grande boucle (17 km)' );
+     pll_register_string( 'bouclegrandlarge', 'Boucle du Grand Large (2 km)' );
+
+     pll_register_string( 'fermer', 'Fermer ↑' );
+     pll_register_string( 'filtres', 'Filtrés par ↓' );
+     pll_register_string( 'categories', 'Catégories');
+     pll_register_string( 'tous', 'Tous');
+     pll_register_string( 'quand', 'Quand');
+     pll_register_string( 'avenir', 'A venir');
+     pll_register_string( 'today', 'Aujourd’hui');
+     pll_register_string( 'thismonth', 'Ce mois');
+     pll_register_string( 'past', 'Passé');
 
 }, 20);
 

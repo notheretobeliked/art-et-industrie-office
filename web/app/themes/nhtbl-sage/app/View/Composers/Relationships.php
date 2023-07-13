@@ -50,6 +50,7 @@ class Relationships extends Composer
 
   public function getEvents($field_name)
   {
+    error_log(print_r(get_field($field_name), true));
     if (get_field($field_name)) {
       $args = array(
         'posts_per_page' => -1,
@@ -63,8 +64,8 @@ class Relationships extends Composer
       $allCategories = [];
 
       foreach ($items as $item) {
+        $tags = [];
         if (get_the_terms($item->ID, 'post_tag')) {
-          $tags = [];
           foreach (get_the_terms($item->ID, 'tribe_events_cat') as $cat) {
             $categories[] = [
               'name' => $cat->name,
@@ -208,8 +209,8 @@ class Relationships extends Composer
         $alt = get_post_meta($image, '_wp_attachment_image_alt', TRUE);
         $imageMeta = wp_get_attachment_metadata($image);
         if (is_array($imageMeta)) {
-          $width = $imageMeta["width"];
-          $height = $imageMeta["height"];
+          $width = isset($imageMeta["width"]) ? $imageMeta["width"] : 160;
+          $height = isset($imageMeta["height"]) ? $imageMeta["height"] : 90;
         } else {
           $width = 160;
           $height = 90;
@@ -254,7 +255,6 @@ class Relationships extends Composer
   public function galerieoutput()
   {
     $images = get_field('galerie');
-    error_log(print_r($images, true));
     if (!$images) return;
     $output = array();
     foreach ($images as $image) {

@@ -1,4 +1,4 @@
-<a class="brand" href="{{ home_url('/') }}">
+<a class="brand" href="{{ pll_home_url() }}">
   <h1
     class="mt-1 px-2 grid grid-cols-logo font-ui text-xs text-fill-transparent text-stroke-05 md:text-stroke  text-stroke-black !tracking-wider uppercase md:fluid-xl hover:text-fill-black hover:text-stroke-0 dark:hover:text-fill-white leading-[1.1]">
     <span class="block">Triennale Art<br>Industrie</span>
@@ -64,7 +64,7 @@
           </button>
         </div>
 
-        <p class="hidden md:block text-sm mb-0 mr-2 text-serif">{{ __('Energie', '_sage') }}</p>
+        <p class="hidden md:block text-sm mb-0 mr-2 text-serif">{{ pll_e('Energie') }}</p>
         <div class="relative flex items-center gap-1 rounded-3xl p-1 border h-8 justify-self-end">
           <button
             x-on:click="$store.quality.qualitySwitch = 'webp-bw'; $store.utils.setCookie('qualitySwitch', 'webp-bw', 365)">

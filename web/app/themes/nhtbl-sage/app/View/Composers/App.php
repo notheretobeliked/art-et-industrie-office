@@ -22,11 +22,13 @@ class App extends Composer
      */
     public function with()
     {
+        $qualitySwitch = isset($_COOKIE['qualitySwitch']) ? $_COOKIE['qualitySwitch'] : 'webp-low';
         $languages = function_exists('pll_the_languages') ? pll_the_languages( array( 'raw' => 1 ) ) : null;
+        $qualitySwitchData = pll_current_language() === 'fr' ? get_field('energy_selector', 'option') : get_field('energy_selector_en', 'option');
         return [
             'siteName' => $this->siteName(),
-            'qualitySwitch' => $_COOKIE['qualitySwitch'] ? $_COOKIE['qualitySwitch'] : 'webp-low',
-            'qualitySwitchData' => get_field('energy_selector', 'option'),
+            'qualitySwitch' => $qualitySwitch,
+            'qualitySwitchData' => $qualitySwitchData,
             'languageSwitchActive' => get_field('language_selector_active', 'option'),
             'languages' => $languages,
         ];
